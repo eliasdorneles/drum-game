@@ -53,12 +53,12 @@ function Game($) {
             "bpm": 120,
             "pattern": [
                 {
-                "name": "Drum Kick",
+                "name": "Kick",
                 "file": "kick.wav",
                 "steps": [1,0,0,0],
                 },
                 {
-                    "name": "Drum Snare",
+                    "name": "Snare",
                     "file": "snare.wav",
                     "steps": [0,0,1,0],
                 },
@@ -88,6 +88,13 @@ function Game($) {
         source.start(time);
     }
 
+    var stepLights = $('ul.step-lights > li');
+
+    function updateLights(position, index) {
+        stepLights.removeClass('on');
+        $(stepLights[position]).addClass('on');
+    }
+
     function playLoop(level) {
         if (!isReady) {
             console.log('Not ready yet!');
@@ -103,8 +110,10 @@ function Game($) {
         for (var currentBar = 0; currentBar < repeat; currentBar++) {
             for (var j = 0; j < nSteps; j++) {
                 level.pattern.forEach(function(pat){
+                    var durationSecs = currentBar * barDuration + j * beatDuration;
+                    setTimeout(updateLights, durationSecs * 1000, j);
                     if (pat.steps[j] == 1) {
-                        playSound(pat.buffer, startTime + currentBar * barDuration + j * beatDuration);
+                        playSound(pat.buffer, startTime + durationSecs);
                     }
                 });
             }
