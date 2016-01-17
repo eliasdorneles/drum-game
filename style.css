@@ -1,0 +1,19 @@
+.game {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.step-lights {
+    margin-top: 2em;
+}
+
+.light {
+    /* border: 1px solid #aaa; */
+    padding: 0.5em 0.8em;
+    background-color: lightgray;
+}
+
+.light.on {
+    background-color: yellowgreen;
+}
+

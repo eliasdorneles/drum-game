@@ -1,3 +1,4 @@
+// BufferLoader stolen from: http://www.html5rocks.com/en/tutorials/webaudio/intro/js/buffer-loader.js
 function BufferLoader(context, urlList, callback) {
   this.context = context;
   this.urlList = urlList;
@@ -64,6 +65,22 @@ function Game($) {
                 },
             ]
         },
+        {
+            "name": "On the up",
+            "bpm": 240,
+            "pattern": [
+                {
+                "name": "Kick",
+                "file": "kick.wav",
+                "steps": [1,0,0,1,1,0,0,0],
+                },
+                {
+                    "name": "Snare",
+                    "file": "snare.wav",
+                    "steps": [0,0,1,0,0,0,1,0],
+                },
+            ]
+        },
     ];
     var currentLevel = null;
     var isReady = false;
@@ -81,7 +98,7 @@ function Game($) {
                               numSteps + " != " + pattern.steps.length);
             }
         }
-        console.log("numSteps", numSteps);
+        console.log("Initialized level with numSteps =", numSteps);
         currentLevel.numSteps = numSteps;
     }
     initLevel(levels[0]);
@@ -97,7 +114,7 @@ function Game($) {
     });
     bufferLoader.load();
 
-    function playSound(buffer, time) {
+    function schedulePlaySound(buffer, time) {
         var source = audioContext.createBufferSource();
         source.buffer = buffer;
         source.connect(audioContext.destination);
@@ -108,16 +125,16 @@ function Game($) {
     }
 
     function createStepLights(level) {
-        var container = $('ul.step-lights');
+        var container = $('.step-lights');
         for (var i = 0; i < level.numSteps; i++) {
-            container.append('<li>o</li>');
+            container.append('<span class="light">&nbsp;</span>');
         }
-        return $('ul.step-lights > li');
+        return container.children();
     }
 
     var stepLights = createStepLights(currentLevel);
 
-    function updateLights(step, index) {
+    function updateLights(step) {
         stepLights.removeClass('on');
         $(stepLights[step]).addClass('on');
     }
@@ -138,7 +155,7 @@ function Game($) {
                     var durationSecs = currentBar * barDuration + step * beatDuration;
                     setTimeout(updateLights, durationSecs * 1000, step);
                     if (pattern.steps[step] == 1) {
-                        playSound(pattern.buffer, startTime + durationSecs);
+                        schedulePlaySound(pattern.buffer, startTime + durationSecs);
                     }
                 });
             }
