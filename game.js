@@ -104,7 +104,7 @@ function Game($) {
     initLevel(levels[0]);
 
     var audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
-    var urlList = currentLevel.pattern.map(function(f){ return "/samples/" + f.file});;
+    var urlList = currentLevel.pattern.map(function(f){ return "samples/" + f.file});;
 
     var bufferLoader = new BufferLoader(audioContext, urlList, function(bufferList){
         isReady = true;
