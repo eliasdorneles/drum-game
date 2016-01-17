@@ -65,17 +65,36 @@ function Game($) {
             ]
         },
     ];
-    var currentLevel = levels[0];
-    var audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
+    var currentLevel = null;
     var isReady = false;
+
+    function initLevel(level) {
+        currentLevel = $.extend({}, level);
+        var numSteps = 0;
+        for (var i = 0; i < level.pattern.length; i++) {
+            var pattern = level.pattern[i];
+            if (i == 0) {
+                numSteps = pattern.steps.length;
+            }
+            if (numSteps != pattern.steps.length) {
+                console.error("Unexpected difference of number of steps: " +
+                              numSteps + " != " + pattern.steps.length);
+            }
+        }
+        console.log("numSteps", numSteps);
+        currentLevel.numSteps = numSteps;
+    }
+    initLevel(levels[0]);
+
+    var audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
     var urlList = currentLevel.pattern.map(function(f){ return "/samples/" + f.file});;
+
     var bufferLoader = new BufferLoader(audioContext, urlList, function(bufferList){
         isReady = true;
         for (var i = 0; i < bufferList.length; i++) {
             currentLevel.pattern[i].buffer = bufferList[i];
         }
     });
-    console.log(bufferLoader);
     bufferLoader.load();
 
     function playSound(buffer, time) {
@@ -88,11 +107,19 @@ function Game($) {
         source.start(time);
     }
 
-    var stepLights = $('ul.step-lights > li');
+    function createStepLights(level) {
+        var container = $('ul.step-lights');
+        for (var i = 0; i < level.numSteps; i++) {
+            container.append('<li>o</li>');
+        }
+        return $('ul.step-lights > li');
+    }
 
-    function updateLights(position, index) {
+    var stepLights = createStepLights(currentLevel);
+
+    function updateLights(step, index) {
         stepLights.removeClass('on');
-        $(stepLights[position]).addClass('on');
+        $(stepLights[step]).addClass('on');
     }
 
     function playLoop(level) {
@@ -100,20 +127,18 @@ function Game($) {
             console.log('Not ready yet!');
             return;
         }
-        // TODO: assert that pattern[*].steps are all the same size
-        console.log('Ready!', level);
+
         var startTime = audioContext.currentTime;
         var repeat = 3;
-        var nSteps = level.pattern[0].steps.length;
         var beatDuration = 60 / level.bpm;
-        var barDuration = beatDuration * nSteps;
+        var barDuration = beatDuration * level.numSteps;
         for (var currentBar = 0; currentBar < repeat; currentBar++) {
-            for (var j = 0; j < nSteps; j++) {
-                level.pattern.forEach(function(pat){
-                    var durationSecs = currentBar * barDuration + j * beatDuration;
-                    setTimeout(updateLights, durationSecs * 1000, j);
-                    if (pat.steps[j] == 1) {
-                        playSound(pat.buffer, startTime + durationSecs);
+            for (var step = 0; step < level.numSteps; step++) {
+                level.pattern.forEach(function(pattern){
+                    var durationSecs = currentBar * barDuration + step * beatDuration;
+                    setTimeout(updateLights, durationSecs * 1000, step);
+                    if (pattern.steps[step] == 1) {
+                        playSound(pattern.buffer, startTime + durationSecs);
                     }
                 });
             }
