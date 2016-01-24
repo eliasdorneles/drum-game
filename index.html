@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Drum game</title>
+    <meta charset="UTF-8">
+    <title>Drum game</title>
     <link rel="stylesheet" href="normalize-3.0.2.css">
     <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width">
 </head>
 <body>
     <section class="game">
         <h1>Welcome to the Drum Game</h1>
-        <button class="play-btn">Play</button>
-        <div class="step-lights">
+        We'll play a drum pattern like this:
+
+        <button class="primary-btn play-btn">Play</button>
+        <div class="step-lights"></div>
+
+        <p>And you have to draw it like this:</p>
+        <div class="pattern-canvas"></div>
+
+        <div>
+          <button class="primary-btn start-btn">Start</button>
         </div>
     </section>
     <script src="jquery-2.2.0.min.js"></script>

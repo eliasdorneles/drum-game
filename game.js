@@ -1,3 +1,4 @@
+// vim: set sw=4:ts=4:
 // BufferLoader stolen from: http://www.html5rocks.com/en/tutorials/webaudio/intro/js/buffer-loader.js
 function BufferLoader(context, urlList, callback) {
   this.context = context;
@@ -51,17 +52,17 @@ function Game($) {
     var levels = [
         {
             "name": "Training",
-            "bpm": 120,
+            "bpm": 200,
             "pattern": [
-                {
-                "name": "Kick",
-                "file": "kick.wav",
-                "steps": [1,0,0,0],
-                },
                 {
                     "name": "Snare",
                     "file": "snare.wav",
-                    "steps": [0,0,1,0],
+                    "steps": [0,0,1,0,0,0,1,0],
+                },
+                {
+                    "name": "Kick",
+                    "file": "kick.wav",
+                    "steps": [1,0,0,1,1,0,0,0],
                 },
             ]
         },
@@ -127,12 +128,29 @@ function Game($) {
     function createStepLights(level) {
         var container = $('.step-lights');
         for (var i = 0; i < level.numSteps; i++) {
-            container.append('<span class="light">&nbsp;</span>');
+            container.append('<span class="light"></span>');
         }
         return container.children();
     }
 
+    function createPatternCanvas(level) {
+        var container = $('.pattern-canvas');
+        level.pattern.forEach(function(track){
+            var row = $('<div class="track"></div>')
+            row.append('<span class="track-name">' + track.name + '</span>');
+            track.steps.forEach(function(on){
+                var box = $('<span class="box"></span>');
+                if (on) {
+                    box.addClass('on');
+                }
+                row.append(box);
+            });
+            container.append(row);
+        });
+    }
+
     var stepLights = createStepLights(currentLevel);
+    var patternCanvas = createPatternCanvas(currentLevel);
 
     function updateLights(step) {
         stepLights.removeClass('on');
