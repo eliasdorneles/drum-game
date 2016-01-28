@@ -27,6 +27,8 @@ body {
     font-size: 1.5em;
     margin-left: 1.5em;
     margin-top: 1em;
+    background-color: #cc3137;
+    color: #eee;
 }
 
 .track {
