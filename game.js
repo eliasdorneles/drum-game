@@ -135,26 +135,38 @@ function Game($) {
 
     function createPatternCanvas(level) {
         var container = $('.pattern-canvas');
+        var patternBoxes = [];
         level.pattern.forEach(function(track){
             var row = $('<div class="track"></div>')
             row.append('<span class="track-name">' + track.name + '</span>');
             track.steps.forEach(function(on){
-                var box = $('<span class="box"></span>');
+                var box = $('<span class="box"><span></span></span>');
                 if (on) {
-                    box.addClass('on');
+                    box.addClass('tick');
                 }
                 row.append(box);
             });
+            patternBoxes.push(row.find('.box'))
             container.append(row);
+        });
+        return patternBoxes;
+    }
+
+    var patternBoxes = createPatternCanvas(currentLevel);
+    var playButton = $('.play-btn');
+
+    function updateLights(step) {
+        patternBoxes.forEach(function(boxes) {
+            boxes.removeClass('on');
+            if (step >= 0) {
+                $(boxes[step]).addClass('on');
+            }
         });
     }
 
-    var stepLights = createStepLights(currentLevel);
-    var patternCanvas = createPatternCanvas(currentLevel);
-
-    function updateLights(step) {
-        stepLights.removeClass('on');
-        $(stepLights[step]).addClass('on');
+    function stoppedPlaying() {
+        updateLights(-1);
+        playButton.removeAttr('disabled');
     }
 
     function playLoop(level) {
@@ -169,18 +181,20 @@ function Game($) {
         var barDuration = beatDuration * level.numSteps;
         for (var currentBar = 0; currentBar < repeat; currentBar++) {
             for (var step = 0; step < level.numSteps; step++) {
+                var durationSecs = currentBar * barDuration + step * beatDuration;
+                setTimeout(updateLights, durationSecs * 1000, step);
                 level.pattern.forEach(function(pattern){
-                    var durationSecs = currentBar * barDuration + step * beatDuration;
-                    setTimeout(updateLights, durationSecs * 1000, step);
                     if (pattern.steps[step] == 1) {
                         schedulePlaySound(pattern.buffer, startTime + durationSecs);
                     }
                 });
             }
         }
+        setTimeout(stoppedPlaying, barDuration * repeat * 1000);
     }
 
-    $('.play-btn').click(function(){
+    playButton.click(function(){
+        playButton.attr('disabled', 'disabled');
         playLoop(currentLevel);
     });
 };

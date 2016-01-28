@@ -9,25 +9,6 @@ body {
     margin: 0 auto;
 }
 
-.step-lights {
-    margin-top: 0.5em;
-}
-
-.light {
-    border: 1px solid #aaa;
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    margin: 0 0.5em;
-    background-color: lightgray;
-    border-radius: 50%;
-}
-
-.light.on {
-    border-color: darkgreen;
-    background-color: yellowgreen;
-}
-
 .primary-btn {
     border-radius: 0.4em;
     padding: 0.2em 0.8em;
@@ -38,9 +19,13 @@ body {
     font-weight: bold;
 }
 
+.primary-btn:disabled {
+    background-color: #ccc;
+}
+
 .start-btn {
     font-size: 1.5em;
-    margin-left: 3em;
+    margin-left: 1.5em;
     margin-top: 1em;
 }
 
@@ -67,6 +52,16 @@ body {
     display: inline-block;
 }
 
-.box.on {
+.box.tick {
     background-color: #cc3198;
+}
+
+.box span {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
+
+.box.on span {
+    background-color: rgba(255, 255, 0, 0.5)
 }
