@@ -66,6 +66,14 @@ body {
     display: inline-block;
 }
 
+.playing .track {
+    cursor: pointer;
+}
+
+.playing button {
+    margin-bottom: 20px;
+}
+
 .box.on span {
     background-color: rgba(255, 255, 0, 0.5)
 }

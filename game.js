@@ -188,15 +188,7 @@ Game.prototype.playCurrentLevelLoop = function(tickCallback, finishCallback) {
 
 
 function App($) {
-    function createStepLights(level) {
-        var container = $('.step-lights');
-        for (var i = 0; i < level.amountOfSteps; i++) {
-            container.append('<span class="light"></span>');
-        }
-        return container.children();
-    }
-
-    function createPatternCanvas(level, showPattern) {
+    function displayPatternCanvas(level, demo) {
         var container = $('.pattern-canvas');
         container.html('');
         var patternBoxes = [];
@@ -205,7 +197,7 @@ function App($) {
             row.append('<span class="track-name">' + track.name + '</span>');
             track.steps.forEach(function(on){
                 var box = $('<span class="box"><span></span></span>');
-                if (on && showPattern) {
+                if (on && demo) {
                     box.addClass('tick');
                 }
                 row.append(box);
@@ -227,24 +219,46 @@ function App($) {
 
     function stoppedPlaying() {
         highlightPatternAtStep(-1);
-        playButton.removeAttr('disabled');
+        $('.play-btn').removeAttr('disabled');
     }
 
     var patternBoxes = null;
 
     var game = new Game();
     game.load(function(){
-        patternBoxes = createPatternCanvas(game.currentLevel, true);
+        patternBoxes = displayPatternCanvas(game.currentLevel, true);
     });
 
-    var playButton = $('.play-btn');
-    playButton.click(function(){
+    $(document).on('click', '.play-btn', function(){
         if (game.isReady()) {
-            playButton.attr('disabled', 'disabled');
+            $(this).attr('disabled', 'disabled');
             game.playCurrentLevelLoop(
                 highlightPatternAtStep,
                 stoppedPlaying
             );
+        } else {
+            console.log('Not ready yet!');
+        }
+    });
+
+    function startGame() {
+        game.nextLevel();
+
+        var $board = $('.board')
+        $board.addClass('playing');
+        $board.html('');
+        $board.append($('<h2>' + game.currentLevel.name + '</h2>'));
+        $board.append($('<button class="primary-btn play-btn">Play pattern</button>'));
+        $board.append($('<div class="pattern-canvas"></div>'));
+
+        patternBoxes = displayPatternCanvas(game.currentLevel, false);
+        $('.play-btn').click();
+    }
+
+    $('.start-btn').click(function(){
+        if (game.isReady()) {
+            startGame();
+            $(this).remove();
         } else {
             console.log('Not ready yet!');
         }
