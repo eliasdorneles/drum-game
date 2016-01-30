@@ -48,6 +48,47 @@ BufferLoader.prototype.load = function() {
 }
 
 
+function AudioLibrary(samples) {
+    this.samples = samples;
+    this.audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
+}
+
+AudioLibrary.prototype.getCurrentTime = function() {
+    return this.audioContext.currentTime;
+}
+
+AudioLibrary.prototype.init = function(callback) {
+    var urls = this.samples.map(function(f){ return "samples/" + f.file});
+    var parent = this;
+    var bufferLoader = new BufferLoader(this.audioContext, urls, function(buffers){
+        for (var i = 0; i < buffers.length; i++) {
+            parent.samples[i].buffer = buffers[i];
+        }
+        callback();
+    });
+    bufferLoader.load();
+}
+
+AudioLibrary.prototype.getSampleBuffer = function (name) {
+    var sample = this.samples.find(function(s){ return s.name == name; });
+    if (!sample) {
+        throw Error("Sample not found: " + name);
+    }
+    return sample.buffer;
+}
+
+AudioLibrary.prototype.schedulePlaySample = function(name, time) {
+    var buffer = this.getSampleBuffer(name);
+    var source = this.audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.connect(this.audioContext.destination);
+    if (!source.start) {
+        source.start = source.noteOn;
+    }
+    source.start(time);
+}
+
+
 function Game($) {
     var samples = [
         {
@@ -109,15 +150,6 @@ function Game($) {
             ]
         },
     ];
-    function getSampleBuffer(name) {
-        var sample = samples.find(function(s){ return s.name == name; });
-        if (!sample) {
-            return console.error("Sample not found: " + name);
-        }
-        return sample.buffer;
-    }
-    var currentLevel = null;
-    var isReady = false;
 
     function initLevel(level) {
         currentLevel = $.extend({}, level);
@@ -134,28 +166,6 @@ function Game($) {
         }
         console.log("Initialized level with numSteps =", numSteps);
         currentLevel.numSteps = numSteps;
-    }
-    initLevel(levels[0]);
-
-    var audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
-    var urlList = samples.map(function(f){ return "samples/" + f.file});
-
-    var bufferLoader = new BufferLoader(audioContext, urlList, function(bufferList){
-        isReady = true;
-        for (var i = 0; i < bufferList.length; i++) {
-            samples[i].buffer = bufferList[i];
-        }
-    });
-    bufferLoader.load();
-
-    function schedulePlaySound(buffer, time) {
-        var source = audioContext.createBufferSource();
-        source.buffer = buffer;
-        source.connect(audioContext.destination);
-        if (!source.start) {
-            source.start = source.noteOn;
-        }
-        source.start(time);
     }
 
     function createStepLights(level) {
@@ -185,9 +195,6 @@ function Game($) {
         return patternBoxes;
     }
 
-    var patternBoxes = createPatternCanvas(currentLevel, true);
-    var playButton = $('.play-btn');
-
     function updateLights(step) {
         patternBoxes.forEach(function(boxes) {
             boxes.removeClass('on');
@@ -208,7 +215,7 @@ function Game($) {
             return;
         }
 
-        var startTime = audioContext.currentTime;
+        var startTime = audioLibrary.getCurrentTime();
         var repeat = 3;
         var beatDuration = 60 / level.bpm;
         var barDuration = beatDuration * level.numSteps;
@@ -218,8 +225,8 @@ function Game($) {
                 setTimeout(updateLights, durationSecs * 1000, step);
                 level.pattern.forEach(function(pattern){
                     if (pattern.steps[step] == 1) {
-                        var buffer = getSampleBuffer(pattern.name);
-                        schedulePlaySound(buffer, startTime + durationSecs);
+                        audioLibrary.schedulePlaySample(pattern.name,
+                                                        startTime + durationSecs);
                     }
                 });
             }
@@ -227,9 +234,23 @@ function Game($) {
         setTimeout(stoppedPlaying, barDuration * repeat * 1000);
     }
 
+    var currentLevel = null;
+    var isReady = false;
+    var audioLibrary = new AudioLibrary(samples);
+    audioLibrary.init(function(){
+        isReady = true;
+    });
+    initLevel(levels[0]);
+    var patternBoxes = createPatternCanvas(currentLevel, true);
+    var playButton = $('.play-btn');
+
     playButton.click(function(){
-        playButton.attr('disabled', 'disabled');
-        playLoop(currentLevel);
+        if (isReady) {
+            playButton.attr('disabled', 'disabled');
+            playLoop(currentLevel);
+        } else {
+            console.log('Not ready yet!');
+        }
     });
 };
 
