@@ -50,7 +50,7 @@ BufferLoader.prototype.load = function() {
 
 function AudioLibrary(samples) {
     this.samples = samples;
-    this.isReady = false;
+    this.ready = false;
     this.audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
 
     var urls = this.samples.map(function(f){ return "samples/" + f.file});
@@ -59,7 +59,7 @@ function AudioLibrary(samples) {
         for (var i = 0; i < buffers.length; i++) {
             self.samples[i].buffer = buffers[i];
         }
-        self.isReady = true;
+        self.ready = true;
     });
     bufferLoader.load();
 }
@@ -91,6 +91,19 @@ function Game() {
     this.levels = [];
     this.idxCurrentLevel = 0;
     this.currentLevel = {};
+    this.audioLibrary = new AudioLibrary([
+        {"name": "Snare", "file": "snare.wav"},
+        {"name": "Kick", "file": "kick.wav"},
+        {"file": "hihat_open.wav", "name": "Open Hi-Hat"},
+        {"file": "hihat_closed.wav", "name": "Closed Hi-Hat"},
+        {"file": "crash.wav", "name": "Crash"},
+        {"file": "cowbell.wav", "name": "Cowbell"},
+        {"file": "stick.wav", "name": "Stick"},
+    ]);
+}
+
+Game.prototype.isReady = function() {
+    return this.audioLibrary.ready;
 }
 
 Game.prototype.nextLevel = function() {
@@ -142,68 +155,39 @@ Game.prototype.load = function(callback) {
   request.send();
 }
 
-
-function App($) {
-    var samples = [
-        {
-            "name": "Snare",
-            "file": "snare.wav",
-        },
-        {
-            "name": "Kick",
-            "file": "kick.wav",
-        },
-        {
-            "file": "hihat_open.wav",
-            "name": "Open Hi-Hat",
-        },
-        {
-            "file": "hihat_closed.wav",
-            "name": "Closed Hi-Hat",
-        },
-        {
-            "file": "crash.wav",
-            "name": "Crash",
-        },
-        {
-            "file": "cowbell.wav",
-            "name": "Cowbell",
-        },
-        {
-            "file": "stick.wav",
-            "name": "Stick",
-        },
-    ];
-
+Game.prototype.playCurrentLevelLoop = function(tickCallback, finishCallback) {
     /*
-     * Play drump loop for a given level, calling tickCallback for every
+     * Play drump loop for the current level, calling tickCallback for every
      * pattern step along the way, and finishCallback when it's done playing.
      */
-    function playLevelDrumLoop(level, audioLibrary, tickCallback, finishCallback) {
-        if (!audioLibrary.isReady) {
-            console.log('Not ready yet!');
-            return;
-        }
-
-        var startTime = audioLibrary.getCurrentTime();
-        var repeat = 3;
-        var beatDuration = 60 / level.bpm;
-        var barDuration = beatDuration * level.amountOfSteps;
-        for (var currentBar = 0; currentBar < repeat; currentBar++) {
-            for (var step = 0; step < level.amountOfSteps; step++) {
-                var durationSecs = currentBar * barDuration + step * beatDuration;
-                setTimeout(tickCallback, durationSecs * 1000, step);
-                level.pattern.forEach(function(pattern){
-                    if (pattern.steps[step] == 1) {
-                        audioLibrary.playSampleAt(pattern.name,
-                                                  0.05 + startTime + durationSecs);
-                    }
-                });
-            }
-        }
-        setTimeout(finishCallback, barDuration * repeat * 1000);
+    if (!this.isReady()) {
+        console.log('Not ready yet!');
+        return;
     }
 
+    var level = this.currentLevel;
+    var startTime = this.audioLibrary.getCurrentTime();
+    var repeat = 3;
+    var beatDuration = 60 / level.bpm;
+    var barDuration = beatDuration * level.amountOfSteps;
+    var self = this;
+    for (var currentBar = 0; currentBar < repeat; currentBar++) {
+        for (var step = 0; step < level.amountOfSteps; step++) {
+            var durationSecs = currentBar * barDuration + step * beatDuration;
+            setTimeout(tickCallback, durationSecs * 1000, step);
+            level.pattern.forEach(function(pattern){
+                if (pattern.steps[step] == 1) {
+                    self.audioLibrary.playSampleAt(pattern.name,
+                                              0.05 + startTime + durationSecs);
+                }
+            });
+        }
+    }
+    setTimeout(finishCallback, barDuration * repeat * 1000);
+}
+
+
+function App($) {
     function createStepLights(level) {
         var container = $('.step-lights');
         for (var i = 0; i < level.amountOfSteps; i++) {
@@ -247,7 +231,6 @@ function App($) {
     }
 
     var patternBoxes = null;
-    var audioLibrary = new AudioLibrary(samples);
 
     var game = new Game();
     game.load(function(){
@@ -256,11 +239,9 @@ function App($) {
 
     var playButton = $('.play-btn');
     playButton.click(function(){
-        if (audioLibrary.isReady) {
+        if (game.isReady()) {
             playButton.attr('disabled', 'disabled');
-            playLevelDrumLoop(
-                game.currentLevel,
-                audioLibrary,
+            game.playCurrentLevelLoop(
                 highlightPatternAtStep,
                 stoppedPlaying
             );
