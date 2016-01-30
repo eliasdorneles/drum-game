@@ -119,7 +119,7 @@ function Game($) {
             "name": "Stick",
         },
     ];
-    var levels = [
+    var availableLevels = [
         {
             "name": "Training",
             "bpm": 200,
@@ -163,9 +163,9 @@ function Game($) {
         var startTime = audioLibrary.getCurrentTime();
         var repeat = 3;
         var beatDuration = 60 / level.bpm;
-        var barDuration = beatDuration * level.numSteps;
+        var barDuration = beatDuration * level.amountOfSteps;
         for (var currentBar = 0; currentBar < repeat; currentBar++) {
-            for (var step = 0; step < level.numSteps; step++) {
+            for (var step = 0; step < level.amountOfSteps; step++) {
                 var durationSecs = currentBar * barDuration + step * beatDuration;
                 setTimeout(tickCallback, durationSecs * 1000, step);
                 level.pattern.forEach(function(pattern){
@@ -181,7 +181,7 @@ function Game($) {
 
     function createStepLights(level) {
         var container = $('.step-lights');
-        for (var i = 0; i < level.numSteps; i++) {
+        for (var i = 0; i < level.amountOfSteps; i++) {
             container.append('<span class="light"></span>');
         }
         return container.children();
@@ -206,7 +206,28 @@ function Game($) {
         return patternBoxes;
     }
 
-    function updateLights(step) {
+    function createLevel(level) {
+        var level = $.extend({}, level);
+        var amountOfSteps = 0;
+        if (!level.pattern) {
+            throw Error("Level has no pattern configured");
+        }
+        for (var i = 0; i < level.pattern.length; i++) {
+            var pattern = level.pattern[i];
+            if (i == 0) {
+                amountOfSteps = pattern.steps.length;
+            }
+            if (amountOfSteps != pattern.steps.length) {
+                console.error("Unexpected difference of number of steps: " +
+                              amountOfSteps + " != " + pattern.steps.length);
+            }
+        }
+        console.log("Initialized level with amountOfSteps =", amountOfSteps);
+        level.amountOfSteps = amountOfSteps;
+        return level;
+    }
+
+    function highlightPatternAtStep(step) {
         patternBoxes.forEach(function(boxes) {
             boxes.removeClass('on');
             if (step >= 0) {
@@ -216,41 +237,23 @@ function Game($) {
     }
 
     function stoppedPlaying() {
-        updateLights(-1);
+        highlightPatternAtStep(-1);
         playButton.removeAttr('disabled');
     }
 
-    function initLevel(level) {
-        currentLevel = $.extend({}, level);
-        var numSteps = 0;
-        for (var i = 0; i < level.pattern.length; i++) {
-            var pattern = level.pattern[i];
-            if (i == 0) {
-                numSteps = pattern.steps.length;
-            }
-            if (numSteps != pattern.steps.length) {
-                console.error("Unexpected difference of number of steps: " +
-                              numSteps + " != " + pattern.steps.length);
-            }
-        }
-        console.log("Initialized level with numSteps =", numSteps);
-        currentLevel.numSteps = numSteps;
-    }
-
-    var playButton = $('.play-btn');
-    var currentLevel = null;
-    initLevel(levels[0]);
+    var currentLevel = createLevel(availableLevels[0]);
+    var patternBoxes = createPatternCanvas(currentLevel, true);
 
     var audioLibrary = new AudioLibrary(samples);
 
-    var patternBoxes = createPatternCanvas(currentLevel, true);
+    var playButton = $('.play-btn');
     playButton.click(function(){
         if (audioLibrary.isReady) {
             playButton.attr('disabled', 'disabled');
             playLevelDrumLoop(
                 currentLevel,
                 audioLibrary,
-                updateLights,
+                highlightPatternAtStep,
                 stoppedPlaying
             );
         } else {
