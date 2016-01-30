@@ -50,23 +50,22 @@ BufferLoader.prototype.load = function() {
 
 function AudioLibrary(samples) {
     this.samples = samples;
+    this.isReady = false;
     this.audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
-}
 
-AudioLibrary.prototype.getCurrentTime = function() {
-    return this.audioContext.currentTime;
-}
-
-AudioLibrary.prototype.init = function(callback) {
     var urls = this.samples.map(function(f){ return "samples/" + f.file});
     var parent = this;
     var bufferLoader = new BufferLoader(this.audioContext, urls, function(buffers){
         for (var i = 0; i < buffers.length; i++) {
             parent.samples[i].buffer = buffers[i];
         }
-        callback();
+        parent.isReady = true;
     });
     bufferLoader.load();
+}
+
+AudioLibrary.prototype.getCurrentTime = function() {
+    return this.audioContext.currentTime;
 }
 
 AudioLibrary.prototype.getSampleBuffer = function (name) {
@@ -77,7 +76,7 @@ AudioLibrary.prototype.getSampleBuffer = function (name) {
     return sample.buffer;
 }
 
-AudioLibrary.prototype.schedulePlaySample = function(name, time) {
+AudioLibrary.prototype.playSampleAt = function(name, time) {
     var buffer = this.getSampleBuffer(name);
     var source = this.audioContext.createBufferSource();
     source.buffer = buffer;
@@ -151,21 +150,33 @@ function Game($) {
         },
     ];
 
-    function initLevel(level) {
-        currentLevel = $.extend({}, level);
-        var numSteps = 0;
-        for (var i = 0; i < level.pattern.length; i++) {
-            var pattern = level.pattern[i];
-            if (i == 0) {
-                numSteps = pattern.steps.length;
-            }
-            if (numSteps != pattern.steps.length) {
-                console.error("Unexpected difference of number of steps: " +
-                              numSteps + " != " + pattern.steps.length);
+    /*
+     * Play drump loop for a given level, calling tickCallback for every
+     * pattern step along the way, and finishCallback when it's done playing.
+     */
+    function playLevelDrumLoop(level, audioLibrary, tickCallback, finishCallback) {
+        if (!audioLibrary.isReady) {
+            console.log('Not ready yet!');
+            return;
+        }
+
+        var startTime = audioLibrary.getCurrentTime();
+        var repeat = 3;
+        var beatDuration = 60 / level.bpm;
+        var barDuration = beatDuration * level.numSteps;
+        for (var currentBar = 0; currentBar < repeat; currentBar++) {
+            for (var step = 0; step < level.numSteps; step++) {
+                var durationSecs = currentBar * barDuration + step * beatDuration;
+                setTimeout(tickCallback, durationSecs * 1000, step);
+                level.pattern.forEach(function(pattern){
+                    if (pattern.steps[step] == 1) {
+                        audioLibrary.playSampleAt(pattern.name,
+                                                  startTime + durationSecs);
+                    }
+                });
             }
         }
-        console.log("Initialized level with numSteps =", numSteps);
-        currentLevel.numSteps = numSteps;
+        setTimeout(finishCallback, barDuration * repeat * 1000);
     }
 
     function createStepLights(level) {
@@ -209,45 +220,39 @@ function Game($) {
         playButton.removeAttr('disabled');
     }
 
-    function playLoop(level) {
-        if (!isReady) {
-            console.log('Not ready yet!');
-            return;
-        }
-
-        var startTime = audioLibrary.getCurrentTime();
-        var repeat = 3;
-        var beatDuration = 60 / level.bpm;
-        var barDuration = beatDuration * level.numSteps;
-        for (var currentBar = 0; currentBar < repeat; currentBar++) {
-            for (var step = 0; step < level.numSteps; step++) {
-                var durationSecs = currentBar * barDuration + step * beatDuration;
-                setTimeout(updateLights, durationSecs * 1000, step);
-                level.pattern.forEach(function(pattern){
-                    if (pattern.steps[step] == 1) {
-                        audioLibrary.schedulePlaySample(pattern.name,
-                                                        startTime + durationSecs);
-                    }
-                });
+    function initLevel(level) {
+        currentLevel = $.extend({}, level);
+        var numSteps = 0;
+        for (var i = 0; i < level.pattern.length; i++) {
+            var pattern = level.pattern[i];
+            if (i == 0) {
+                numSteps = pattern.steps.length;
+            }
+            if (numSteps != pattern.steps.length) {
+                console.error("Unexpected difference of number of steps: " +
+                              numSteps + " != " + pattern.steps.length);
             }
         }
-        setTimeout(stoppedPlaying, barDuration * repeat * 1000);
+        console.log("Initialized level with numSteps =", numSteps);
+        currentLevel.numSteps = numSteps;
     }
 
-    var currentLevel = null;
-    var isReady = false;
-    var audioLibrary = new AudioLibrary(samples);
-    audioLibrary.init(function(){
-        isReady = true;
-    });
-    initLevel(levels[0]);
-    var patternBoxes = createPatternCanvas(currentLevel, true);
     var playButton = $('.play-btn');
+    var currentLevel = null;
+    initLevel(levels[0]);
 
+    var audioLibrary = new AudioLibrary(samples);
+
+    var patternBoxes = createPatternCanvas(currentLevel, true);
     playButton.click(function(){
-        if (isReady) {
+        if (audioLibrary.isReady) {
             playButton.attr('disabled', 'disabled');
-            playLoop(currentLevel);
+            playLevelDrumLoop(
+                currentLevel,
+                audioLibrary,
+                updateLights,
+                stoppedPlaying
+            );
         } else {
             console.log('Not ready yet!');
         }
