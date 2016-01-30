@@ -36,7 +36,7 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
   }
 
   request.onerror = function() {
-    alert('BufferLoader: XHR error');
+    throw Error('BufferLoader: XHR error');
   }
 
   request.send();
@@ -54,12 +54,12 @@ function AudioLibrary(samples) {
     this.audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
 
     var urls = this.samples.map(function(f){ return "samples/" + f.file});
-    var parent = this;
+    var self = this;
     var bufferLoader = new BufferLoader(this.audioContext, urls, function(buffers){
         for (var i = 0; i < buffers.length; i++) {
-            parent.samples[i].buffer = buffers[i];
+            self.samples[i].buffer = buffers[i];
         }
-        parent.isReady = true;
+        self.isReady = true;
     });
     bufferLoader.load();
 }
@@ -87,8 +87,63 @@ AudioLibrary.prototype.playSampleAt = function(name, time) {
     source.start(time);
 }
 
+function Game() {
+    this.levels = [];
+    this.idxCurrentLevel = 0;
+    this.currentLevel = {};
+}
 
-function Game($) {
+Game.prototype.nextLevel = function() {
+    var lastLevel = this.levels.length - 1;
+    if (this.idxCurrentLevel < lastLevel) {
+        this.loadLevel(++this.idxCurrentLevel);
+    } else {
+        console.log('Finished all levels, congrats!');
+    }
+}
+
+Game.prototype.loadLevel = function (idxLevel) {
+    this.idxCurrentLevel = idxLevel || 0;
+    this.currentLevel = $.extend({}, this.levels[this.idxCurrentLevel]);
+
+    var amountOfSteps = 0;
+    if (!this.currentLevel.pattern) {
+        throw Error("Level has no pattern configured");
+    }
+    for (var i = 0; i < this.currentLevel.pattern.length; i++) {
+        var pattern = this.currentLevel.pattern[i];
+        if (i == 0) {
+            amountOfSteps = pattern.steps.length;
+        }
+        if (amountOfSteps != pattern.steps.length) {
+            console.error("Unexpected difference of number of steps: " +
+                          amountOfSteps + " != " + pattern.steps.length);
+        }
+    }
+    this.currentLevel.amountOfSteps = amountOfSteps;
+    console.log("Initialized level with amountOfSteps =", amountOfSteps);
+}
+
+Game.prototype.load = function(callback) {
+  var request = new XMLHttpRequest();
+  request.open("GET", "/levels.json");
+  var game = this;
+
+  request.onload = function() {
+      game.levels = JSON.parse(request.response)
+      game.loadLevel(0);
+      callback();
+  }
+
+  request.onerror = function() {
+    throw Error('BufferLoader: XHR error');
+  }
+
+  request.send();
+}
+
+
+function App($) {
     var samples = [
         {
             "name": "Snare",
@@ -119,36 +174,6 @@ function Game($) {
             "name": "Stick",
         },
     ];
-    var availableLevels = [
-        {
-            "name": "Training",
-            "bpm": 200,
-            "pattern": [
-                {
-                    "name": "Snare",
-                    "steps": [0,0,1,0,0,0,1,0],
-                },
-                {
-                    "name": "Kick",
-                    "steps": [1,0,0,1,1,0,0,0],
-                },
-            ]
-        },
-        {
-            "name": "On the up",
-            "bpm": 240,
-            "pattern": [
-                {
-                "name": "Kick",
-                "steps": [1,0,0,1,1,0,0,0],
-                },
-                {
-                    "name": "Snare",
-                    "steps": [0,0,1,0,0,0,1,0],
-                },
-            ]
-        },
-    ];
 
     /*
      * Play drump loop for a given level, calling tickCallback for every
@@ -171,7 +196,7 @@ function Game($) {
                 level.pattern.forEach(function(pattern){
                     if (pattern.steps[step] == 1) {
                         audioLibrary.playSampleAt(pattern.name,
-                                                  startTime + durationSecs);
+                                                  0.05 + startTime + durationSecs);
                     }
                 });
             }
@@ -189,6 +214,7 @@ function Game($) {
 
     function createPatternCanvas(level, showPattern) {
         var container = $('.pattern-canvas');
+        container.html('');
         var patternBoxes = [];
         level.pattern.forEach(function(track){
             var row = $('<div class="track"></div>')
@@ -206,27 +232,6 @@ function Game($) {
         return patternBoxes;
     }
 
-    function createLevel(level) {
-        var level = $.extend({}, level);
-        var amountOfSteps = 0;
-        if (!level.pattern) {
-            throw Error("Level has no pattern configured");
-        }
-        for (var i = 0; i < level.pattern.length; i++) {
-            var pattern = level.pattern[i];
-            if (i == 0) {
-                amountOfSteps = pattern.steps.length;
-            }
-            if (amountOfSteps != pattern.steps.length) {
-                console.error("Unexpected difference of number of steps: " +
-                              amountOfSteps + " != " + pattern.steps.length);
-            }
-        }
-        console.log("Initialized level with amountOfSteps =", amountOfSteps);
-        level.amountOfSteps = amountOfSteps;
-        return level;
-    }
-
     function highlightPatternAtStep(step) {
         patternBoxes.forEach(function(boxes) {
             boxes.removeClass('on');
@@ -241,17 +246,20 @@ function Game($) {
         playButton.removeAttr('disabled');
     }
 
-    var currentLevel = createLevel(availableLevels[0]);
-    var patternBoxes = createPatternCanvas(currentLevel, true);
-
+    var patternBoxes = null;
     var audioLibrary = new AudioLibrary(samples);
+
+    var game = new Game();
+    game.load(function(){
+        patternBoxes = createPatternCanvas(game.currentLevel, true);
+    });
 
     var playButton = $('.play-btn');
     playButton.click(function(){
         if (audioLibrary.isReady) {
             playButton.attr('disabled', 'disabled');
             playLevelDrumLoop(
-                currentLevel,
+                game.currentLevel,
                 audioLibrary,
                 highlightPatternAtStep,
                 stoppedPlaying
@@ -262,4 +270,4 @@ function Game($) {
     });
 };
 
-Game(jQuery);
+App(jQuery);

@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Training",
+        "bpm": 200,
+        "pattern": [
+            {
+                "name": "Snare",
+                "steps": [0,0,1,0,0,0,1,0]
+            },
+            {
+                "name": "Kick",
+                "steps": [1,0,0,1,1,0,0,0]
+            }
+        ]
+    },
+    {
+        "name": "A Waltz",
+        "bpm": 180,
+        "pattern": [
+            {
+                "name": "Snare",
+                "steps": [0,1,1,0,1,1]
+            },
+            {
+                "name": "Kick",
+                "steps": [1,0,0,1,0,0]
+            }
+        ]
+    },
+    {
+        "name": "Metal",
+        "bpm": 400,
+        "pattern": [
+            {
+                "name": "Snare",
+                "steps": [0,0,1,1,0,0,1,0]
+            },
+            {
+            "name": "Kick",
+            "steps": [1,1,1,1,1,1,1,1]
+            }
+        ]
+    },
+    {
+        "name": "On the up",
+        "bpm": 240,
+        "pattern": [
+            {
+                "name": "Snare",
+                "steps": [0,0,1,0,0,0,1,0]
+            },
+            {
+            "name": "Kick",
+            "steps": [1,0,0,1,0,1,0,0]
+            }
+        ]
+    }
+]
