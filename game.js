@@ -49,6 +49,36 @@ BufferLoader.prototype.load = function() {
 
 
 function Game($) {
+    var samples = [
+        {
+            "name": "Snare",
+            "file": "snare.wav",
+        },
+        {
+            "name": "Kick",
+            "file": "kick.wav",
+        },
+        {
+            "file": "hihat_open.wav",
+            "name": "Open Hi-Hat",
+        },
+        {
+            "file": "hihat_closed.wav",
+            "name": "Closed Hi-Hat",
+        },
+        {
+            "file": "crash.wav",
+            "name": "Crash",
+        },
+        {
+            "file": "cowbell.wav",
+            "name": "Cowbell",
+        },
+        {
+            "file": "stick.wav",
+            "name": "Stick",
+        },
+    ];
     var levels = [
         {
             "name": "Training",
@@ -56,12 +86,10 @@ function Game($) {
             "pattern": [
                 {
                     "name": "Snare",
-                    "file": "snare.wav",
                     "steps": [0,0,1,0,0,0,1,0],
                 },
                 {
                     "name": "Kick",
-                    "file": "kick.wav",
                     "steps": [1,0,0,1,1,0,0,0],
                 },
             ]
@@ -72,17 +100,22 @@ function Game($) {
             "pattern": [
                 {
                 "name": "Kick",
-                "file": "kick.wav",
                 "steps": [1,0,0,1,1,0,0,0],
                 },
                 {
                     "name": "Snare",
-                    "file": "snare.wav",
                     "steps": [0,0,1,0,0,0,1,0],
                 },
             ]
         },
     ];
+    function getSampleBuffer(name) {
+        var sample = samples.find(function(s){ return s.name == name; });
+        if (!sample) {
+            return console.error("Sample not found: " + name);
+        }
+        return sample.buffer;
+    }
     var currentLevel = null;
     var isReady = false;
 
@@ -105,12 +138,12 @@ function Game($) {
     initLevel(levels[0]);
 
     var audioContext = new AudioContext() || WebkitAudioContext() || MozAudioContext();
-    var urlList = currentLevel.pattern.map(function(f){ return "samples/" + f.file});;
+    var urlList = samples.map(function(f){ return "samples/" + f.file});
 
     var bufferLoader = new BufferLoader(audioContext, urlList, function(bufferList){
         isReady = true;
         for (var i = 0; i < bufferList.length; i++) {
-            currentLevel.pattern[i].buffer = bufferList[i];
+            samples[i].buffer = bufferList[i];
         }
     });
     bufferLoader.load();
@@ -133,7 +166,7 @@ function Game($) {
         return container.children();
     }
 
-    function createPatternCanvas(level) {
+    function createPatternCanvas(level, showPattern) {
         var container = $('.pattern-canvas');
         var patternBoxes = [];
         level.pattern.forEach(function(track){
@@ -141,7 +174,7 @@ function Game($) {
             row.append('<span class="track-name">' + track.name + '</span>');
             track.steps.forEach(function(on){
                 var box = $('<span class="box"><span></span></span>');
-                if (on) {
+                if (on && showPattern) {
                     box.addClass('tick');
                 }
                 row.append(box);
@@ -152,7 +185,7 @@ function Game($) {
         return patternBoxes;
     }
 
-    var patternBoxes = createPatternCanvas(currentLevel);
+    var patternBoxes = createPatternCanvas(currentLevel, true);
     var playButton = $('.play-btn');
 
     function updateLights(step) {
@@ -185,7 +218,8 @@ function Game($) {
                 setTimeout(updateLights, durationSecs * 1000, step);
                 level.pattern.forEach(function(pattern){
                     if (pattern.steps[step] == 1) {
-                        schedulePlaySound(pattern.buffer, startTime + durationSecs);
+                        var buffer = getSampleBuffer(pattern.name);
+                        schedulePlaySound(buffer, startTime + durationSecs);
                     }
                 });
             }
