@@ -139,7 +139,7 @@ Game.prototype.loadLevel = function (idxLevel) {
 
 Game.prototype.load = function(callback) {
   var request = new XMLHttpRequest();
-  request.open("GET", "/levels.json");
+  request.open("GET", "./levels.json");
   var game = this;
 
   request.onload = function() {
