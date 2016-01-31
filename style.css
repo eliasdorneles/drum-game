@@ -47,6 +47,7 @@ body {
     font-weight: bold;
     font-size: 0.9em;
     text-shadow: 0.03em 0.03em 0.03em white;
+    pointer-events: none;
 }
 
 .box {

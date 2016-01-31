@@ -253,6 +253,12 @@ function App($) {
 
         patternBoxes = displayPatternCanvas(game.currentLevel, false);
         $('.play-btn').click();
+
+        $board.on('click', '.box', function(){
+            var $box = $(this);
+            $box.toggleClass('tick');
+            console.log('enabled', $box.hasClass('tick'));
+        })
     }
 
     $('.start-btn').click(function(){
