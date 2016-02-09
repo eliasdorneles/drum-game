@@ -37,6 +37,14 @@ h1 a:visited {
     color: #eee;
 }
 
+.next-level-btn {
+    font-size: 1.2em;
+    margin-left: 1.2em;
+    margin-top: 1em;
+    background-color: #cc3137;
+    color: #eee;
+}
+
 .track {
     margin: 0;
     padding: 0;
