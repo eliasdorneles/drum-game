@@ -76,7 +76,7 @@ AudioLibrary.prototype.getSampleBuffer = function (name) {
     return sample.buffer;
 }
 
-AudioLibrary.prototype.playSampleAt = function(name, time) {
+AudioLibrary.prototype.playSampleAfter = function(name, time) {
     var buffer = this.getSampleBuffer(name);
     var source = this.audioContext.createBufferSource();
     source.buffer = buffer;
@@ -155,6 +155,18 @@ Game.prototype.load = function(callback) {
   request.send();
 }
 
+Game.prototype.playTrackSampleOnce = function(track) {
+    this.audioLibrary.playSampleAfter(track, 0);
+}
+
+Game.prototype.matchesCurrentLevelPattern = function(enteredPattern) {
+    var matches = this.currentLevel.pattern.map(function(patt){
+        var enteredSteps = enteredPattern[patt.name];
+        return JSON.stringify(enteredSteps) == JSON.stringify(patt.steps);
+    });
+    return matches.reduce(function(o, v){ return o && v; }, true);
+}
+
 Game.prototype.playCurrentLevelLoop = function(tickCallback, finishCallback) {
     /*
      * Play drump loop for the current level, calling tickCallback for every
@@ -177,7 +189,7 @@ Game.prototype.playCurrentLevelLoop = function(tickCallback, finishCallback) {
             setTimeout(tickCallback, durationSecs * 1000, step);
             level.pattern.forEach(function(pattern){
                 if (pattern.steps[step] == 1) {
-                    self.audioLibrary.playSampleAt(pattern.name,
+                    self.audioLibrary.playSampleAfter(pattern.name,
                                               0.05 + startTime + durationSecs);
                 }
             });
@@ -195,8 +207,11 @@ function App($) {
         level.pattern.forEach(function(track){
             var row = $('<div class="track"></div>')
             row.append('<span class="track-name">' + track.name + '</span>');
-            track.steps.forEach(function(on){
-                var box = $('<span class="box"><span></span></span>');
+            track.steps.forEach(function(on, index){
+                var box = $(
+                    '<span class="box" data-index="' + index + '"'
+                    + ' data-track="' + track.name + '"><span></span></span>'
+                );
                 if (on && demo) {
                     box.addClass('tick');
                 }
@@ -241,6 +256,28 @@ function App($) {
         }
     });
 
+    function toObject(tuples) {
+        if (!tuples) { return {}; }
+        return tuples.reduce(function(o, v, i){ o[v[0]] = v[1]; return o; }, {});
+    }
+
+    function getEnteredPattern() {
+        return toObject(patternBoxes.map(function($boxes){
+            var trackName = $($boxes[0]).data('track');
+            var pattern = Array.from($boxes.map(function(i, b){ return +$(b).hasClass('tick'); }));
+            return [trackName, pattern];
+        }));
+    }
+
+    function handleBoxClicked() {
+        var enteredPattern = getEnteredPattern();
+        if (game.matchesCurrentLevelPattern(enteredPattern)) {
+            console.log('yay, you win');
+        } else {
+            console.log('keep trying');
+        }
+    }
+
     function startGame() {
         game.nextLevel();
 
@@ -252,12 +289,12 @@ function App($) {
         $board.append($('<div class="pattern-canvas"></div>'));
 
         patternBoxes = displayPatternCanvas(game.currentLevel, false);
-        $('.play-btn').click();
 
         $board.on('click', '.box', function(){
-            var $box = $(this);
+            var $box = $(this), trackName = $box.data('track');
             $box.toggleClass('tick');
-            console.log('enabled', $box.hasClass('tick'));
+            game.playTrackSampleOnce(trackName);
+            handleBoxClicked();
         })
     }
 

@@ -4,6 +4,10 @@ body {
     background-color: #eee;
 }
 
+h1 a:visited {
+    color: #185d7f;
+}
+
 .game {
     max-width: 80%;
     margin: 0 auto;
