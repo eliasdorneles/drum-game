@@ -271,7 +271,7 @@ function App($) {
         var $board = $('.board.playing')
         if (game.matchesCurrentLevelPattern(enteredPattern)) {
             if (game.hasNextLevel()) {
-                startNextLevel();
+                setTimeout(startNextLevel, 200);
             } else {
                 var $board = $('.board');
                 $board.html('');
@@ -321,12 +321,6 @@ function App($) {
             $(this).remove();
         } else {
             console.log('Not ready yet!');
-        }
-    });
-
-    $(document).on('click', '.next-level-btn', function(){
-        if (game.hasNextLevel()) {
-            startNextLevel();
         }
     });
 
