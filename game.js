@@ -212,12 +212,13 @@ function App($) {
             var row = $('<div class="track"></div>')
             row.append('<span class="track-name">' + track.name + '</span>');
             track.steps.forEach(function(on, index){
-                var box = $(
-                    '<span class="box" data-index="' + index + '"'
-                    + ' data-track="' + track.name + '"><span></span></span>'
-                );
-                if (on && demo) {
-                    box.addClass('tick');
+                var box = $('<span class="box"><span></span></span>');
+                box.data('index', index);
+                box.data('track', track.name);
+                if (on) {
+                    box.addClass(demo ? 'tick' : '');
+                } else {
+                    box.addClass(demo ? '' : 'niet');
                 }
                 row.append(box);
             });
@@ -266,11 +267,13 @@ function App($) {
         var $board = $('.board.playing')
         if (game.matchesCurrentLevelPattern(enteredPattern)) {
             if (game.hasNextLevel()) {
-                $board.append($('<button class="primary-btn next-level-btn">Next level</button>'));
+                startNextLevel();
             } else {
                 var $board = $('.board');
+                $board.html('');
                 // TODO: show some animation here as a reward :)
                 $board.append($('<h2>Congrats, you won!</h2>'));
+                $board.append($('<a href="." class="primary-btn start-btn">Play again</a>'));
             }
         }
     }
@@ -281,7 +284,10 @@ function App($) {
         var $board = $('.board')
         $board.addClass('playing');
         $board.html('');
-        $board.append($('<h2>' + game.currentLevel.name + '</h2>'));
+        $board.append($('<h2 class="level-title">' + game.currentLevel.name + '</h2>'));
+        if (game.currentLevel.description) {
+            $board.append($('<p class="level-desc">' + game.currentLevel.description + '</p>'));
+        }
         $board.append($('<button class="primary-btn play-btn">Play pattern</button>'));
         $board.append($('<div class="pattern-canvas"></div>'));
 
