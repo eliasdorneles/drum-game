@@ -93,5 +93,19 @@ h1 a:visited {
 }
 
 .box.tick.niet span {
-    background-color: rgba(200, 200, 0, 0.5)
+    background-color: #ccb231;
+}
+
+.woo-hoo {
+    font-size: 2em;
+    color: #98cc31;
+    text-shadow: 0 0 5px currentColor,
+                 0 0 10px currentColor,
+                 0 0 15px currentColor,
+                 0 0 20px #354711,
+                 0 0 30px #354711,
+                 0 0 40px #354711,
+                 0 0 50px #354711,
+                 0 0 75px #354711;
+    letter-spacing: 5px;
 }

@@ -106,6 +106,10 @@ Game.prototype.isReady = function() {
     return this.audioLibrary.ready;
 }
 
+Game.prototype.isDemoLevel = function() {
+    return this.currentLevel.name == "Demo";
+}
+
 Game.prototype.nextLevel = function() {
     if (this.hasNextLevel()) {
         this.loadLevel(++this.idxCurrentLevel);
@@ -271,35 +275,44 @@ function App($) {
             } else {
                 var $board = $('.board');
                 $board.html('');
-                // TODO: show some animation here as a reward :)
-                $board.append($('<h2>Congrats, you won!</h2>'));
+                $board.append($('<h2 class="woo-hoo">Woo-hoo, you finished the game, congrats!</h2>'));
                 $board.append($('<a href="." class="primary-btn start-btn">Play again</a>'));
             }
         }
     }
 
     function startNextLevel() {
+        var firstLevel = game.isDemoLevel();
         game.nextLevel();
 
         var $board = $('.board')
         $board.addClass('playing');
-        $board.html('');
-        $board.append($('<h2 class="level-title">' + game.currentLevel.name + '</h2>'));
-        if (game.currentLevel.description) {
-            $board.append($('<p class="level-desc">' + game.currentLevel.description + '</p>'));
+        var delay = 1000;
+        if (firstLevel) {
+            delay = 0;
+        } else {
+            $board.html('<h2 class="woo-hoo">Yay!<br>Next level: ' + game.currentLevel.name + '<h2>');
         }
-        $board.append($('<button class="primary-btn play-btn">Play pattern</button>'));
-        $board.append($('<div class="pattern-canvas"></div>'));
 
-        patternBoxes = displayPatternCanvas(game.currentLevel, false);
+        setTimeout(function(){
+            $board.html('');
+            $board.append($('<h2 class="level-title">' + game.currentLevel.name + '</h2>'));
+            if (game.currentLevel.description) {
+                $board.append($('<p class="level-desc">' + game.currentLevel.description + '</p>'));
+            }
+            $board.append($('<button class="primary-btn play-btn">Play pattern</button>'));
+            $board.append($('<div class="pattern-canvas"></div>'));
 
-        $board.off('click', '.box');
-        $board.on('click', '.box', function(){
-            var $box = $(this), trackName = $box.data('track');
-            $box.toggleClass('tick');
-            game.playTrackSampleOnce(trackName);
-            handleBoxClicked();
-        });
+            patternBoxes = displayPatternCanvas(game.currentLevel, false);
+
+            $board.off('click', '.box');
+            $board.on('click', '.box', function(){
+                var $box = $(this), trackName = $box.data('track');
+                $box.toggleClass('tick');
+                game.playTrackSampleOnce(trackName);
+                handleBoxClicked();
+            });
+        }, delay);
     }
 
     $('.start-btn').click(function(){
