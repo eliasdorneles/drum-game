@@ -253,13 +253,13 @@ function App($) {
         patternBoxes = displayPatternCanvas(game.currentLevel, true);
     });
 
-    function toObject(tuples) {
+    function tuplesToObject(tuples) {
         if (!tuples) { return {}; }
         return tuples.reduce(function(o, v, i){ o[v[0]] = v[1]; return o; }, {});
     }
 
     function getEnteredPattern() {
-        return toObject(patternBoxes.map(function($boxes){
+        return tuplesToObject(patternBoxes.map(function($boxes){
             var trackName = $($boxes[0]).data('track');
             var pattern = Array.from($boxes.map(function(i, b){ return +$(b).hasClass('tick'); }));
             return [trackName, pattern];
@@ -271,12 +271,14 @@ function App($) {
         var $board = $('.board.playing')
         if (game.matchesCurrentLevelPattern(enteredPattern)) {
             if (game.hasNextLevel()) {
-                setTimeout(startNextLevel, 200);
+                var $board = $('.board');
+                $board.find('.next-level-btn').show();
+                $board.find('.level-title').prepend('Yay! You passed level: ')
             } else {
                 var $board = $('.board');
                 $board.html('');
                 $board.append($('<h2 class="woo-hoo">Woo-hoo, you finished the game, congrats!</h2>'));
-                $board.append($('<a href="." class="primary-btn start-btn">Play again</a>'));
+                $board.append($('<a href="." class="btn primary-btn start-btn">Play again</a>'));
             }
         }
     }
@@ -287,52 +289,51 @@ function App($) {
 
         var $board = $('.board')
         $board.addClass('playing');
-        var delay = 1000;
-        if (firstLevel) {
-            delay = 0;
-        } else {
-            $board.html('<h2 class="woo-hoo">Yay!<br>Next level: ' + game.currentLevel.name + '<h2>');
+
+        $board.html('');
+        $board.append($('<h2 class="level-title">' + game.currentLevel.name + '</h2>'));
+        if (game.currentLevel.description) {
+            $board.append($('<p class="level-desc">' + game.currentLevel.description + '</p>'));
         }
+        $board.append($('<div class="pattern-canvas"></div>'));
+        $board.append($('<button class="btn play-btn">Listen rhythm</button>'));
+        $board.append($('<button class="btn primary-btn next-level-btn">Next Level</button>'));
 
-        setTimeout(function(){
-            $board.html('');
-            $board.append($('<h2 class="level-title">' + game.currentLevel.name + '</h2>'));
-            if (game.currentLevel.description) {
-                $board.append($('<p class="level-desc">' + game.currentLevel.description + '</p>'));
-            }
-            $board.append($('<div class="pattern-canvas"></div>'));
-            $board.append($('<button class="primary-btn play-btn">Listen rhythm</button>'));
+        patternBoxes = displayPatternCanvas(game.currentLevel, false);
 
-            patternBoxes = displayPatternCanvas(game.currentLevel, false);
-
-            $board.off('click', '.box');
-            $board.on('click', '.box', function(){
-                var $box = $(this), trackName = $box.data('track');
-                $box.toggleClass('tick');
-                game.playTrackSampleOnce(trackName);
-                handleBoxClicked();
-            });
-        }, delay);
+        $board.find('.next-level-btn').hide();
+        $board.off('click', '.box');
+        $board.on('click', '.box', function(){
+            var $box = $(this), trackName = $box.data('track');
+            $box.toggleClass('tick');
+            game.playTrackSampleOnce(trackName);
+            handleBoxClicked();
+        });
     }
 
     $('.start-btn').click(function(){
-        if (game.isReady()) {
-            startNextLevel();
-            $(this).remove();
-        } else {
+        if (!game.isReady()) {
             console.log('Not ready yet!');
+            return;
         }
+        startNextLevel();
+        $(this).remove();
     });
 
     $(document).on('click', '.play-btn', function(){
-        if (game.isReady()) {
-            $(this).attr('disabled', 'disabled');
-            game.playCurrentLevelLoop(
-                highlightPatternAtStep,
-                stoppedPlaying
-            );
-        } else {
+        if (!game.isReady()) {
             console.log('Not ready yet!');
+            return;
+        }
+        $(this).attr('disabled', 'disabled');
+        game.playCurrentLevelLoop(
+            highlightPatternAtStep,
+            stoppedPlaying
+        );
+    });
+    $(document).on('click', '.next-level-btn', function(){
+        if (game.hasNextLevel()) {
+            startNextLevel();
         }
     });
 };

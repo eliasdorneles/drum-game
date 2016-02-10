@@ -1,7 +1,6 @@
 [X] change current level order, move metal (hardest) to the end
 [X] move play/listen button to the bottom
-
-[ ] don't go to next level automatically, this is impeding user feedback
+[X] don't go to next level automatically, this is impeding user feedback
     give feedback and add a button for going to next level
 
 [ ] replace demo by a guided intro
