@@ -1,6 +1,7 @@
 [
     {
-        "name": "A Waltz",
+        "name": "Waltz",
+        "description": "Listen to the rhythm closely and fill the drum pattern in the boxes",
         "demo": true,
         "bpm": 180,
         "pattern": [
@@ -17,6 +18,22 @@
     {
         "name": "Rock",
         "bpm": 180,
+        "description": "Classic rock beat",
+        "pattern": [
+            {
+                "name": "Snare",
+                "steps": [0,0,1,0,0,0,1,0]
+            },
+            {
+                "name": "Kick",
+                "steps": [1,0,0,0,1,0,0,0]
+            }
+        ]
+    },
+    {
+        "name": "Rock variation",
+        "bpm": 180,
+        "description": "A little variation of the classic beat",
         "pattern": [
             {
                 "name": "Snare",
@@ -29,8 +46,9 @@
         ]
     },
     {
-        "name": "On the up",
-        "bpm": 240,
+        "name": "Yet another variation",
+        "bpm": 200,
+        "description": "Going for a different accent this time ;)",
         "pattern": [
             {
                 "name": "Snare",
@@ -45,6 +63,7 @@
     {
         "name": "Metal",
         "bpm": 400,
+        "description": "Not quite my tempo...",
         "pattern": [
             {
                 "name": "Snare",
@@ -52,7 +71,7 @@
             },
             {
             "name": "Kick",
-            "steps": [1,1,1,1,1,1,1,1]
+            "steps": [1,1,0,0,1,1,0,1]
             }
         ]
     }

@@ -94,20 +94,16 @@ function Game() {
     this.audioLibrary = new AudioLibrary([
         {"name": "Snare", "file": "snare.wav"},
         {"name": "Kick", "file": "kick.wav"},
-        {"file": "hihat_open.wav", "name": "Open Hi-Hat"},
-        {"file": "hihat_closed.wav", "name": "Closed Hi-Hat"},
-        {"file": "crash.wav", "name": "Crash"},
-        {"file": "cowbell.wav", "name": "Cowbell"},
-        {"file": "stick.wav", "name": "Stick"},
+        {"name": "Open Hi-Hat", "file": "hihat_open.wav"},
+        {"name": "Closed Hi-Hat", "file": "hihat_closed.wav"},
+        {"name": "Crash", "file": "crash.wav"},
+        {"name": "Cowbell", "file": "cowbell.wav"},
+        {"name": "Stick", "file": "stick.wav"},
     ]);
 }
 
 Game.prototype.isReady = function() {
     return this.audioLibrary.ready;
-}
-
-Game.prototype.isDemoLevel = function() {
-    return this.currentLevel.demo;
 }
 
 Game.prototype.nextLevel = function() {
@@ -208,7 +204,7 @@ Game.prototype.playCurrentLevelLoop = function(tickCallback, finishCallback) {
 
 
 function App($) {
-    function displayPatternCanvas(level, demo) {
+    function displayPatternCanvas(level) {
         var container = $('.pattern-canvas');
         container.html('');
         var patternBoxes = [];
@@ -219,11 +215,7 @@ function App($) {
                 var box = $('<span class="box"><span></span></span>');
                 box.data('index', index);
                 box.data('track', track.name);
-                if (on) {
-                    box.addClass(demo ? 'tick' : '');
-                } else {
-                    box.addClass(demo ? '' : 'niet');
-                }
+                box.addClass(on ? '' : 'niet');
                 row.append(box);
             });
             patternBoxes.push(row.find('.box'))
@@ -250,7 +242,7 @@ function App($) {
 
     var game = new Game();
     game.load(function(){
-        patternBoxes = displayPatternCanvas(game.currentLevel, true);
+        initCurrentLevel();
     });
 
     function tuplesToObject(tuples) {
@@ -273,7 +265,7 @@ function App($) {
             if (game.hasNextLevel()) {
                 var $board = $('.board');
                 $board.find('.next-level-btn').show();
-                $board.find('.level-title').prepend('Yay! You passed level: ')
+                $board.find('.level-title').text('Yay! You passed level: ' + game.currentLevel.name)
             } else {
                 var $board = $('.board');
                 $board.html('');
@@ -284,9 +276,11 @@ function App($) {
     }
 
     function startNextLevel() {
-        var firstLevel = game.isDemoLevel();
         game.nextLevel();
+        initCurrentLevel();
+    }
 
+    function initCurrentLevel() {
         var $board = $('.board')
         $board.addClass('playing');
 
@@ -299,7 +293,7 @@ function App($) {
         $board.append($('<button class="btn play-btn">Listen rhythm</button>'));
         $board.append($('<button class="btn primary-btn next-level-btn">Next Level</button>'));
 
-        patternBoxes = displayPatternCanvas(game.currentLevel, false);
+        patternBoxes = displayPatternCanvas(game.currentLevel);
 
         $board.find('.next-level-btn').hide();
         $board.off('click', '.box');
