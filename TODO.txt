@@ -1,0 +1,13 @@
+[ ] change current level order, move metal (hardest) to the end
+
+[ ] don't go to next level automatically, this is impeding user feedback
+    give feedback and add a button for going to next level
+
+[ ] move play/listen button to the bottom
+
+[ ] replace demo by a guided intro
+
+[ ] design levels for a smoother learning curve
+    (very easy, easy, easy, medium, medium, hard)
+    idea: use the same tempo for the first levels, and when changing it,
+    use a pattern similar to the previous one -- semi-isolated contrast is better contrast
