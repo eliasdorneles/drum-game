@@ -265,13 +265,16 @@ function App($) {
             if (game.hasNextLevel()) {
                 var $board = $('.board');
                 $board.find('.next-level-btn').show();
-                $board.find('.level-title').text('Yay! You passed level: ' + game.currentLevel.name)
+                $board.find('.level-title').text('Yay! You passed level: ' + game.currentLevel.name + ' :)');
             } else {
                 var $board = $('.board');
                 $board.html('');
                 $board.append($('<h2 class="woo-hoo">Woo-hoo, you finished the game, congrats!</h2>'));
                 $board.append($('<a href="." class="btn primary-btn start-btn">Play again</a>'));
             }
+        } else {
+            $board.find('.next-level-btn').hide();
+            $board.find('.level-title').text(game.currentLevel.name);
         }
     }
 

@@ -2,7 +2,6 @@
 [X] move play/listen button to the bottom
 [X] don't go to next level automatically, this is impeding user feedback
     give feedback and add a button for going to next level
-
 [X] replace demo by slightly better designed levels
 
 [ ] design levels for a smoother learning curve
@@ -11,3 +10,5 @@
     use a pattern similar to the previous one -- semi-isolated contrast is better contrast
 
 [ ] add option for listening to entered rhythm, to compare
+
+[ ] add a simple logo
