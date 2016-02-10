@@ -1,6 +1,7 @@
 [
     {
         "name": "A Waltz",
+        "demo": true,
         "bpm": 180,
         "pattern": [
             {

@@ -14,6 +14,7 @@ h1 a:visited {
 }
 
 .primary-btn {
+    margin-top: 0.5em;
     border-radius: 0.3em;
     padding: 0.2em 0.8em;
     display: inline-block;

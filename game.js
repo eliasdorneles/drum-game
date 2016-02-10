@@ -107,7 +107,7 @@ Game.prototype.isReady = function() {
 }
 
 Game.prototype.isDemoLevel = function() {
-    return this.currentLevel.name == "Demo";
+    return this.currentLevel.demo;
 }
 
 Game.prototype.nextLevel = function() {
@@ -300,8 +300,8 @@ function App($) {
             if (game.currentLevel.description) {
                 $board.append($('<p class="level-desc">' + game.currentLevel.description + '</p>'));
             }
-            $board.append($('<button class="primary-btn play-btn">Play pattern</button>'));
             $board.append($('<div class="pattern-canvas"></div>'));
+            $board.append($('<button class="primary-btn play-btn">Listen rhythm</button>'));
 
             patternBoxes = displayPatternCanvas(game.currentLevel, false);
 
