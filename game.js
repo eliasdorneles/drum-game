@@ -258,16 +258,19 @@ function App($) {
         }));
     }
 
+    function removeWrongTicks($board) {
+        $board.find('.box.niet').removeClass('tick');
+        handleBoxClicked();
+    }
+
     function handleBoxClicked() {
         var enteredPattern = getEnteredPattern();
         var $board = $('.board.playing')
         if (game.matchesCurrentLevelPattern(enteredPattern)) {
             if (game.hasNextLevel()) {
-                var $board = $('.board');
                 $board.find('.next-level-btn').show();
                 $board.find('.level-title').text('Yay! You passed level: ' + game.currentLevel.name + ' :)');
             } else {
-                var $board = $('.board');
                 $board.html('');
                 $board.append($('<h2 class="woo-hoo">Woo-hoo, you finished the game, congrats!</h2>'));
                 $board.append($('<a href="." class="btn primary-btn start-btn">Play again</a>'));
@@ -275,6 +278,7 @@ function App($) {
         } else {
             $board.find('.next-level-btn').hide();
             $board.find('.level-title').text(game.currentLevel.name);
+            setTimeout(removeWrongTicks, 250, $board);
         }
     }
 
@@ -294,7 +298,7 @@ function App($) {
         }
         $board.append($('<div class="pattern-canvas"></div>'));
         $board.append($('<button class="btn play-btn">Listen rhythm</button>'));
-        $board.append($('<button class="btn primary-btn next-level-btn">Next Level</button>'));
+        $board.append($('<button class="btn primary-btn next-level-btn">Go to Next Level</button>'));
 
         patternBoxes = displayPatternCanvas(game.currentLevel);
 
