@@ -183,7 +183,7 @@ Game.prototype.playCurrentLevelLoop = function(tickCallback, finishCallback) {
 
     var level = this.currentLevel;
     var startTime = this.audioLibrary.getCurrentTime();
-    var repeat = 2;
+    var repeat = 4;
     var beatDuration = 60 / level.bpm;
     var barDuration = beatDuration * level.amountOfSteps;
     var self = this;
@@ -268,9 +268,7 @@ function App($) {
                 $board.find('.level-title').text('Yay! You passed level: ' + game.currentLevel.name + ' :)');
             } else {
                 var $board = $('.board');
-                $board.html('');
-                $board.append($('<h2 class="woo-hoo">Woo-hoo, you finished the game, congrats!</h2>'));
-                $board.append($('<a href="." class="btn primary-btn start-btn">Play again</a>'));
+                $('.finished').show();
             }
         } else {
             $board.find('.next-level-btn').hide();
