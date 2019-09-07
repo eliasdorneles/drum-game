@@ -1,78 +1,203 @@
 [
-    {
-        "name": "Waltz",
-        "description": "Listen to the rhythm closely and fill the drum pattern in the boxes",
-        "demo": true,
-        "bpm": 180,
-        "pattern": [
-            {
-                "name": "Snare",
-                "steps": [0,1,1,0,1,1]
-            },
-            {
-                "name": "Kick",
-                "steps": [1,0,0,1,0,0]
-            }
-        ]
-    },
-    {
-        "name": "Rock",
-        "bpm": 180,
-        "description": "Classic rock beat",
-        "pattern": [
-            {
-                "name": "Snare",
-                "steps": [0,0,1,0,0,0,1,0]
-            },
-            {
-                "name": "Kick",
-                "steps": [1,0,0,0,1,0,0,0]
-            }
-        ]
-    },
-    {
-        "name": "Rock variation",
-        "bpm": 180,
-        "description": "A little variation of the classic beat",
-        "pattern": [
-            {
-                "name": "Snare",
-                "steps": [0,0,1,0,0,0,1,0]
-            },
-            {
-                "name": "Kick",
-                "steps": [1,0,0,1,1,0,0,0]
-            }
-        ]
-    },
-    {
-        "name": "Yet another variation",
-        "bpm": 200,
-        "description": "Going for a different accent this time ;)",
-        "pattern": [
-            {
-                "name": "Snare",
-                "steps": [0,0,1,0,0,0,1,0]
-            },
-            {
-            "name": "Kick",
-            "steps": [1,0,0,1,0,1,0,0]
-            }
-        ]
-    },
-    {
-        "name": "Metal",
-        "bpm": 400,
-        "description": "Not quite my tempo...",
-        "pattern": [
-            {
-                "name": "Snare",
-                "steps": [0,0,1,1,0,0,1,0]
-            },
-            {
-            "name": "Kick",
-            "steps": [1,1,0,0,1,1,0,1]
-            }
-        ]
-    }
+  {
+    "name": "Waltz",
+    "description": "Listen to the rhythm closely and fill the drum pattern in the boxes",
+    "demo": true,
+    "bpm": 180,
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [0,1,1,0,1,1]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,0,0,1,0,0]
+      }
+    ]
+  },
+  {
+    "name": "Rock",
+    "bpm": 180,
+    "description": "Classic rock beat",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [0,0,1,0,0,0,1,0]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,0,0,0,1,0,0,0]
+      }
+    ]
+  },
+  {
+    "name": "Rock variation",
+    "bpm": 180,
+    "description": "A lil' variation of that classic beat",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [0,0,1,0,0,0,1,0]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,0,0,1,1,0,0,0]
+      }
+    ]
+  },
+  {
+    "name": "Changing the accent",
+    "bpm": 200,
+    "description": "Let's go for a different accent this time ;)",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [0,0,1,0,0,0,1,0]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,0,0,1,0,1,0,0]
+      }
+    ]
+  },
+  {
+    "name": "Speeding up a bit",
+    "bpm": 320,
+    "description": "But no rush!",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [0,0,0,0,1,0,1,1]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,1,0,0,0,0,0,0]
+      }
+    ]
+  },
+  {
+    "name": "Hear that kick?",
+    "bpm": 360,
+    "description": "Your turn to kick it!",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [0,0,0,0,1,0,0,0]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,1,1,0,0,0,1,1]
+      }
+    ]
+  },
+  {
+    "name": "Whiplash",
+    "bpm": 400,
+    "description": "Not quite my tempo...",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [0,0,1,1,0,0,1,0]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,1,0,0,1,1,0,1]
+      }
+    ]
+  },
+  {
+    "name": "Use that crash!",
+    "bpm": 300,
+    "description": "You have some good moves!",
+    "pattern": [
+      {
+        "name": "Crash",
+        "steps": [1,0,0,0,0,0,0,0]
+      },
+      {
+        "name": "Snare",
+        "steps": [0,0,1,1,0,0,0,1]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,1,0,0,0,0,1,0]
+      }
+    ]
+  },
+  {
+    "name": "Let's try a fill-in",
+    "bpm": 340,
+    "description": "Oh yeah, the public loves it!",
+    "pattern": [
+      {
+        "name": "Crash",
+        "steps": [1,0,0,0,0,0,1,0]
+      },
+      {
+        "name": "Snare",
+        "steps": [0,0,1,1,1,0,1,0]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,0,0,0,0,1,0,0]
+      }
+    ]
+  },
+  {
+    "name": "Fly to Rio",
+    "bpm": 360,
+    "description": "... and do a little samba!",
+    "pattern": [
+      {
+        "name": "Stick",
+        "steps": [0,0,1,0,0,1,0,1]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,0,0,1,1,0,0,1]
+      }
+    ]
+  },
+  {
+    "name": "Let's add a cowbell",
+    "bpm": 360,
+    "description": "Wooo, this is getting funky!",
+    "pattern": [
+      {
+        "name": "Cowbell",
+        "steps": [1,0,0,0,1,0,0,0]
+      },
+      {
+        "name": "Stick",
+        "steps": [0,0,1,0,0,1,0,1]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,0,0,1,1,0,0,1]
+      }
+    ]
+  },
+  {
+    "name": "And finally, a hit-hat!",
+    "bpm": 360,
+    "description": "Tip: do one at the time =)",
+    "pattern": [
+      {
+        "name": "Closed Hi-Hat",
+        "steps": [1,1,0,1,1,1,0,0]
+      },
+      {
+        "name": "Cowbell",
+        "steps": [1,0,0,0,1,0,0,0]
+      },
+      {
+        "name": "Stick",
+        "steps": [0,0,1,0,0,1,0,1]
+      },
+      {
+        "name": "Kick",
+        "steps": [1,0,0,1,1,0,0,1]
+      }
+    ]
+  }
 ]
