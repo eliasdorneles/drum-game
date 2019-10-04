@@ -183,7 +183,7 @@ Game.prototype.playCurrentLevelLoop = function(tickCallback, finishCallback) {
 
     var level = this.currentLevel;
     var startTime = this.audioLibrary.getCurrentTime();
-    var repeat = 4;
+    var repeat = 2;
     var beatDuration = 60 / level.bpm;
     var barDuration = beatDuration * level.amountOfSteps;
     var self = this;
