@@ -98,4 +98,16 @@ class AudioLibrary {
     }
     source.start(time);
   }
+
+  stopAll() {
+    this.audioContext.suspend();
+  }
+
+  resumeAll() {
+    this.audioContext.resume();
+  }
+
+  restart() {
+    this.audioContext = new AudioContext();
+  }
 }

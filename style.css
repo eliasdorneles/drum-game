@@ -4,8 +4,16 @@ body {
     background-color: #eee;
 }
 
+h1 {
+    font-size: 1.2em;
+}
+
 h1 a:visited {
     color: #185d7f;
+}
+
+h2 {
+    font-size: 1.1em;
 }
 
 .game {
@@ -65,8 +73,8 @@ h1 a:visited {
 
 .box {
     border: 1px solid #aaa;
-    width: 2em;
-    height: 2em;
+    width: 2.5em;
+    height: 2.5em;
     display: inline-block;
 }
 
@@ -88,11 +96,11 @@ h1 a:visited {
     margin-bottom: 20px;
 }
 
-.box.on span {
-    background-color: rgba(204, 49, 152, 0.5)
+.box.isActive {
+    background-color: rgba(204, 49, 152, 0.5);
 }
 
-.box.tick.niet span {
+.box.niet.tick {
     background-color: #cc314b;
 }
 

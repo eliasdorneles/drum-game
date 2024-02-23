@@ -80,7 +80,7 @@ class Game {
     this.audioLibrary.playSampleAfter(track, 0);
   }
 
-  matchesCurrentLevelPattern(enteredPattern) {
+  isCorrectPattern(enteredPattern) {
     const matches = this.currentLevel.pattern.map((patt) => {
       const enteredSteps = enteredPattern[patt.name];
       return JSON.stringify(enteredSteps) == JSON.stringify(patt.steps);

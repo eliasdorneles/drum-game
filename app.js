@@ -1,150 +1,197 @@
+const boolToInt = (bool) => +bool;
 
-function App($) {
-  function displayPatternCanvas(level) {
-    var container = $(".pattern-canvas");
-    container.html("");
-    var patternBoxes = [];
-    level.pattern.forEach(function (track) {
-      var row = $('<div class="track"></div>');
-      row.append('<span class="track-name">' + track.name + "</span>");
-      track.steps.forEach(function (on, index) {
-        var box = $('<span class="box"><span></span></span>');
-        box.data("index", index);
-        box.data("track", track.name);
-        box.addClass(on ? "" : "niet");
-        row.append(box);
-      });
-      patternBoxes.push(row.find(".box"));
-      container.append(row);
-    });
-    return patternBoxes;
+const addClass = (element, className) => {
+  element.classList.add(className);
+};
+
+const removeClass = (element, className) => {
+  element.classList.remove(className);
+};
+
+const toggleClass = (element, className) => {
+  element.classList.toggle(className);
+};
+
+const show = (element) => {
+  if (getComputedStyle(element).display === "none") {
+    element.style.display = "";
+  } else {
+    element.style.display = "block";
+  }
+};
+
+const hide = (element) => {
+  element.style.display = "none";
+};
+
+function on(container, selector, event, callback) {
+  // Validate arguments
+  if (!container || !selector || !event || !callback) {
+    throw new Error("Missing required arguments for on function.");
   }
 
-  function highlightPatternAtStep(step) {
-    patternBoxes.forEach(function (boxes) {
-      boxes.removeClass("on");
+  // Utilize event delegation for dynamically added elements
+  container.addEventListener(event, function (e) {
+    const target = e.target;
+    const matchingElements = container.querySelectorAll(selector);
+
+    // Check if the clicked element matches the selector
+    for (const element of matchingElements) {
+      if (element === target || element.contains(target)) {
+        callback.call(target, e); // Pass the event object to the callback
+        return; // Stop further checking once a match is found
+      }
+    }
+  });
+}
+
+function App() {
+  const createBox = (isActive, index, trackName) => {
+    const box = document.createElement("span");
+    addClass(box, "box");
+    box.innerHTML = "&nbsp;";
+    box.dataset.index = index;
+    box.dataset.track = trackName;
+    if (!isActive) {
+      addClass(box, "niet");
+    }
+    return box;
+  };
+
+  const buildAndDisplayPatternGrid = (level) => {
+    const container = document.querySelector(".pattern-canvas");
+    container.innerHTML = "";
+    return level.pattern.map((track) => {
+      const row = document.createElement("div");
+      addClass(row, "track");
+      row.innerHTML = '<span class="track-name">' + track.name + "</span>";
+
+      const boxes = track.steps.map((isActive, index) =>
+        createBox(isActive, index, track.name)
+      );
+
+      boxes.forEach((box) => row.appendChild(box));
+      container.appendChild(row);
+
+      return boxes;
+    });
+  }
+
+  const updateUIPlayingStep = (step) => {
+    patternBoxes.forEach((boxes) => {
+      boxes.forEach((box) => removeClass(box, "isActive"));
       if (step >= 0) {
-        $(boxes[step]).addClass("on");
+        addClass(boxes[step], "isActive");
       }
     });
   }
 
-  function stoppedPlaying() {
-    highlightPatternAtStep(-1);
-    $(".play-btn").removeAttr("disabled");
+  const stoppedPlaying = () => {
+    updateUIPlayingStep(-1);
+    document.querySelector(".play-btn").removeAttribute("disabled");
   }
 
-  var patternBoxes = null;
-
-  var game = new Game();
-  game.load(function () {
-    initCurrentLevel();
-  });
-
-  function tuplesToObject(tuples) {
-    if (!tuples) {
-      return {};
-    }
-    return tuples.reduce(function (o, v, i) {
-      o[v[0]] = v[1];
-      return o;
+  const getEnteredPattern = () => {
+    // Return an object representing the pattern entered by the user
+    // e.g. { Kick: [1, 0, 1, 0, 1, 0, 1, 0], Snare: [0, 1, 0, 1, 0, 1, 0, 1] }
+    return patternBoxes.reduce((enteredPattern, boxes) => {
+      const trackName = boxes[0].dataset.track;
+      const pattern = Array.from(boxes, (b) =>
+        boolToInt(b.classList.contains("tick"))
+      );
+      enteredPattern[trackName] = pattern;
+      return enteredPattern;
     }, {});
   }
 
-  function getEnteredPattern() {
-    return tuplesToObject(
-      patternBoxes.map(function ($boxes) {
-        var trackName = $($boxes[0]).data("track");
-        var pattern = Array.from(
-          $boxes.map(function (i, b) {
-            return +$(b).hasClass("tick");
-          })
-        );
-        return [trackName, pattern];
-      })
-    );
-  }
+  const handleBoxClicked = () => {
+    const enteredPattern = getEnteredPattern();
 
-  function handleBoxClicked() {
-    var enteredPattern = getEnteredPattern();
-    var $board = $(".board.playing");
-    if (game.matchesCurrentLevelPattern(enteredPattern)) {
+    const board = document.querySelector(".board.playing");
+    if (game.isCorrectPattern(enteredPattern)) {
+      const board = document.querySelector(".board");
       if (game.hasNextLevel()) {
-        var $board = $(".board");
-        $board.find(".next-level-btn").show();
-        $board
-          .find(".level-title")
-          .text("Yay! You passed level: " + game.currentLevel.name + " :)");
+        // TODO: make a better transition between levels
+        show(board.querySelector(".next-level-btn"));
+        board.querySelector(".level-title").textContent =
+          "Yay! You passed level: " + game.currentLevel.name + " :)";
       } else {
-        var $board = $(".board");
-        $(".finished").show();
+        show(document.querySelector(".finished"));
       }
     } else {
-      $board.find(".next-level-btn").hide();
-      $board.find(".level-title").text(game.currentLevel.name);
+      hide(board.querySelector(".next-level-btn"));
+      board.querySelector(".level-title").textContent = game.currentLevel.name;
     }
   }
 
-  function startNextLevel() {
+  const startNextLevel = () => {
     game.nextLevel();
-    initCurrentLevel();
+    updateUIForCurrentLevel();
   }
 
-  function initCurrentLevel() {
-    var $board = $(".board");
-    $board.addClass("playing");
+  const updateUIForCurrentLevel = () => {
+    const board = document.querySelector(".board");
+    addClass(board, "playing");
 
-    $board.html("");
-    $board.append(
-      $('<h2 class="level-title">' + game.currentLevel.name + "</h2>")
-    );
+    board.innerHTML =
+      "<h2 class='level-title'>" + game.currentLevel.name + "</h2>";
     if (game.currentLevel.description) {
-      $board.append(
-        $('<p class="level-desc">' + game.currentLevel.description + "</p>")
-      );
+      board.innerHTML +=
+        "<p class='level-desc'>" + game.currentLevel.description + "</p>";
     }
-    $board.append($('<div class="pattern-canvas"></div>'));
-    $board.append($('<button class="btn play-btn">Listen rhythm</button>'));
-    $board.append(
-      $('<button class="btn primary-btn next-level-btn">Next Level</button>')
-    );
+    board.innerHTML += `
+      <div class='pattern-canvas'></div>
+      <button class='btn play-btn'>Listen rhythm</button>
+      <button class='btn primary-btn next-level-btn'>Next Level</button>
+    `;
 
-    patternBoxes = displayPatternCanvas(game.currentLevel);
+    patternBoxes = buildAndDisplayPatternGrid(game.currentLevel);
 
-    $board.find(".next-level-btn").hide();
-    $board.off("click", ".box");
-    $board.on("click", ".box", function () {
-      var $box = $(this),
-        trackName = $box.data("track");
-      $box.toggleClass("tick");
-      game.playTrackSampleOnce(trackName);
-      handleBoxClicked();
-    });
+    hide(board.querySelector(".next-level-btn"));
   }
 
-  $(".start-btn").click(function () {
+  // Initialize
+  let patternBoxes = null;
+
+  let game = new Game();
+
+  const board = document.querySelector(".board");
+
+  game.load(function () {
+    updateUIForCurrentLevel();
+  });
+
+  // Register event listeners
+  on(board, ".box", "click", function () {
+    const trackName = this.dataset.track;
+    toggleClass(this, "tick");
+    game.playTrackSampleOnce(trackName);
+    handleBoxClicked();
+  });
+
+  on(board, ".start-btn", "click", function () {
     if (!game.isReady()) {
       console.log("Not ready yet!");
       return;
     }
     startNextLevel();
-    $(this).remove();
+    this.remove();
   });
 
-  $(document).on("click", ".play-btn", function () {
+  on(board, ".play-btn", "click", function () {
     if (!game.isReady()) {
       console.log("Not ready yet!");
       return;
     }
-    $(this).attr("disabled", "disabled");
-    game.playCurrentLevelLoop(highlightPatternAtStep, stoppedPlaying);
+    this.setAttribute("disabled", "disabled");
+    game.playCurrentLevelLoop(updateUIPlayingStep, stoppedPlaying);
   });
-  $(document).on("click", ".next-level-btn", function () {
+
+  on(board, ".next-level-btn", "click", function () {
     if (game.hasNextLevel()) {
       startNextLevel();
     }
   });
 }
 
-App(jQuery);
-
+App();
