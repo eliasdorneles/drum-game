@@ -8,6 +8,8 @@ Let's improve the gameplay!
 
 - [ ] add a score system: to give an idea of progress! Maybe display Level 1 of X?
 
+- [ ] let the user to choose drum kit
+
 - [ ] prevent brute-force play: limit the amount of attempts, show hints if user makes many mistakes
 
 - [ ] add "About / WTF / help?" button
