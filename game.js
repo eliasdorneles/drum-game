@@ -1,97 +1,4 @@
 // vim: set sw=4:ts=4:
-// BufferLoader stolen from: http://www.html5rocks.com/en/tutorials/webaudio/intro/js/buffer-loader.js
-function BufferLoader(context, urlList, callback) {
-  this.context = context;
-  this.urlList = urlList;
-  this.onload = callback;
-  this.bufferList = new Array();
-  this.loadCount = 0;
-}
-
-BufferLoader.prototype.loadBuffer = function (url, index) {
-  // Load buffer asynchronously
-  var request = new XMLHttpRequest();
-  request.open("GET", url, true);
-  request.responseType = "arraybuffer";
-
-  var loader = this;
-
-  request.onload = function () {
-    // Asynchronously decode the audio file data in request.response
-    loader.context.decodeAudioData(
-      request.response,
-      function (buffer) {
-        if (!buffer) {
-          alert("error decoding file data: " + url);
-          return;
-        }
-        loader.bufferList[index] = buffer;
-        if (++loader.loadCount == loader.urlList.length)
-          loader.onload(loader.bufferList);
-      },
-      function (error) {
-        console.error("decodeAudioData error", error);
-      }
-    );
-  };
-
-  request.onerror = function () {
-    throw Error("BufferLoader: XHR error");
-  };
-
-  request.send();
-};
-
-BufferLoader.prototype.load = function () {
-  for (var i = 0; i < this.urlList.length; ++i)
-    this.loadBuffer(this.urlList[i], i);
-};
-
-function AudioLibrary(samples) {
-  this.samples = samples;
-  this.ready = false;
-  this.audioContext =
-    new AudioContext() || WebkitAudioContext() || MozAudioContext();
-
-  var urls = this.samples.map(function (f) {
-    return "samples/" + f.file;
-  });
-  var self = this;
-  var bufferLoader = new BufferLoader(this.audioContext, urls, function (
-    buffers
-  ) {
-    for (var i = 0; i < buffers.length; i++) {
-      self.samples[i].buffer = buffers[i];
-    }
-    self.ready = true;
-  });
-  bufferLoader.load();
-}
-
-AudioLibrary.prototype.getCurrentTime = function () {
-  return this.audioContext.currentTime;
-};
-
-AudioLibrary.prototype.getSampleBuffer = function (name) {
-  var sample = this.samples.find(function (s) {
-    return s.name == name;
-  });
-  if (!sample) {
-    throw Error("Sample not found: " + name);
-  }
-  return sample.buffer;
-};
-
-AudioLibrary.prototype.playSampleAfter = function (name, time) {
-  var buffer = this.getSampleBuffer(name);
-  var source = this.audioContext.createBufferSource();
-  source.buffer = buffer;
-  source.connect(this.audioContext.destination);
-  if (!source.start) {
-    source.start = source.noteOn;
-  }
-  source.start(time);
-};
 
 function Game() {
   this.levels = [];
@@ -127,7 +34,7 @@ Game.prototype.hasNextLevel = function () {
 
 Game.prototype.loadLevel = function (idxLevel) {
   this.idxCurrentLevel = idxLevel || 0;
-  this.currentLevel = $.extend({}, this.levels[this.idxCurrentLevel]);
+  this.currentLevel = { ...this.levels[this.idxCurrentLevel] };
 
   var amountOfSteps = 0;
   if (!this.currentLevel.pattern) {
