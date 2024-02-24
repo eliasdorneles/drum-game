@@ -1,7 +1,7 @@
 /* vim: set sw=4:ts=4: */
 body {
     color: #185d7f;
-    background-color: #eee;
+    background-color: #f6fff8;
 }
 
 h1 {
@@ -22,9 +22,9 @@ h2 {
 }
 
 .btn {
-    margin-top: 0.5em;
+    margin-top: 1em;
     border-radius: 0.3em;
-    padding: 0.2em 0.8em;
+    padding: 0.5em;
     display: inline-block;
     background-color: #98cc31;
     border: 2px solid #354711;
@@ -72,20 +72,15 @@ h2 {
 }
 
 .box {
-    border: 1px solid #aaa;
+    background-color: #edae49;
     width: 2.5em;
     height: 2.5em;
+    outline: 2px solid #caa068;
     display: inline-block;
 }
 
 .box.tick {
-    background-color: #98cc31;
-}
-
-.box span {
-    width: 100%;
-    height: 100%;
-    display: inline-block;
+    background-color: #00798c;
 }
 
 .playing .track {
@@ -101,7 +96,7 @@ h2 {
 }
 
 .box.niet.tick {
-    background-color: #cc314b;
+    background-color: #d1495b;
 }
 
 .woo-hoo {
