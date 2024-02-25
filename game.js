@@ -9,7 +9,7 @@ class Game {
       { name: "Snare", file: "snare.wav" },
       { name: "Kick", file: "kick.wav" },
       { name: "Open Hi-Hat", file: "hihat_open.wav" },
-      { name: "Closed Hi-Hat", file: "hihat_closed.wav" },
+      { name: "Hi-Hat", file: "hihat_closed.wav" },
       { name: "Crash", file: "crash.wav" },
       { name: "Cowbell", file: "cowbell.wav" },
       { name: "Stick", file: "stick.wav" },

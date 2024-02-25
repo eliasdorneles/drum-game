@@ -1,39 +1,9 @@
 [
   {
-    "name": "Waltz",
-    "description": "Listen to the rhythm closely and fill the drum pattern in the boxes",
-    "demo": true,
-    "bpm": 180,
-    "pattern": [
-      {
-        "name": "Snare",
-        "steps": [0, 1, 1, 0, 1, 1]
-      },
-      {
-        "name": "Kick",
-        "steps": [1, 0, 0, 1, 0, 0]
-      }
-    ]
-  },
-  {
     "name": "Rock",
     "bpm": 180,
-    "description": "Classic rock beat",
-    "pattern": [
-      {
-        "name": "Snare",
-        "steps": [0, 0, 1, 0, 0, 0, 1, 0]
-      },
-      {
-        "name": "Kick",
-        "steps": [1, 0, 0, 0, 1, 0, 0, 0]
-      }
-    ]
-  },
-  {
-    "name": "Rock variation",
-    "bpm": 180,
-    "description": "A lil' variation of that classic beat",
+    "groupSize": 4,
+    "description": "Here is a classic rock beat",
     "pattern": [
       {
         "name": "Snare",
@@ -48,7 +18,8 @@
   {
     "name": "Changing the accent",
     "bpm": 200,
-    "description": "Let's go for a different accent this time ;)",
+    "groupSize": 4,
+    "description": "Let's go for a different accent this time",
     "pattern": [
       {
         "name": "Snare",
@@ -63,7 +34,8 @@
   {
     "name": "Speeding up a bit",
     "bpm": 320,
-    "description": "But no rush!",
+    "groupSize": 4,
+    "description": "The playing is fast, but you can take your time",
     "pattern": [
       {
         "name": "Snare",
@@ -78,7 +50,7 @@
   {
     "name": "Hear that kick?",
     "bpm": 360,
-    "description": "Your turn to kick it!",
+    "groupSize": 4,
     "pattern": [
       {
         "name": "Snare",
@@ -91,24 +63,9 @@
     ]
   },
   {
-    "name": "Whiplash",
-    "bpm": 400,
-    "description": "Not quite my tempo...",
-    "pattern": [
-      {
-        "name": "Snare",
-        "steps": [0, 0, 1, 1, 0, 0, 1, 0]
-      },
-      {
-        "name": "Kick",
-        "steps": [1, 1, 0, 0, 1, 1, 0, 1]
-      }
-    ]
-  },
-  {
     "name": "Use that crash!",
     "bpm": 300,
-    "description": "You have some good moves!",
+    "groupSize": 4,
     "pattern": [
       {
         "name": "Crash",
@@ -125,9 +82,9 @@
     ]
   },
   {
-    "name": "Let's try a fill-in",
+    "name": "Let's try some snare fills",
     "bpm": 340,
-    "description": "Oh yeah, the public loves it!",
+    "groupSize": 4,
     "pattern": [
       {
         "name": "Crash",
@@ -146,6 +103,7 @@
   {
     "name": "Fly to Rio",
     "bpm": 360,
+    "groupSize": 4,
     "description": "... and do a little samba!",
     "pattern": [
       {
@@ -159,9 +117,9 @@
     ]
   },
   {
-    "name": "Let's add a cowbell",
+    "name": "Let's add a cowbell and a hi-hat to that samba!",
     "bpm": 360,
-    "description": "Wooo, this is getting funky!",
+    "groupSize": 4,
     "pattern": [
       {
         "name": "Cowbell",
@@ -178,12 +136,13 @@
     ]
   },
   {
-    "name": "And finally, a hit-hat!",
+    "name": "And a hit-hat!",
     "bpm": 360,
+    "groupSize": 4,
     "description": "Tip: do one at the time =)",
     "pattern": [
       {
-        "name": "Closed Hi-Hat",
+        "name": "ZHi-Hat",
         "steps": [1, 1, 0, 1, 1, 1, 0, 0]
       },
       {
@@ -197,6 +156,23 @@
       {
         "name": "Kick",
         "steps": [1, 0, 0, 1, 1, 0, 0, 1]
+      }
+    ]
+  },
+  ,
+  {
+    "name": "Whiplash",
+    "bpm": 400,
+    "groupSize": 4,
+    "description": "Not quite my tempo...",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [0, 0, 1, 1, 0, 0, 1, 0]
+      },
+      {
+        "name": "Kick",
+        "steps": [1, 1, 0, 0, 1, 1, 0, 1]
       }
     ]
   }
