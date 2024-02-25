@@ -3,31 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <title>Drum Game 🥁</title>
-    <link rel="stylesheet" href="vendor/normalize-3.0.2.css" />
-    <link rel="stylesheet" href="style.css" />
-    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="vendor/tachyons.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      .box {
+        background-color: #cdecff;
+        outline: 2px solid #96ccff;
+      }
+
+      .box.tick {
+        background-color: #19a974;
+      }
+
+      .box.isActive {
+        background-color: #ff80cc;
+      }
+
+      .box.mistake.tick {
+        background-color: #ff4136;
+      }
+    </style>
   </head>
 
   <body>
-    <section class="game">
-      <h1><a href=".">Drum Game 🥁</a></h1>
-      <div class="board">
-        We'll play a drum pattern like this:
-        <button class="btn play-btn">Play</button>
-
-        <p>And you have to draw it like this:</p>
+    <section class="game sans-serif ml2">
+      <h1 class="f4">Drum Game 🥁</h1>
+      <div class="board ma3">
         <div class="pattern-canvas">Loading...</div>
-
-        <div>
-          <button class="btn primary-btn start-btn">Start game</button>
-        </div>
       </div>
       <div class="finished" style="display: none">
         <h2 class="woo-hoo">Woo-hoo, you finished the game, congrats!</h2>
         <a href="." class="btn primary-btn start-btn">Play again</a>
       </div>
-      <small>(for best results, plug-in your headphones 🎧)</small>
+
+      <p class="f6 mt4 w6">
+        <strong>How to play:</strong> Listen to the drum loop attentively, then
+        click on the boxes until their pattern matches the loop sequence. For
+        best results, plug-in your headphones 🎧
+      </p>
     </section>
+
     <script src="audio.js"></script>
     <script src="game.js"></script>
     <script src="app.js"></script>

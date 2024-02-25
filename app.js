@@ -1,7 +1,14 @@
 const boolToInt = (bool) => +bool;
 
-const addClass = (element, className) => {
-  element.classList.add(className);
+const addClass = (element, classNames) => {
+  if (typeof classNames === "string") {
+    classNames = classNames.split(" ");
+  }
+  classNames.forEach((className) => element.classList.add(className));
+};
+
+const appendAll = (container, nodes) => {
+  nodes.forEach((node) => container.appendChild(node));
 };
 
 const removeClass = (element, className) => {
@@ -45,40 +52,70 @@ function on(container, selector, event, callback) {
   });
 }
 
-function App() {
-  const createBox = (isActive, index, trackName) => {
+class DrumPatternGrid {
+  constructor(level) {
+    this.level = level;
+    this.tracks = [];
+    this.patternBoxes = [];
+  }
+
+  #createBox(isActive, index, trackName) {
+    // Create a box element representing a step in the pattern
     const box = document.createElement("span");
-    addClass(box, "box");
+    addClass(box, "box dib w2 h2 pointer br3 ml1");
     box.innerHTML = "&nbsp;";
+
+    // Add data attributes to the box, to make it easier to identify the track and step
+    // when the box is clicked
     box.dataset.index = index;
     box.dataset.track = trackName;
+
     if (!isActive) {
-      addClass(box, "niet");
+      addClass(box, "mistake");
     }
     return box;
-  };
+  }
 
-  const buildAndDisplayPatternGrid = (level) => {
-    const container = document.querySelector(".pattern-canvas");
-    container.innerHTML = "";
-    return level.pattern.map((track) => {
-      const row = document.createElement("div");
-      addClass(row, "track");
-      row.innerHTML = '<span class="track-name">' + track.name + "</span>";
+  #createTrackRow(trackSpec) {
+    // Create a row element representing a track in the pattern
+    const trackRow = document.createElement("div");
+    addClass(trackRow, "track mb2");
+    trackRow.dataset.trackName = trackSpec.name;
+    trackRow.innerHTML =
+      '<span class="track-name dib w3 fw6 underline pointer">' +
+      trackSpec.name +
+      "🔉</span>";
 
-      const boxes = track.steps.map((isActive, index) =>
-        createBox(isActive, index, track.name)
-      );
+    const boxes = trackSpec.steps.map((isActive, index) =>
+      this.#createBox(isActive, index, trackSpec.name)
+    );
+    appendAll(trackRow, boxes);
+    return { trackRow, boxes };
+  }
 
-      boxes.forEach((box) => row.appendChild(box));
-      container.appendChild(row);
+  createDrumTracksGrid() {
+    // Build grid pattern and return list of tracks to be appended to the DOM
+    // A level looks like this:
+    // {
+    //   name: "Level 1",
+    //   bpm: 180,
+    //   pattern: [
+    //     { name: "Snare", steps: [0, 1, 0, 1, 0, 1, 0, 1] }
+    //     { name: "Kick", steps: [1, 0, 1, 0, 1, 0, 1, 0] },
+    //   ]
+    // }
+    return this.level.pattern.map((track) => {
+      const { trackRow, boxes } = this.#createTrackRow(track);
 
-      return boxes;
+      this.tracks.push(trackRow);
+      this.patternBoxes.push(boxes);
+
+      return trackRow;
     });
   }
 
-  const updateUIPlayingStep = (step) => {
-    patternBoxes.forEach((boxes) => {
+  updatePlayingCursor(step) {
+    this.patternBoxes.forEach((boxes) => {
       boxes.forEach((box) => removeClass(box, "isActive"));
       if (step >= 0) {
         addClass(boxes[step], "isActive");
@@ -86,30 +123,22 @@ function App() {
     });
   }
 
-  const stoppedPlaying = () => {
-    updateUIPlayingStep(-1);
-    document.querySelector(".play-btn").removeAttribute("disabled");
-  }
-
-  const getEnteredPattern = () => {
+  getUserInputPattern() {
     // Return an object representing the pattern entered by the user
     // e.g. { Kick: [1, 0, 1, 0, 1, 0, 1, 0], Snare: [0, 1, 0, 1, 0, 1, 0, 1] }
-    return patternBoxes.reduce((enteredPattern, boxes) => {
+    return this.patternBoxes.reduce((inputPatt, boxes) => {
       const trackName = boxes[0].dataset.track;
-      const pattern = Array.from(boxes, (b) =>
+      inputPatt[trackName] = Array.from(boxes, (b) =>
         boolToInt(b.classList.contains("tick"))
       );
-      enteredPattern[trackName] = pattern;
-      return enteredPattern;
+      return inputPatt;
     }, {});
   }
+}
 
+function App() {
   const handleBoxClicked = () => {
-    const enteredPattern = getEnteredPattern();
-
-    const board = document.querySelector(".board.playing");
-    if (game.isCorrectPattern(enteredPattern)) {
-      const board = document.querySelector(".board");
+    if (game.isCorrectPattern(patternGrid.getUserInputPattern())) {
       if (game.hasNextLevel()) {
         // TODO: make a better transition between levels
         show(board.querySelector(".next-level-btn"));
@@ -122,60 +151,66 @@ function App() {
       hide(board.querySelector(".next-level-btn"));
       board.querySelector(".level-title").textContent = game.currentLevel.name;
     }
-  }
+  };
 
   const startNextLevel = () => {
     game.nextLevel();
-    updateUIForCurrentLevel();
-  }
+    updateUIForCurrentLevel(game.currentLevel);
+  };
 
-  const updateUIForCurrentLevel = () => {
-    const board = document.querySelector(".board");
+  const updateUIForCurrentLevel = (currentLevel) => {
     addClass(board, "playing");
 
-    board.innerHTML =
-      "<h2 class='level-title'>" + game.currentLevel.name + "</h2>";
-    if (game.currentLevel.description) {
-      board.innerHTML +=
-        "<p class='level-desc'>" + game.currentLevel.description + "</p>";
-    }
+    board.innerHTML = `
+      <h2>Puzzle ${game.idxCurrentLevel + 1} of ${game.levels.length}</h2>
+      <h3 class='level-title'>${currentLevel.name}</h3>
+    `;
+    board.innerHTML += `<p class="level-description">${
+      currentLevel.description
+    }${currentLevel.description ? " - " : ""}BPM: ${currentLevel.bpm}</p>`;
     board.innerHTML += `
-      <div class='pattern-canvas'></div>
-      <button class='btn play-btn'>Listen rhythm</button>
-      <button class='btn primary-btn next-level-btn'>Next Level</button>
+      <div class='pattern-canvas ma4'></div>
+      <button class='play-btn br3 bw0 ph3 pv2 dim orange bg-purple'>Listen now</button>
+      <button class='next-level-btn br3 bw0 ml5 ph3 pv2 dim light-green bg-dark-green'>Next Level</button>
     `;
 
-    patternBoxes = buildAndDisplayPatternGrid(game.currentLevel);
+    patternGrid = new DrumPatternGrid(currentLevel);
+
+    appendAll(
+      board.querySelector(".pattern-canvas"),
+      patternGrid.createDrumTracksGrid()
+    );
 
     hide(board.querySelector(".next-level-btn"));
-  }
+  };
 
-  // Initialize
-  let patternBoxes = null;
+  const playPattern = () => {
+    game.playCurrentLevelLoop({
+      tickCallback: (step) => {
+        patternGrid.updatePlayingCursor(step);
+      },
+      finishCallback: () => {
+        patternGrid.updatePlayingCursor(-1);
+        const playButton = board.querySelector(".play-btn");
+        playButton.removeAttribute("disabled");
+        playButton.blur();
+      },
+    });
+  };
+
+  // Main - App entry point
+  let patternGrid = null;
 
   let game = new Game();
 
-  const board = document.querySelector(".board");
+  game.load(() => updateUIForCurrentLevel(game.currentLevel));
 
-  game.load(function () {
-    updateUIForCurrentLevel();
-  });
+  const board = document.querySelector(".board");
 
   // Register event listeners
   on(board, ".box", "click", function () {
-    const trackName = this.dataset.track;
     toggleClass(this, "tick");
-    game.playTrackSampleOnce(trackName);
     handleBoxClicked();
-  });
-
-  on(board, ".start-btn", "click", function () {
-    if (!game.isReady()) {
-      console.log("Not ready yet!");
-      return;
-    }
-    startNextLevel();
-    this.remove();
   });
 
   on(board, ".play-btn", "click", function () {
@@ -184,13 +219,18 @@ function App() {
       return;
     }
     this.setAttribute("disabled", "disabled");
-    game.playCurrentLevelLoop(updateUIPlayingStep, stoppedPlaying);
+    playPattern();
   });
 
   on(board, ".next-level-btn", "click", function () {
     if (game.hasNextLevel()) {
       startNextLevel();
     }
+  });
+
+  on(board, ".track-name", "click", function () {
+    const trackName = this.parentElement.dataset.trackName;
+    game.playTrackSampleOnce(trackName);
   });
 }
 

@@ -88,7 +88,7 @@ class Game {
     return matches.reduce((o, v) => o && v, true);
   }
 
-  playCurrentLevelLoop(tickCallback, finishCallback) {
+  playCurrentLevelLoop({ tickCallback, finishCallback }) {
     /*
      * Play drump loop for the current level, calling tickCallback for every
      * pattern step along the way, and finishCallback when it's done playing.
