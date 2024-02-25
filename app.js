@@ -82,7 +82,7 @@ class DrumPatternGrid {
     addClass(trackRow, "track mb2");
     trackRow.dataset.trackName = trackSpec.name;
     trackRow.innerHTML =
-      '<span class="track-name dib w3 fw6 underline pointer">' +
+      '<span class="track-name dib w3 fw6 pointer v-btm pb1 tr">' +
       trackSpec.name +
       "🔉</span>";
 
@@ -95,15 +95,7 @@ class DrumPatternGrid {
 
   createDrumTracksGrid() {
     // Build grid pattern and return list of tracks to be appended to the DOM
-    // A level looks like this:
-    // {
-    //   name: "Level 1",
-    //   bpm: 180,
-    //   pattern: [
-    //     { name: "Snare", steps: [0, 1, 0, 1, 0, 1, 0, 1] }
-    //     { name: "Kick", steps: [1, 0, 1, 0, 1, 0, 1, 0] },
-    //   ]
-    // }
+    // Note: see levels.json to understand the structure of the level object
     return this.level.pattern.map((track) => {
       const { trackRow, boxes } = this.#createTrackRow(track);
 
@@ -162,16 +154,19 @@ function App() {
     addClass(board, "playing");
 
     board.innerHTML = `
-      <h2>Puzzle ${game.idxCurrentLevel + 1} of ${game.levels.length}</h2>
-      <h3 class='level-title'>${currentLevel.name}</h3>
+      <h2>${currentLevel.name} - BPM: ${currentLevel.bpm}
+        <small>(puzzle ${game.idxCurrentLevel + 1} of ${
+      game.levels.length
+    })</small>
+      </h2>
     `;
-    board.innerHTML += `<p class="level-description">${
-      currentLevel.description
-    }${currentLevel.description ? " - " : ""}BPM: ${currentLevel.bpm}</p>`;
+    if (currentLevel.description) {
+      board.innerHTML += `<p class="i">${currentLevel.description}</p>`;
+    }
     board.innerHTML += `
       <div class='pattern-canvas ma4'></div>
-      <button class='play-btn br3 bw0 ph3 pv2 dim orange bg-purple'>Listen now</button>
-      <button class='next-level-btn br3 bw0 ml5 ph3 pv2 dim light-green bg-dark-green'>Next Level</button>
+      <button class='play-btn br3 bw0 ph3 pv2 dim fw6 gold bg-purple pointer'>Listen now</button>
+      <button class='next-level-btn br3 bw0 ml5 ph3 pv2 dim fw6 light-green bg-dark-green pointer'>Next Level</button>
     `;
 
     patternGrid = new DrumPatternGrid(currentLevel);
