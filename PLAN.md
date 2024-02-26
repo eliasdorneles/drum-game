@@ -8,21 +8,24 @@ Let's improve the gameplay!
 
 - [x] review all levels, only keep the ones that are actually interesting
 
+- [ ] save user progress in localStorage
+
+- [ ] add a score system:
+      - add 10 points for every well-placed step
+      - remove 5 points for every misplaced step
+      - add 100 points for every completed level
+
 - [ ] make a level editor
 
 - [ ] allow some levels to build upon the previous one by just adding a new track
 
 - [ ] add a STOP button, show/hide play & stop buttons according to the playing status
 
-- [ ] add a score system, remove points if user attempts to brute-force
-
 - [ ] add more complex hi-hat support, supporting three states: strong, weak and open
 
 - [ ] improve transition from one level to the other: make it mean something!
 
 - [ ] let the user to choose drum kit
-
-- [ ] prevent brute-force play: limit the amount of attempts, show hints if user makes many mistakes
 
 - [ ] add "About / WTF / help?" button
 
