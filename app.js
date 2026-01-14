@@ -2,14 +2,12 @@ const boolToInt = (bool) => +bool;
 
 // DOM helpers
 const addClass = (element, classNames) => {
-  if (typeof classNames === "string") {
-    classNames = classNames.split(" ");
-  }
-  classNames.forEach((className) => element.classList.add(className));
+  const classes = typeof classNames === "string" ? classNames.split(" ") : classNames;
+  element.classList.add(...classes);
 };
 
 const appendAll = (container, nodes) => {
-  nodes.forEach((node) => container.appendChild(node));
+  container.append(...nodes);
 };
 
 const removeClass = (element, className) => {
@@ -21,11 +19,7 @@ const toggleClass = (element, className) => {
 };
 
 const show = (element) => {
-  if (getComputedStyle(element).display === "none") {
-    element.style.display = "";
-  } else {
-    element.style.display = "block";
-  }
+  element.style.display = "";
 };
 
 const hide = (element) => {
@@ -83,10 +77,7 @@ class DrumPatternGrid {
     const trackRow = document.createElement("div");
     addClass(trackRow, "track mb2");
     trackRow.dataset.trackName = trackSpec.name;
-    trackRow.innerHTML =
-      '<span class="track-name dib w3 fw6 pointer v-btm pb1 tr">' +
-      trackSpec.name +
-      "🔉</span>";
+    trackRow.innerHTML = `<span class="track-name dib w3 fw6 pointer v-btm pb1 tr">${trackSpec.name}🔉</span>`;
 
     const boxes = trackSpec.steps.map((isActive, index) =>
       this.#createBox(isActive, index, trackSpec.name)
@@ -137,7 +128,7 @@ function App() {
         // TODO: make a better transition between levels
         show(board.querySelector(".next-level-btn"));
         board.querySelector(".level-title").textContent =
-          "Yay! You passed level: " + game.currentLevel.name + " :)";
+          `Yay! You passed level: ${game.currentLevel.name} :)`;
       } else {
         show(document.querySelector(".finished"));
       }
