@@ -142,7 +142,7 @@
     "description": "Tip: do one at the time =)",
     "pattern": [
       {
-        "name": "ZHi-Hat",
+        "name": "Hi-Hat",
         "steps": [1, 1, 0, 1, 1, 1, 0, 0]
       },
       {
