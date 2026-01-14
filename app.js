@@ -142,7 +142,7 @@ function App() {
       if (game.hasNextLevel()) {
         show(board.querySelector(".next-level-btn"));
         board.querySelector(".level-title").textContent =
-          `Yay! You passed level: ${game.currentLevel.name} :)`;
+          `Bravo! You've completed the level: ${game.currentLevel.name} 🎉`;
       } else {
         show(document.querySelector(".finished"));
       }
