@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+  <defs>
+    <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="titleGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00fff5"/>
+      <stop offset="100%" style="stop-color:#ff9f1c"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="600" fill="url(#bgGrad1)"/>
+
+  <!-- Grid pattern overlay -->
+  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ffffff08" stroke-width="0.5"/>
+  </pattern>
+  <rect width="400" height="600" fill="url(#grid)"/>
+
+  <!-- Header -->
+  <text x="24" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="url(#titleGrad1)">Drum Game</text>
+  <text x="175" y="45" font-size="24">&#x1F941;</text>
+
+  <!-- Level badge -->
+  <rect x="24" y="60" width="180" height="28" rx="14" fill="#2d3748"/>
+  <text x="36" y="79" font-family="Arial, sans-serif" font-size="12" fill="#00fff5">LEVEL 1</text>
+  <rect x="90" y="68" width="100" height="4" rx="2" fill="#1a1a2e"/>
+  <rect x="90" y="68" width="10" height="4" rx="2" fill="#08f26e"/>
+
+  <!-- Level title -->
+  <text x="24" y="120" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#ffffff">Rock</text>
+  <text x="24" y="145" font-family="Arial, sans-serif" font-size="14" fill="#a0a0a0">BPM: 180 | Puzzle 1 of 10</text>
+  <text x="24" y="170" font-family="Arial, sans-serif" font-size="13" fill="#606080" font-style="italic">Here is a classic rock beat</text>
+
+  <!-- Track: Snare -->
+  <g transform="translate(24, 195)">
+    <text x="0" y="25" font-family="monospace" font-size="12" fill="#a0a0a0">Snare</text>
+    <text x="50" y="25" font-size="14" fill="#00fff5">&#x1F50A;</text>
+
+    <!-- Boxes Row -->
+    <g transform="translate(75, 0)">
+      <!-- Box 1 - inactive -->
+      <rect x="0" y="5" width="34" height="34" rx="6" fill="#2d3748" stroke="#00fff520" stroke-width="2"/>
+      <!-- Box 2 - tick (correct) -->
+      <rect x="40" y="5" width="34" height="34" rx="6" fill="#08f26e" filter="url(#glow)"/>
+      <!-- Box 3 - inactive -->
+      <rect x="80" y="5" width="34" height="34" rx="6" fill="#2d3748" stroke="#00fff520" stroke-width="2"/>
+      <!-- Box 4 - tick -->
+      <rect x="120" y="5" width="34" height="34" rx="6" fill="#08f26e" filter="url(#glow)"/>
+      <!-- Box 5 - inactive -->
+      <rect x="160" y="5" width="34" height="34" rx="6" fill="#2d3748" stroke="#00fff520" stroke-width="2"/>
+      <!-- Box 6 - tick -->
+      <rect x="200" y="5" width="34" height="34" rx="6" fill="#08f26e" filter="url(#glow)"/>
+      <!-- Box 7 - inactive -->
+      <rect x="240" y="5" width="34" height="34" rx="6" fill="#2d3748" stroke="#00fff520" stroke-width="2"/>
+      <!-- Box 8 - tick -->
+      <rect x="280" y="5" width="34" height="34" rx="6" fill="#08f26e" filter="url(#glow)"/>
+    </g>
+  </g>
+
+  <!-- Track: Kick -->
+  <g transform="translate(24, 255)">
+    <text x="0" y="25" font-family="monospace" font-size="12" fill="#a0a0a0">Kick</text>
+    <text x="50" y="25" font-size="14" fill="#00fff5">&#x1F50A;</text>
+
+    <!-- Boxes Row -->
+    <g transform="translate(75, 0)">
+      <!-- Box 1 - tick with active (playing indicator) -->
+      <rect x="0" y="5" width="34" height="34" rx="6" fill="#ff9f1c" filter="url(#glowStrong)"/>
+      <!-- Box 2 - inactive -->
+      <rect x="40" y="5" width="34" height="34" rx="6" fill="#2d3748" stroke="#00fff520" stroke-width="2"/>
+      <!-- Box 3 - tick -->
+      <rect x="80" y="5" width="34" height="34" rx="6" fill="#08f26e" filter="url(#glow)"/>
+      <!-- Box 4 - inactive -->
+      <rect x="120" y="5" width="34" height="34" rx="6" fill="#2d3748" stroke="#00fff520" stroke-width="2"/>
+      <!-- Box 5 - tick -->
+      <rect x="160" y="5" width="34" height="34" rx="6" fill="#08f26e" filter="url(#glow)"/>
+      <!-- Box 6 - inactive -->
+      <rect x="200" y="5" width="34" height="34" rx="6" fill="#2d3748" stroke="#00fff520" stroke-width="2"/>
+      <!-- Box 7 - mistake (wrong box selected) -->
+      <rect x="240" y="5" width="34" height="34" rx="6" fill="#ff4757" filter="url(#glow)"/>
+      <!-- Box 8 - inactive -->
+      <rect x="280" y="5" width="34" height="34" rx="6" fill="#2d3748" stroke="#00fff520" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Timeline/Progress bar -->
+  <g transform="translate(24, 330)">
+    <rect x="0" y="0" width="352" height="6" rx="3" fill="#2d3748"/>
+    <rect x="0" y="0" width="44" height="6" rx="3" fill="#ff9f1c" filter="url(#glow)"/>
+    <!-- Beat markers -->
+    <g fill="#ffffff30">
+      <rect x="44" y="-2" width="1" height="10"/>
+      <rect x="88" y="-2" width="1" height="10"/>
+      <rect x="132" y="-2" width="1" height="10"/>
+      <rect x="176" y="-2" width="1" height="10"/>
+      <rect x="220" y="-2" width="1" height="10"/>
+      <rect x="264" y="-2" width="1" height="10"/>
+      <rect x="308" y="-2" width="1" height="10"/>
+    </g>
+  </g>
+
+  <!-- Play Button -->
+  <g transform="translate(200, 400)">
+    <circle cx="0" cy="0" r="40" fill="#16213e" stroke="#00fff5" stroke-width="3" filter="url(#glow)"/>
+    <polygon points="-12,-18 -12,18 18,0" fill="#00fff5"/>
+  </g>
+
+  <!-- Instructions -->
+  <g transform="translate(24, 480)">
+    <rect x="0" y="0" width="352" height="60" rx="8" fill="#2d374850" stroke="#ffffff10" stroke-width="1"/>
+    <text x="16" y="25" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#00fff5">HOW TO PLAY</text>
+    <text x="16" y="45" font-family="Arial, sans-serif" font-size="10" fill="#a0a0a0">Listen to the drum loop, then click boxes to match</text>
+  </g>
+
+  <!-- Mobile indicator -->
+  <g transform="translate(24, 560)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="10" fill="#606080">Dark Synth Theme | Mobile Responsive</text>
+  </g>
+
+  <!-- State Legend -->
+  <g transform="translate(240, 470)">
+    <rect x="0" y="10" width="12" height="12" rx="2" fill="#2d3748"/>
+    <text x="18" y="20" font-family="Arial, sans-serif" font-size="9" fill="#a0a0a0">Empty</text>
+
+    <rect x="0" y="28" width="12" height="12" rx="2" fill="#08f26e"/>
+    <text x="18" y="38" font-family="Arial, sans-serif" font-size="9" fill="#a0a0a0">Selected</text>
+
+    <rect x="0" y="46" width="12" height="12" rx="2" fill="#ff9f1c"/>
+    <text x="18" y="56" font-family="Arial, sans-serif" font-size="9" fill="#a0a0a0">Playing</text>
+
+    <rect x="70" y="10" width="12" height="12" rx="2" fill="#ff4757"/>
+    <text x="88" y="20" font-family="Arial, sans-serif" font-size="9" fill="#a0a0a0">Mistake</text>
+  </g>
+</svg>

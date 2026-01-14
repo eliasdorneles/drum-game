@@ -1,0 +1,237 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 650" width="400" height="650">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+    <filter id="cardShadow3">
+      <feDropShadow dx="0" dy="10" stdDeviation="20" flood-color="#7c3aed50"/>
+    </filter>
+    <filter id="boxShadow3">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#00000020"/>
+    </filter>
+    <filter id="playBtnShadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#7c3aed60"/>
+    </filter>
+  </defs>
+
+  <!-- Background gradient -->
+  <rect width="400" height="650" fill="url(#bgGrad3)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="50" cy="100" r="80" fill="#ffffff08"/>
+  <circle cx="380" cy="550" r="120" fill="#ffffff08"/>
+  <circle cx="350" cy="80" r="40" fill="#ffffff05"/>
+
+  <!-- Header with score -->
+  <g transform="translate(24, 30)">
+    <text x="0" y="25" font-family="'Nunito', 'Poppins', sans-serif" font-size="20" font-weight="800" fill="#ffffff">Drum Game</text>
+    <text x="125" y="25" font-size="22">&#x1F941;</text>
+
+    <!-- Score display -->
+    <g transform="translate(230, 0)">
+      <rect x="0" y="5" width="120" height="30" rx="15" fill="#ffffff20"/>
+      <text x="15" y="25" font-size="14">&#x2B50;</text>
+      <text x="35" y="26" font-family="'Nunito', sans-serif" font-size="16" font-weight="700" fill="#ffffff">1,250</text>
+      <text x="90" y="26" font-family="'Nunito', sans-serif" font-size="11" font-weight="600" fill="#fbbf24">x2</text>
+    </g>
+  </g>
+
+  <!-- Main Card -->
+  <rect x="16" y="70" width="368" height="490" rx="24" fill="#ffffff" filter="url(#cardShadow3)"/>
+
+  <!-- Level badge -->
+  <g transform="translate(32, 90)">
+    <rect x="0" y="0" width="80" height="28" rx="14" fill="#7c3aed"/>
+    <text x="15" y="19" font-family="'Nunito', sans-serif" font-size="12" font-weight="700" fill="#ffffff">LEVEL 1</text>
+  </g>
+
+  <!-- Stars earned -->
+  <g transform="translate(290, 90)">
+    <text x="0" y="20" font-size="18">&#x2B50;&#x2B50;&#x2606;</text>
+  </g>
+
+  <!-- Level Title -->
+  <text x="32" y="150" font-family="'Nunito', 'Poppins', sans-serif" font-size="32" font-weight="800" fill="#1e293b">Rock</text>
+
+  <!-- Subtitle -->
+  <g transform="translate(32, 165)">
+    <text x="0" y="15" font-family="'Nunito', sans-serif" font-size="14" fill="#64748b">180 BPM</text>
+    <circle cx="70" cy="10" r="3" fill="#cbd5e1"/>
+    <text x="82" y="15" font-family="'Nunito', sans-serif" font-size="14" fill="#64748b">Puzzle 1 of 10</text>
+  </g>
+
+  <!-- Description bubble -->
+  <g transform="translate(32, 195)">
+    <rect x="0" y="0" width="200" height="30" rx="15" fill="#f1f5f9"/>
+    <text x="15" y="20" font-family="'Nunito', sans-serif" font-size="12" fill="#64748b">Here is a classic rock beat</text>
+  </g>
+
+  <!-- Track: Snare -->
+  <g transform="translate(32, 250)">
+    <!-- Track icon -->
+    <circle cx="20" cy="22" r="18" fill="#fef3c7"/>
+    <text x="12" y="28" font-size="16">&#x1F941;</text>
+    <text x="45" y="27" font-family="'Nunito', sans-serif" font-size="13" font-weight="700" fill="#1e293b">Snare</text>
+
+    <!-- Boxes Row -->
+    <g transform="translate(0, 40)">
+      <!-- Box 1 - inactive -->
+      <g>
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#e0e7ff"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#c7d2fe"/>
+      </g>
+      <!-- Box 2 - tick (correct) -->
+      <g transform="translate(44, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#10b981"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#059669"/>
+        <path d="M12 20 L18 26 L28 14" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <!-- Box 3 - inactive -->
+      <g transform="translate(88, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#e0e7ff"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#c7d2fe"/>
+      </g>
+      <!-- Box 4 - tick -->
+      <g transform="translate(132, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#10b981"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#059669"/>
+        <path d="M12 20 L18 26 L28 14" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <!-- Box 5 - inactive -->
+      <g transform="translate(176, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#e0e7ff"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#c7d2fe"/>
+      </g>
+      <!-- Box 6 - tick -->
+      <g transform="translate(220, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#10b981"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#059669"/>
+        <path d="M12 20 L18 26 L28 14" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <!-- Box 7 - inactive -->
+      <g transform="translate(264, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#e0e7ff"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#c7d2fe"/>
+      </g>
+      <!-- Box 8 - tick -->
+      <g transform="translate(308, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#10b981"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#059669"/>
+        <path d="M12 20 L18 26 L28 14" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Track: Kick -->
+  <g transform="translate(32, 360)">
+    <!-- Track icon -->
+    <circle cx="20" cy="22" r="18" fill="#fce7f3"/>
+    <text x="10" y="28" font-size="16">&#x1F525;</text>
+    <text x="45" y="27" font-family="'Nunito', sans-serif" font-size="13" font-weight="700" fill="#1e293b">Kick</text>
+
+    <!-- Boxes Row -->
+    <g transform="translate(0, 40)">
+      <!-- Box 1 - active (playing) -->
+      <g>
+        <rect x="0" y="-3" width="40" height="46" rx="10" fill="url(#goldGrad)"/>
+        <rect x="0" y="39" width="40" height="4" rx="2" fill="#d97706"/>
+        <circle cx="20" cy="20" r="6" fill="#ffffff"/>
+      </g>
+      <!-- Box 2 - inactive -->
+      <g transform="translate(44, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#e0e7ff"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#c7d2fe"/>
+      </g>
+      <!-- Box 3 - tick -->
+      <g transform="translate(88, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#10b981"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#059669"/>
+        <path d="M12 20 L18 26 L28 14" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <!-- Box 4 - inactive -->
+      <g transform="translate(132, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#e0e7ff"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#c7d2fe"/>
+      </g>
+      <!-- Box 5 - tick -->
+      <g transform="translate(176, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#10b981"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#059669"/>
+        <path d="M12 20 L18 26 L28 14" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <!-- Box 6 - inactive -->
+      <g transform="translate(220, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#e0e7ff"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#c7d2fe"/>
+      </g>
+      <!-- Box 7 - mistake -->
+      <g transform="translate(264, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#ef4444"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#dc2626"/>
+        <path d="M14 14 L26 26 M26 14 L14 26" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- Box 8 - inactive -->
+      <g transform="translate(308, 0)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#e0e7ff"/>
+        <rect x="0" y="36" width="40" height="4" rx="2" fill="#c7d2fe"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Play Button (FAB style) -->
+  <g transform="translate(200, 485)">
+    <circle cx="0" cy="0" r="36" fill="#7c3aed" filter="url(#playBtnShadow)"/>
+    <circle cx="0" cy="6" r="36" fill="#5b21b6"/>
+    <circle cx="0" cy="0" r="36" fill="#7c3aed"/>
+    <polygon points="-10,-15 -10,15 15,0" fill="#ffffff"/>
+  </g>
+
+  <!-- Instructions pill -->
+  <g transform="translate(32, 535)">
+    <rect x="0" y="0" width="336" height="50" rx="25" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="20" y="20" font-size="16">&#x1F3A7;</text>
+    <text x="45" y="22" font-family="'Nunito', sans-serif" font-size="11" font-weight="700" fill="#64748b">HOW TO PLAY</text>
+    <text x="45" y="38" font-family="'Nunito', sans-serif" font-size="11" fill="#94a3b8">Listen, then tap boxes to match the beat!</text>
+  </g>
+
+  <!-- State Legend -->
+  <g transform="translate(32, 600)">
+    <g>
+      <rect x="0" y="0" width="20" height="20" rx="6" fill="#e0e7ff"/>
+      <rect x="0" y="16" width="20" height="4" rx="2" fill="#c7d2fe"/>
+      <text x="26" y="15" font-family="'Nunito', sans-serif" font-size="10" fill="#64748b">Empty</text>
+    </g>
+    <g transform="translate(75, 0)">
+      <rect x="0" y="0" width="20" height="20" rx="6" fill="#10b981"/>
+      <rect x="0" y="16" width="20" height="4" rx="2" fill="#059669"/>
+      <text x="26" y="15" font-family="'Nunito', sans-serif" font-size="10" fill="#64748b">Correct</text>
+    </g>
+    <g transform="translate(155, 0)">
+      <rect x="0" y="0" width="20" height="20" rx="6" fill="#fbbf24"/>
+      <rect x="0" y="16" width="20" height="4" rx="2" fill="#d97706"/>
+      <text x="26" y="15" font-family="'Nunito', sans-serif" font-size="10" fill="#64748b">Playing</text>
+    </g>
+    <g transform="translate(235, 0)">
+      <rect x="0" y="0" width="20" height="20" rx="6" fill="#ef4444"/>
+      <rect x="0" y="16" width="20" height="4" rx="2" fill="#dc2626"/>
+      <text x="26" y="15" font-family="'Nunito', sans-serif" font-size="10" fill="#64748b">Oops!</text>
+    </g>
+  </g>
+
+  <!-- Confetti decorations (success state) -->
+  <g opacity="0.8">
+    <circle cx="60" cy="140" r="4" fill="#fbbf24"/>
+    <circle cx="340" cy="120" r="3" fill="#10b981"/>
+    <circle cx="320" cy="180" r="5" fill="#f472b6"/>
+    <rect x="80" y="130" width="6" height="6" fill="#818cf8" transform="rotate(45, 83, 133)"/>
+    <rect x="300" y="150" width="5" height="5" fill="#34d399" transform="rotate(30, 302, 152)"/>
+  </g>
+
+  <!-- Footer label -->
+  <text x="200" y="638" font-family="'Nunito', sans-serif" font-size="10" fill="#ffffff80" text-anchor="middle">Playful Game Theme | Fun &amp; Engaging</text>
+</svg>

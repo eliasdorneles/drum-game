@@ -58,7 +58,7 @@ class DrumPatternGrid {
   #createBox(isActive, index, trackName) {
     // Create a box element representing a step in the pattern
     const box = document.createElement("span");
-    addClass(box, "box dib w2 h2 pointer br3 ml1");
+    addClass(box, "box");
     box.innerHTML = "&nbsp;";
 
     // Add data attributes to the box, to make it easier to identify the track and step
@@ -75,9 +75,9 @@ class DrumPatternGrid {
   #createTrackRow(trackSpec) {
     // Create a row element representing a track in the pattern
     const trackRow = document.createElement("div");
-    addClass(trackRow, "track mb2");
+    addClass(trackRow, "track");
     trackRow.dataset.trackName = trackSpec.name;
-    trackRow.innerHTML = `<span class="track-name dib w3 fw6 pointer v-btm pb1 tr">${trackSpec.name}🔉</span>`;
+    trackRow.innerHTML = `<span class="track-name">${trackSpec.name}</span>`;
 
     const boxes = trackSpec.steps.map((isActive, index) =>
       this.#createBox(isActive, index, trackSpec.name)
@@ -158,9 +158,9 @@ function App() {
       board.innerHTML += `<p class="i">${currentLevel.description}</p>`;
     }
     board.innerHTML += `
-      <div class='pattern-canvas ma4'></div>
-      <button class='play-btn br3 bw0 ph3 pv2 dim fw6 gold bg-purple pointer'>Listen now</button>
-      <button class='next-level-btn br3 bw0 ml5 ph3 pv2 dim fw6 light-green bg-dark-green pointer'>Next Level</button>
+      <div class='pattern-canvas'></div>
+      <button class='play-btn'>Listen now</button>
+      <button class='next-level-btn'>Next Level</button>
     `;
 
     patternGrid = new DrumPatternGrid(currentLevel);

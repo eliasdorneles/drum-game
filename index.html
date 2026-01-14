@@ -2,44 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Drum Game 🥁</title>
-    <link rel="stylesheet" href="vendor/tachyons.min.css" />
+    <title>Drum Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      .box {
-        background-color: #cdecff;
-        outline: 2px solid #96ccff;
-      }
-
-      .box.tick {
-        background-color: #19a974;
-      }
-
-      .box.isActive {
-        background-color: #ff80cc;
-      }
-
-      .box.mistake.tick {
-        background-color: #ff4136;
-      }
-    </style>
+    <meta name="theme-color" content="#1a1a2e" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body>
-    <section class="game sans-serif ml2">
-      <h1 class="f4">Drum Game 🥁</h1>
-      <div class="board ma3">
+    <section class="game">
+      <h1>Drum Game</h1>
+      <div class="board">
         <div class="pattern-canvas">Loading...</div>
       </div>
       <div class="finished" style="display: none">
-        <h2 class="woo-hoo">Woo-hoo, you finished the game, congrats!</h2>
-        <a href="." class="btn primary-btn start-btn">Play again</a>
+        <h2>Woo-hoo, you finished the game, congrats!</h2>
+        <a href=".">Play again</a>
       </div>
 
-      <p class="f6 mt4 w6">
+      <p>
         <strong>How to play:</strong> Listen to the drum loop attentively, then
         click on the boxes until their pattern matches the loop sequence. For
-        best results, plug-in your headphones 🎧
+        best results, plug-in your headphones.
       </p>
     </section>
 

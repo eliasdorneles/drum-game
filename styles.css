@@ -1,0 +1,369 @@
+/* Dark Synth Theme for Drum Game */
+
+:root {
+  /* Colors */
+  --bg-primary: #1a1a2e;
+  --bg-surface: #16213e;
+  --accent-cyan: #00fff5;
+  --accent-orange: #ff9f1c;
+  --success: #08f26e;
+  --error: #ff4757;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --box-inactive: #2d3748;
+  --box-border: rgba(0, 255, 245, 0.15);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Shadows */
+  --shadow-glow-cyan: 0 0 20px rgba(0, 255, 245, 0.4);
+  --shadow-glow-green: 0 0 15px rgba(8, 242, 110, 0.5);
+  --shadow-glow-orange: 0 0 20px rgba(255, 159, 28, 0.6);
+  --shadow-glow-red: 0 0 15px rgba(255, 71, 87, 0.5);
+
+  /* Transitions */
+  --transition-fast: 100ms ease-out;
+  --transition-normal: 150ms ease-out;
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Grid pattern overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Game Container */
+.game {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+/* Header */
+.game > h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 var(--space-lg) 0;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Board */
+.board {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+/* Level Title */
+.level-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.level-title small {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-left: var(--space-sm);
+}
+
+/* Description */
+.board > p.i {
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0 0 var(--space-lg) 0;
+  font-size: 0.9rem;
+}
+
+/* Pattern Canvas */
+.pattern-canvas {
+  margin-bottom: var(--space-xl);
+}
+
+/* Track Row */
+.track {
+  margin-bottom: var(--space-md);
+}
+
+/* Track Name */
+.track-name {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: inline-block;
+  min-width: 100px;
+  text-align: right;
+  padding-right: var(--space-md);
+  cursor: pointer;
+  transition: color var(--transition-normal);
+  vertical-align: middle;
+}
+
+.track-name:hover {
+  color: var(--accent-cyan);
+}
+
+/* Boxes */
+.box {
+  width: 44px;
+  height: 44px;
+  background: var(--box-inactive);
+  border: 2px solid var(--box-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background var(--transition-normal),
+    border-color var(--transition-normal),
+    box-shadow var(--transition-normal),
+    transform var(--transition-fast);
+  display: inline-block;
+  vertical-align: middle;
+  margin: 2px;
+}
+
+.box:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.box:active {
+  transform: scale(0.95);
+}
+
+/* Box States */
+.box.tick {
+  background: var(--success);
+  border-color: var(--success);
+  box-shadow: var(--shadow-glow-green);
+}
+
+.box.isActive {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  box-shadow: var(--shadow-glow-orange);
+  animation: pulse 300ms ease-in-out;
+}
+
+.box.mistake.tick {
+  background: var(--error);
+  border-color: var(--error);
+  box-shadow: var(--shadow-glow-red);
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Buttons */
+.play-btn,
+.next-level-btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: var(--space-md) var(--space-xl);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition:
+    background var(--transition-normal),
+    box-shadow var(--transition-normal),
+    transform var(--transition-fast);
+}
+
+.play-btn {
+  background: var(--bg-primary);
+  color: var(--accent-cyan);
+  border: 2px solid var(--accent-cyan);
+}
+
+.play-btn:hover:not([disabled]) {
+  background: rgba(0, 255, 245, 0.1);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.play-btn:active:not([disabled]) {
+  transform: scale(0.98);
+}
+
+.play-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.next-level-btn {
+  background: var(--success);
+  color: var(--bg-primary);
+  margin-left: var(--space-md);
+}
+
+.next-level-btn:hover {
+  box-shadow: var(--shadow-glow-green);
+}
+
+.next-level-btn:active {
+  transform: scale(0.98);
+}
+
+/* Finished State */
+.finished {
+  text-align: center;
+  padding: var(--space-xl);
+}
+
+.finished h2 {
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--success));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-lg);
+}
+
+.finished a {
+  display: inline-block;
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+  text-decoration: none;
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  transition: box-shadow var(--transition-normal);
+}
+
+.finished a:hover {
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+/* Instructions */
+.game > p {
+  background: rgba(45, 55, 72, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  max-width: 600px;
+}
+
+.game > p strong {
+  color: var(--accent-cyan);
+}
+
+/* Loading State */
+.pattern-canvas:empty::before,
+.board .pattern-canvas:only-child::before {
+  content: "Loading...";
+  color: var(--text-secondary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .game {
+    padding: var(--space-md);
+  }
+
+  .board {
+    padding: var(--space-md);
+  }
+
+  .track-name {
+    display: block;
+    min-width: auto;
+    text-align: left;
+    padding-right: 0;
+    margin-bottom: var(--space-sm);
+  }
+
+  .box {
+    width: 38px;
+    height: 38px;
+  }
+
+  .level-title {
+    font-size: 1.25rem;
+  }
+
+  .level-title small {
+    display: block;
+    margin-left: 0;
+    margin-top: var(--space-xs);
+  }
+
+  .play-btn,
+  .next-level-btn {
+    width: 100%;
+    margin: var(--space-sm) 0;
+  }
+
+  .next-level-btn {
+    margin-left: 0;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus Visible for Keyboard Navigation */
+.box:focus-visible,
+.play-btn:focus-visible,
+.next-level-btn:focus-visible,
+.track-name:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
