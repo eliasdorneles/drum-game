@@ -143,7 +143,8 @@ function App() {
       }
     } else {
       hide(board.querySelector(".next-level-btn"));
-      board.querySelector(".level-title").textContent = game.currentLevel.name;
+      board.querySelector(".level-title").innerHTML = `${game.currentLevel.name} - BPM: ${game.currentLevel.bpm}
+        <small>(puzzle ${game.idxCurrentLevel + 1} of ${game.levels.length})</small>`;
     }
   };
 
