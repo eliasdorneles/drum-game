@@ -119,13 +119,27 @@ class DrumPatternGrid {
       return inputPatt;
     }, {});
   }
+
+  playVictoryWave() {
+    // Animate all boxes in a wave pattern
+    const allBoxes = this.patternBoxes.flat();
+    allBoxes.forEach((box, index) => {
+      setTimeout(() => {
+        addClass(box, "victory-wave");
+      }, index * 50); // 50ms delay between each box
+    });
+  }
 }
 
 function App() {
   const handleBoxClicked = () => {
     if (game.isCorrectPattern(patternGrid.getUserInputPattern())) {
+      // Celebration! Play wave animation and victory sound
+      addClass(board, "victory");
+      patternGrid.playVictoryWave();
+      game.playVictorySound();
+
       if (game.hasNextLevel()) {
-        // TODO: make a better transition between levels
         show(board.querySelector(".next-level-btn"));
         board.querySelector(".level-title").textContent =
           `Yay! You passed level: ${game.currentLevel.name} :)`;
@@ -133,6 +147,7 @@ function App() {
         show(document.querySelector(".finished"));
       }
     } else {
+      removeClass(board, "victory");
       hide(board.querySelector(".next-level-btn"));
       board.querySelector(".level-title").innerHTML = `${game.currentLevel.name} - BPM: ${game.currentLevel.bpm}
         <small>(puzzle ${game.idxCurrentLevel + 1} of ${game.levels.length})</small>`;
@@ -145,6 +160,7 @@ function App() {
   };
 
   const updateUIForCurrentLevel = (currentLevel) => {
+    removeClass(board, "victory");
     addClass(board, "playing");
 
     board.innerHTML = `

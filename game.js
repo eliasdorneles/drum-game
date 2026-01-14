@@ -13,6 +13,7 @@ class Game {
       { name: "Crash", file: "crash.wav" },
       { name: "Cowbell", file: "cowbell.wav" },
       { name: "Stick", file: "stick.wav" },
+      { name: "Win", file: "win.wav" },
     ]);
   }
 
@@ -67,6 +68,11 @@ class Game {
 
   playTrackSampleOnce(track) {
     this.audioLibrary.playSampleAfter(track, 0);
+  }
+
+  playVictorySound() {
+    const startTime = this.audioLibrary.getCurrentTime();
+    this.audioLibrary.playSampleAfter("Win", startTime, 0.2);
   }
 
   isCorrectPattern(enteredPattern) {

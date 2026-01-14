@@ -202,6 +202,33 @@ body::before {
   }
 }
 
+/* Victory wave animation */
+@keyframes victoryWave {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.2);
+    background: var(--success);
+    box-shadow: var(--shadow-glow-green);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.box.victory-wave {
+  animation: victoryWave 400ms ease-out forwards;
+}
+
+/* Victory state for the board */
+.board.victory .level-title {
+  background: linear-gradient(90deg, var(--success), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Buttons */
 .play-btn,
 .next-level-btn {

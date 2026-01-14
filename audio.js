@@ -49,11 +49,20 @@ class AudioLibrary {
     return sample.buffer;
   }
 
-  playSampleAfter(name, time) {
+  playSampleAfter(name, time, volume = 1.0) {
     const buffer = this.getSampleBuffer(name);
     const source = this.audioContext.createBufferSource();
     source.buffer = buffer;
-    source.connect(this.audioContext.destination);
+
+    if (volume < 1.0) {
+      const gainNode = this.audioContext.createGain();
+      gainNode.gain.value = volume;
+      source.connect(gainNode);
+      gainNode.connect(this.audioContext.destination);
+    } else {
+      source.connect(this.audioContext.destination);
+    }
+
     source.start(time);
   }
 
