@@ -39,19 +39,16 @@ class Game {
 
     let amountOfSteps = 0;
     if (!this.currentLevel.pattern) {
-      throw Error("Level has no pattern configured");
+      throw new Error("Level has no pattern configured");
     }
     for (let i = 0; i < this.currentLevel.pattern.length; i++) {
       const pattern = this.currentLevel.pattern[i];
-      if (i == 0) {
+      if (i === 0) {
         amountOfSteps = pattern.steps.length;
       }
-      if (amountOfSteps != pattern.steps.length) {
+      if (amountOfSteps !== pattern.steps.length) {
         console.error(
-          "Unexpected difference of number of steps: " +
-            amountOfSteps +
-            " != " +
-            pattern.steps.length
+          `Unexpected difference of number of steps: ${amountOfSteps} !== ${pattern.steps.length}`
         );
       }
     }
@@ -59,21 +56,13 @@ class Game {
     console.log("Initialized level with amountOfSteps =", amountOfSteps);
   }
 
-  load(callback) {
-    const request = new XMLHttpRequest();
-    request.open("GET", "./levels.json");
-
-    request.onload = () => {
-      this.levels = JSON.parse(request.response);
-      this.loadLevel(0);
-      callback();
-    };
-
-    request.onerror = function () {
-      throw Error("BufferLoader: XHR error");
-    };
-
-    request.send();
+  async load() {
+    const response = await fetch("./levels.json");
+    if (!response.ok) {
+      throw new Error(`Failed to load levels: ${response.status}`);
+    }
+    this.levels = await response.json();
+    this.loadLevel(0);
   }
 
   playTrackSampleOnce(track) {
@@ -83,9 +72,9 @@ class Game {
   isCorrectPattern(enteredPattern) {
     const matches = this.currentLevel.pattern.map((patt) => {
       const enteredSteps = enteredPattern[patt.name];
-      return JSON.stringify(enteredSteps) == JSON.stringify(patt.steps);
+      return JSON.stringify(enteredSteps) === JSON.stringify(patt.steps);
     });
-    return matches.reduce((o, v) => o && v, true);
+    return matches.every(Boolean);
   }
 
   playCurrentLevelLoop({ tickCallback, finishCallback }) {
@@ -108,7 +97,7 @@ class Game {
         const durationSecs = currentBar * barDuration + step * beatDuration;
         setTimeout(tickCallback, durationSecs * 1000, step);
         level.pattern.forEach((pattern) => {
-          if (pattern.steps[step] == 1) {
+          if (pattern.steps[step] === 1) {
             this.audioLibrary.playSampleAfter(
               pattern.name,
               0.05 + startTime + durationSecs

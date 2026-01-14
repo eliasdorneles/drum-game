@@ -1,5 +1,6 @@
 const boolToInt = (bool) => +bool;
 
+// DOM helpers
 const addClass = (element, classNames) => {
   if (typeof classNames === "string") {
     classNames = classNames.split(" ");
@@ -31,6 +32,7 @@ const hide = (element) => {
   element.style.display = "none";
 };
 
+// Event delegation helper
 function on(container, selector, event, callback) {
   // Validate arguments
   if (!container || !selector || !event || !callback) {
@@ -154,7 +156,7 @@ function App() {
     addClass(board, "playing");
 
     board.innerHTML = `
-      <h2>${currentLevel.name} - BPM: ${currentLevel.bpm}
+      <h2 class="level-title">${currentLevel.name} - BPM: ${currentLevel.bpm}
         <small>(puzzle ${game.idxCurrentLevel + 1} of ${
       game.levels.length
     })</small>
@@ -198,7 +200,7 @@ function App() {
 
   let game = new Game();
 
-  game.load(() => updateUIForCurrentLevel(game.currentLevel));
+  game.load().then(() => updateUIForCurrentLevel(game.currentLevel));
 
   const board = document.querySelector(".board");
 
