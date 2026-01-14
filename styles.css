@@ -314,17 +314,25 @@ body::before {
     padding: var(--space-md);
   }
 
+  .track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    max-width: 280px;
+  }
+
   .track-name {
-    display: block;
+    grid-column: 1 / -1;
     min-width: auto;
     text-align: left;
     padding-right: 0;
-    margin-bottom: var(--space-sm);
   }
 
   .box {
-    width: 38px;
-    height: 38px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0;
   }
 
   .level-title {
