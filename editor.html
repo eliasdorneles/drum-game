@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Drum Game - Level Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1a1a2e" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Editor-specific styles */
+      .editor-container {
+        display: flex;
+        min-height: 100vh;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 280px;
+        background: var(--bg-surface);
+        border-right: 1px solid var(--box-border);
+        padding: var(--space-md);
+        overflow-y: auto;
+        flex-shrink: 0;
+      }
+
+      .sidebar h2 {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin: 0 0 var(--space-md) 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .level-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--space-lg) 0;
+      }
+
+      .level-list li {
+        padding: var(--space-sm) var(--space-md);
+        margin-bottom: var(--space-xs);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: background var(--transition-normal);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .level-list li:hover {
+        background: rgba(0, 255, 245, 0.1);
+      }
+
+      .level-list li.selected {
+        background: rgba(0, 255, 245, 0.2);
+        border: 1px solid var(--accent-cyan);
+      }
+
+      .level-list li .level-name {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .level-list li .level-actions {
+        display: flex;
+        gap: var(--space-xs);
+        opacity: 0;
+        transition: opacity var(--transition-normal);
+      }
+
+      .level-list li:hover .level-actions,
+      .level-list li.selected .level-actions {
+        opacity: 1;
+      }
+
+      .level-action-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 2px 6px;
+        border-radius: var(--radius-sm);
+        font-size: 0.85rem;
+        transition: all var(--transition-normal);
+      }
+
+      .level-action-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+      }
+
+      .level-action-btn.delete:hover {
+        color: var(--error);
+      }
+
+      .sidebar-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .sidebar-btn {
+        width: 100%;
+        padding: var(--space-sm) var(--space-md);
+        background: transparent;
+        border: 1px solid var(--box-border);
+        color: var(--text-primary);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all var(--transition-normal);
+      }
+
+      .sidebar-btn:hover {
+        border-color: var(--accent-cyan);
+        background: rgba(0, 255, 245, 0.1);
+      }
+
+      .sidebar-btn.primary {
+        background: var(--accent-cyan);
+        color: var(--bg-primary);
+        border-color: var(--accent-cyan);
+      }
+
+      .sidebar-btn.primary:hover {
+        box-shadow: var(--shadow-glow-cyan);
+      }
+
+      /* Main Editor Area */
+      .main-editor {
+        flex: 1;
+        padding: var(--space-xl);
+        overflow-y: auto;
+      }
+
+      .editor-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-xl);
+      }
+
+      .editor-header h1 {
+        font-size: 1.5rem;
+        margin: 0;
+        background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .back-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color var(--transition-normal);
+      }
+
+      .back-link:hover {
+        color: var(--accent-cyan);
+      }
+
+      /* Metadata Form */
+      .metadata-form {
+        background: var(--bg-surface);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        margin-bottom: var(--space-xl);
+      }
+
+      .form-row {
+        display: flex;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-md);
+        flex-wrap: wrap;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .form-group.wide {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .form-group label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary);
+      }
+
+      .form-group input {
+        background: var(--bg-primary);
+        border: 1px solid var(--box-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-sm) var(--space-md);
+        color: var(--text-primary);
+        font-size: 1rem;
+        transition: border-color var(--transition-normal);
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--accent-cyan);
+      }
+
+      .form-group input[type="number"] {
+        width: 100px;
+      }
+
+      /* Pattern Editor */
+      .pattern-editor {
+        background: var(--bg-surface);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        margin-bottom: var(--space-xl);
+      }
+
+      .pattern-editor h3 {
+        margin: 0 0 var(--space-lg) 0;
+        font-size: 1rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .editor-track {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--space-md);
+        gap: var(--space-sm);
+      }
+
+      .editor-track select {
+        width: 120px;
+        background: var(--bg-primary);
+        border: 1px solid var(--box-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-sm);
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        cursor: pointer;
+      }
+
+      .editor-track select:focus {
+        outline: none;
+        border-color: var(--accent-cyan);
+      }
+
+      .editor-boxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+      }
+
+      .editor-box {
+        width: 40px;
+        height: 40px;
+        background: var(--box-inactive);
+        border: 2px solid var(--box-border);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all var(--transition-normal);
+      }
+
+      .editor-box:hover {
+        border-color: var(--accent-cyan);
+      }
+
+      .editor-box.active {
+        background: var(--success);
+        border-color: var(--success);
+        box-shadow: var(--shadow-glow-green);
+      }
+
+      .editor-box.playing {
+        background: var(--accent-orange);
+        border-color: var(--accent-orange);
+        box-shadow: var(--shadow-glow-orange);
+      }
+
+      /* Group separator */
+      .editor-box.group-start {
+        margin-left: var(--space-sm);
+      }
+
+      .editor-box:first-child.group-start {
+        margin-left: 0;
+      }
+
+      .remove-track-btn {
+        background: transparent;
+        border: 1px solid var(--box-border);
+        color: var(--text-secondary);
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        font-size: 1.2rem;
+        line-height: 1;
+        transition: all var(--transition-normal);
+      }
+
+      .remove-track-btn:hover {
+        border-color: var(--error);
+        color: var(--error);
+      }
+
+      .pattern-controls {
+        display: flex;
+        gap: var(--space-md);
+        margin-top: var(--space-lg);
+        flex-wrap: wrap;
+      }
+
+      .pattern-btn {
+        padding: var(--space-sm) var(--space-md);
+        background: transparent;
+        border: 1px solid var(--box-border);
+        color: var(--text-primary);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all var(--transition-normal);
+      }
+
+      .pattern-btn:hover {
+        border-color: var(--accent-cyan);
+        background: rgba(0, 255, 245, 0.1);
+      }
+
+      .pattern-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Add track dropdown */
+      .add-track-container {
+        display: flex;
+        gap: var(--space-sm);
+        align-items: center;
+      }
+
+      .add-track-container select {
+        background: var(--bg-primary);
+        border: 1px solid var(--box-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-sm);
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      /* Action Buttons */
+      .editor-actions {
+        display: flex;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        padding: var(--space-md) var(--space-xl);
+        border: none;
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all var(--transition-normal);
+      }
+
+      .action-btn.preview {
+        background: var(--bg-primary);
+        color: var(--accent-cyan);
+        border: 2px solid var(--accent-cyan);
+      }
+
+      .action-btn.preview:hover:not(:disabled) {
+        background: rgba(0, 255, 245, 0.1);
+        box-shadow: var(--shadow-glow-cyan);
+      }
+
+      .action-btn.preview:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .action-btn.download {
+        background: var(--success);
+        color: var(--bg-primary);
+      }
+
+      .action-btn.download:hover {
+        box-shadow: var(--shadow-glow-green);
+      }
+
+      /* Empty state */
+      .empty-state {
+        text-align: center;
+        padding: var(--space-xl);
+        color: var(--text-secondary);
+      }
+
+      .empty-state p {
+        margin-bottom: var(--space-lg);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .editor-container {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          border-right: none;
+          border-bottom: 1px solid var(--box-border);
+          max-height: 40vh;
+        }
+
+        .main-editor {
+          padding: var(--space-md);
+        }
+
+        .form-row {
+          flex-direction: column;
+        }
+
+        .form-group input[type="number"] {
+          width: 100%;
+        }
+
+        .editor-box {
+          width: 36px;
+          height: 36px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="editor-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h2>Levels</h2>
+        <ul class="level-list" id="levelList">
+          <!-- Populated by JS -->
+        </ul>
+        <div class="sidebar-buttons">
+          <button class="sidebar-btn primary" id="addLevelBtn">+ Add Level</button>
+          <button class="sidebar-btn" id="duplicateLevelBtn">Duplicate Level</button>
+          <button class="sidebar-btn primary" id="downloadBtn">Download JSON</button>
+        </div>
+      </aside>
+
+      <!-- Main Editor -->
+      <main class="main-editor">
+        <div class="editor-header">
+          <h1>Level Editor</h1>
+          <a href="index.html" class="back-link">Back to Game</a>
+        </div>
+
+        <div id="editorContent">
+          <div class="empty-state">
+            <p>Select a level from the sidebar to edit, or create a new one.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="audio.js"></script>
+    <script src="editor.js"></script>
+  </body>
+</html>
