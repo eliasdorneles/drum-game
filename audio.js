@@ -23,7 +23,11 @@ async function loadAudioBuffers(context, urls) {
  */
 class AudioLibrary {
   constructor(samples) {
-    this.samples = samples;
+    // Each sample can have: { name, file, volume (optional, default 1.0) }
+    this.samples = samples.map((s) => ({
+      ...s,
+      volume: s.volume ?? 1.0,
+    }));
     this.ready = false;
     this.audioContext = new AudioContext();
 
@@ -41,22 +45,29 @@ class AudioLibrary {
     return this.audioContext.currentTime;
   }
 
-  getSampleBuffer(name) {
+  getSample(name) {
     const sample = this.samples.find((s) => s.name === name);
     if (!sample) {
       throw new Error(`Sample not found: ${name}`);
     }
-    return sample.buffer;
+    return sample;
+  }
+
+  getSampleBuffer(name) {
+    return this.getSample(name).buffer;
   }
 
   playSampleAfter(name, time, volume = 1.0) {
-    const buffer = this.getSampleBuffer(name);
+    const sample = this.getSample(name);
     const source = this.audioContext.createBufferSource();
-    source.buffer = buffer;
+    source.buffer = sample.buffer;
 
-    if (volume < 1.0) {
+    // Combine sample's configured volume with the passed volume
+    const finalVolume = sample.volume * volume;
+
+    if (finalVolume < 1.0) {
       const gainNode = this.audioContext.createGain();
-      gainNode.gain.value = volume;
+      gainNode.gain.value = finalVolume;
       source.connect(gainNode);
       gainNode.connect(this.audioContext.destination);
     } else {

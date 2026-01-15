@@ -5,15 +5,16 @@ class Game {
     this.levels = [];
     this.idxCurrentLevel = 0;
     this.currentLevel = {};
+    // Each sample can have an optional "volume" property (0.0 to 1.0, default 1.0)
     this.audioLibrary = new AudioLibrary([
-      { name: "Snare", file: "snare.wav" },
-      { name: "Kick", file: "kick.wav" },
-      { name: "Open Hi-Hat", file: "hihat_open.wav" },
-      { name: "Hi-Hat", file: "hihat_closed.wav" },
-      { name: "Crash", file: "crash.wav" },
-      { name: "Cowbell", file: "cowbell.wav" },
-      { name: "Stick", file: "stick.wav" },
-      { name: "Win", file: "win.wav" },
+      { name: "Snare", file: "snare.wav", volume: 0.5 },
+      { name: "Kick", file: "kick.wav", volume: 0.5 },
+      { name: "Hi-Hat", file: "hihat_closed.wav", volume: 0.5 },
+      { name: "Open Hi-Hat", file: "hihat_open.wav", volume: 0.5 },
+      { name: "Crash", file: "crash.wav", volume: 0.5 },
+      { name: "Cowbell", file: "cowbell.wav", volume: 0.5 },
+      { name: "Stick", file: "stick.wav", volume: 0.5 },
+      { name: "Win", file: "win.wav", volume: 0.5 },
     ]);
   }
 
