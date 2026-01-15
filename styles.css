@@ -329,6 +329,8 @@ body::before {
   background: var(--bg-primary);
   color: var(--accent-cyan);
   border: 2px solid var(--accent-cyan);
+  min-width: 140px;
+  text-align: center;
 }
 
 .play-btn:hover:not([disabled]) {
