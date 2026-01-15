@@ -249,6 +249,66 @@ body::before {
   background-clip: text;
 }
 
+/* Audio Controls Container */
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* Volume Control */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.volume-icon {
+  font-size: 1rem;
+  user-select: none;
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--box-inactive);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: box-shadow var(--transition-normal);
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--accent-cyan);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.volume-slider::-moz-range-track {
+  background: var(--box-inactive);
+  border-radius: 2px;
+  height: 4px;
+}
+
 /* Buttons */
 .play-btn,
 .next-level-btn {
@@ -288,7 +348,6 @@ body::before {
 .next-level-btn {
   background: var(--success);
   color: var(--bg-primary);
-  margin-left: var(--space-md);
 }
 
 .next-level-btn:hover {
@@ -398,14 +457,23 @@ body::before {
     margin-top: var(--space-xs);
   }
 
+  .audio-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .play-btn,
   .next-level-btn {
     width: 100%;
-    margin: var(--space-sm) 0;
   }
 
-  .next-level-btn {
-    margin-left: 0;
+  .volume-control {
+    justify-content: center;
+    order: -1;
+  }
+
+  .volume-slider {
+    width: 120px;
   }
 }
 

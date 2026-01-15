@@ -186,6 +186,9 @@ function App() {
   };
 
   const startNextLevel = () => {
+    if (isPlaying) {
+      stopPlayback();
+    }
     game.nextLevel();
     updateUIForCurrentLevel(game.currentLevel);
   };
@@ -206,8 +209,14 @@ function App() {
     }
     board.innerHTML += `
       <div class='pattern-canvas'></div>
-      <button class='play-btn'>Listen now</button>
-      <button class='next-level-btn'>Next Level</button>
+      <div class='audio-controls'>
+        <button class='play-btn'>Listen now</button>
+        <div class='volume-control'>
+          <span class='volume-icon'>🔊</span>
+          <input type='range' class='volume-slider' min='0' max='100' value='${game.getVolume() * 100}'>
+        </div>
+        <button class='next-level-btn'>Next Level</button>
+      </div>
     `;
 
     patternGrid = new DrumPatternGrid(currentLevel);
@@ -220,18 +229,42 @@ function App() {
     hide(board.querySelector(".next-level-btn"));
   };
 
+  let isPlaying = false;
+  let playTimeouts = [];
+
   const playPattern = () => {
+    isPlaying = true;
+    const playButton = board.querySelector(".play-btn");
+    playButton.textContent = "Stop";
+
     game.playCurrentLevelLoop({
       tickCallback: (step) => {
         patternGrid.updatePlayingCursor(step);
       },
       finishCallback: () => {
-        patternGrid.updatePlayingCursor(-1);
-        const playButton = board.querySelector(".play-btn");
-        playButton.removeAttribute("disabled");
-        playButton.blur();
+        stopPlayback();
+      },
+      registerTimeout: (id) => {
+        playTimeouts.push(id);
       },
     });
+  };
+
+  const stopPlayback = () => {
+    isPlaying = false;
+
+    // Clear all scheduled timeouts
+    playTimeouts.forEach((id) => clearTimeout(id));
+    playTimeouts = [];
+
+    // Reset audio
+    game.stopPlayback();
+
+    // Reset UI
+    patternGrid.updatePlayingCursor(-1);
+    const playButton = board.querySelector(".play-btn");
+    playButton.textContent = "Listen now";
+    playButton.blur();
   };
 
   // Main - App entry point
@@ -254,8 +287,11 @@ function App() {
       console.log("Not ready yet!");
       return;
     }
-    this.setAttribute("disabled", "disabled");
-    playPattern();
+    if (isPlaying) {
+      stopPlayback();
+    } else {
+      playPattern();
+    }
   });
 
   on(board, ".next-level-btn", "click", function () {
@@ -267,6 +303,10 @@ function App() {
   on(board, ".track-name", "click", function () {
     const trackName = this.parentElement.dataset.trackName;
     game.playTrackSampleOnce(trackName);
+  });
+
+  on(board, ".volume-slider", "input", function () {
+    game.setVolume(this.value / 100);
   });
 }
 

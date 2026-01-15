@@ -29,7 +29,12 @@ class AudioLibrary {
       volume: s.volume ?? 1.0,
     }));
     this.ready = false;
+    this.masterVolume = 1.0;
     this.audioContext = new AudioContext();
+
+    // Master gain node - all audio routes through this
+    this.masterGain = this.audioContext.createGain();
+    this.masterGain.connect(this.audioContext.destination);
 
     const urls = this.samples.map((f) => `samples/${f.file}`);
 
@@ -57,21 +62,27 @@ class AudioLibrary {
     return this.getSample(name).buffer;
   }
 
+  setMasterVolume(volume) {
+    this.masterVolume = Math.max(0, Math.min(1, volume));
+    this.masterGain.gain.value = this.masterVolume;
+  }
+
   playSampleAfter(name, time, volume = 1.0) {
     const sample = this.getSample(name);
     const source = this.audioContext.createBufferSource();
     source.buffer = sample.buffer;
 
-    // Combine sample's configured volume with the passed volume
-    const finalVolume = sample.volume * volume;
+    // Per-sample volume (sample's configured volume * passed volume)
+    // Master volume is handled by the masterGain node
+    const sampleVolume = sample.volume * volume;
 
-    if (finalVolume < 1.0) {
+    if (sampleVolume < 1.0) {
       const gainNode = this.audioContext.createGain();
-      gainNode.gain.value = finalVolume;
+      gainNode.gain.value = sampleVolume;
       source.connect(gainNode);
-      gainNode.connect(this.audioContext.destination);
+      gainNode.connect(this.masterGain);
     } else {
-      source.connect(this.audioContext.destination);
+      source.connect(this.masterGain);
     }
 
     source.start(time);
@@ -86,6 +97,11 @@ class AudioLibrary {
   }
 
   restart() {
+    const savedVolume = this.masterVolume;
     this.audioContext = new AudioContext();
+    this.masterGain = this.audioContext.createGain();
+    this.masterGain.connect(this.audioContext.destination);
+    this.masterGain.gain.value = savedVolume;
+    this.masterVolume = savedVolume;
   }
 }

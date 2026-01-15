@@ -22,6 +22,14 @@ class Game {
     return this.audioLibrary.ready;
   }
 
+  getVolume() {
+    return this.audioLibrary.masterVolume;
+  }
+
+  setVolume(volume) {
+    this.audioLibrary.setMasterVolume(volume);
+  }
+
   nextLevel() {
     if (this.hasNextLevel()) {
       this.loadLevel(++this.idxCurrentLevel);
@@ -84,10 +92,16 @@ class Game {
     return matches.every(Boolean);
   }
 
-  playCurrentLevelLoop({ tickCallback, finishCallback }) {
+  stopPlayback() {
+    this.audioLibrary.stopAll();
+    this.audioLibrary.restart();
+  }
+
+  playCurrentLevelLoop({ tickCallback, finishCallback, registerTimeout }) {
     /*
      * Play drump loop for the current level, calling tickCallback for every
      * pattern step along the way, and finishCallback when it's done playing.
+     * registerTimeout is called for each scheduled timeout, to allow cancellation.
      */
     if (!this.isReady()) {
       console.log("Not ready yet!");
@@ -102,7 +116,8 @@ class Game {
     for (let currentBar = 0; currentBar < repeat; currentBar++) {
       for (let step = 0; step < level.amountOfSteps; step++) {
         const durationSecs = currentBar * barDuration + step * beatDuration;
-        setTimeout(tickCallback, durationSecs * 1000, step);
+        const timeoutId = setTimeout(tickCallback, durationSecs * 1000, step);
+        if (registerTimeout) registerTimeout(timeoutId);
         level.pattern.forEach((pattern) => {
           if (pattern.steps[step] === 1) {
             this.audioLibrary.playSampleAfter(
@@ -113,6 +128,7 @@ class Game {
         });
       }
     }
-    setTimeout(finishCallback, barDuration * repeat * 1000);
+    const finishTimeoutId = setTimeout(finishCallback, barDuration * repeat * 1000);
+    if (registerTimeout) registerTimeout(finishTimeoutId);
   }
 }
