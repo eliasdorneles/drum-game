@@ -128,7 +128,7 @@ body::before {
 
 /* Track Row */
 .track {
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 /* Track Name */
@@ -136,23 +136,45 @@ body::before {
   font-family: "JetBrains Mono", "Fira Code", monospace;
   font-size: 0.85rem;
   color: var(--text-secondary);
-  display: inline-block;
-  min-width: 100px;
-  text-align: right;
-  padding-right: var(--space-md);
+  display: block;
+  margin-bottom: var(--space-xs);
   cursor: pointer;
   transition: color var(--transition-normal);
-  vertical-align: middle;
 }
 
 .track-name:hover {
   color: var(--accent-cyan);
 }
 
+/* Track boxes container */
+.track-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+/* Beat group container */
+.beat-group {
+  display: flex;
+  gap: 2px;
+}
+
+/* Add spacing between beat groups */
+.beat-group + .beat-group {
+  margin-left: var(--space-sm);
+}
+
+/* Measure break - force new line after 2 groups */
+.measure-break {
+  flex-basis: 100%;
+  height: var(--space-xs);
+}
+
 /* Boxes */
 .box {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   background: var(--box-inactive);
   border: 2px solid var(--box-border);
   border-radius: var(--radius-md);
@@ -162,9 +184,7 @@ body::before {
     border-color var(--transition-normal),
     box-shadow var(--transition-normal),
     transform var(--transition-fast);
-  display: inline-block;
-  vertical-align: middle;
-  margin: 2px;
+  flex-shrink: 0;
 }
 
 .box:hover {
@@ -342,24 +362,30 @@ body::before {
   }
 
   .track {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
-    max-width: 280px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .track-name {
-    grid-column: 1 / -1;
     min-width: auto;
     text-align: left;
     padding-right: 0;
+    margin-bottom: var(--space-xs);
+  }
+
+  .track-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
   }
 
   .box {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
-    margin: 0;
+    width: 32px;
+    height: 32px;
+  }
+
+  .beat-group + .beat-group {
+    margin-left: var(--space-xs);
   }
 
   .level-title {

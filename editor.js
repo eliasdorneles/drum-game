@@ -261,32 +261,52 @@ class LevelEditor {
       return '<p class="empty-state">No tracks yet. Add one below.</p>';
     }
 
+    const groupSize = level.groupSize || 4;
+
     return level.pattern
-      .map(
-        (track, trackIndex) => `
-      <div class="editor-track" data-track-index="${trackIndex}">
-        <select class="track-instrument" data-track-index="${trackIndex}">
-          ${AVAILABLE_INSTRUMENTS.map(
-            (inst) =>
-              `<option value="${inst.name}" ${inst.name === track.name ? "selected" : ""}>${inst.name}</option>`
-          ).join("")}
-        </select>
-        <div class="editor-boxes">
-          ${track.steps
-            .map(
-              (step, stepIndex) => `
-            <div class="editor-box ${step ? "active" : ""} ${stepIndex % level.groupSize === 0 && stepIndex > 0 ? "group-start" : ""}"
-                 data-track-index="${trackIndex}"
-                 data-step-index="${stepIndex}">
+      .map((track, trackIndex) => {
+        // Group steps into beat groups
+        const beatGroups = [];
+        for (let i = 0; i < track.steps.length; i += groupSize) {
+          const groupSteps = track.steps.slice(i, i + groupSize);
+          const groupHtml = `
+            <div class="editor-beat-group">
+              ${groupSteps
+                .map(
+                  (step, j) => `
+                <div class="editor-box ${step ? "active" : ""}"
+                     data-track-index="${trackIndex}"
+                     data-step-index="${i + j}">
+                </div>
+              `
+                )
+                .join("")}
             </div>
-          `
-            )
-            .join("")}
-        </div>
-        <button class="remove-track-btn" data-track-index="${trackIndex}" title="Remove track">×</button>
-      </div>
-    `
-      )
+          `;
+          beatGroups.push(groupHtml);
+
+          // Add measure break after every 2 groups
+          const groupIndex = i / groupSize;
+          if ((groupIndex + 1) % 2 === 0 && i + groupSize < track.steps.length) {
+            beatGroups.push('<div class="editor-measure-break"></div>');
+          }
+        }
+
+        return `
+          <div class="editor-track" data-track-index="${trackIndex}">
+            <select class="track-instrument" data-track-index="${trackIndex}">
+              ${AVAILABLE_INSTRUMENTS.map(
+                (inst) =>
+                  `<option value="${inst.name}" ${inst.name === track.name ? "selected" : ""}>${inst.name}</option>`
+              ).join("")}
+            </select>
+            <div class="editor-boxes">
+              ${beatGroups.join("")}
+            </div>
+            <button class="remove-track-btn" data-track-index="${trackIndex}" title="Remove track">×</button>
+          </div>
+        `;
+      })
       .join("");
   }
 

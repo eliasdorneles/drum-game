@@ -77,12 +77,43 @@ class DrumPatternGrid {
     const trackRow = document.createElement("div");
     addClass(trackRow, "track");
     trackRow.dataset.trackName = trackSpec.name;
-    trackRow.innerHTML = `<span class="track-name">${trackSpec.name}</span>`;
 
-    const boxes = trackSpec.steps.map((isActive, index) =>
-      this.#createBox(isActive, index, trackSpec.name)
-    );
-    appendAll(trackRow, boxes);
+    const trackName = document.createElement("span");
+    addClass(trackName, "track-name");
+    trackName.textContent = trackSpec.name;
+    trackRow.appendChild(trackName);
+
+    // Container for all beat groups
+    const trackBoxes = document.createElement("div");
+    addClass(trackBoxes, "track-boxes");
+
+    const groupSize = this.level.groupSize || 4;
+    const boxes = [];
+
+    // Group boxes into beat groups with measure breaks
+    for (let i = 0; i < trackSpec.steps.length; i += groupSize) {
+      const beatGroup = document.createElement("div");
+      addClass(beatGroup, "beat-group");
+
+      // Create boxes for this beat group
+      for (let j = i; j < Math.min(i + groupSize, trackSpec.steps.length); j++) {
+        const box = this.#createBox(trackSpec.steps[j], j, trackSpec.name);
+        beatGroup.appendChild(box);
+        boxes.push(box);
+      }
+
+      trackBoxes.appendChild(beatGroup);
+
+      // Add measure break after every 2 groups (one measure)
+      const groupIndex = i / groupSize;
+      if ((groupIndex + 1) % 2 === 0 && i + groupSize < trackSpec.steps.length) {
+        const measureBreak = document.createElement("div");
+        addClass(measureBreak, "measure-break");
+        trackBoxes.appendChild(measureBreak);
+      }
+    }
+
+    trackRow.appendChild(trackBoxes);
     return { trackRow, boxes };
   }
 

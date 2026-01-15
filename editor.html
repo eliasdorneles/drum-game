@@ -235,8 +235,8 @@
 
       .editor-track {
         display: flex;
-        align-items: center;
-        margin-bottom: var(--space-md);
+        align-items: flex-start;
+        margin-bottom: var(--space-lg);
         gap: var(--space-sm);
       }
 
@@ -260,11 +260,26 @@
         display: flex;
         flex-wrap: wrap;
         gap: 2px;
+        align-items: flex-start;
+      }
+
+      .editor-beat-group {
+        display: flex;
+        gap: 2px;
+      }
+
+      .editor-beat-group + .editor-beat-group {
+        margin-left: var(--space-sm);
+      }
+
+      .editor-measure-break {
+        flex-basis: 100%;
+        height: var(--space-xs);
       }
 
       .editor-box {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         background: var(--box-inactive);
         border: 2px solid var(--box-border);
         border-radius: var(--radius-md);
@@ -286,15 +301,6 @@
         background: var(--accent-orange);
         border-color: var(--accent-orange);
         box-shadow: var(--shadow-glow-orange);
-      }
-
-      /* Group separator */
-      .editor-box.group-start {
-        margin-left: var(--space-sm);
-      }
-
-      .editor-box:first-child.group-start {
-        margin-left: 0;
       }
 
       .remove-track-btn {
