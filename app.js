@@ -180,8 +180,7 @@ function App() {
     } else {
       removeClass(board, "victory");
       hide(board.querySelector(".next-level-btn"));
-      board.querySelector(".level-title").innerHTML = `${game.currentLevel.name} - BPM: ${game.currentLevel.bpm}
-        <small>(puzzle ${game.idxCurrentLevel + 1} of ${game.levels.length})</small>`;
+      board.querySelector(".level-title").textContent = `${game.currentLevel.name} - BPM: ${game.currentLevel.bpm}`;
     }
   };
 
@@ -198,11 +197,10 @@ function App() {
     addClass(board, "playing");
 
     board.innerHTML = `
-      <h2 class="level-title">${currentLevel.name} - BPM: ${currentLevel.bpm}
-        <small>(puzzle ${game.idxCurrentLevel + 1} of ${
-      game.levels.length
-    })</small>
-      </h2>
+      <div class="level-header">
+        <h2 class="level-title">${currentLevel.name} - BPM: ${currentLevel.bpm}</h2>
+        <div class="level-nav"></div>
+      </div>
     `;
     if (currentLevel.description) {
       board.innerHTML += `<p class="i">${currentLevel.description}</p>`;
@@ -218,6 +216,26 @@ function App() {
         <button class='next-level-btn'>Next Level</button>
       </div>
     `;
+
+    // Add level selector dropdown
+    const levelNav = board.querySelector(".level-nav");
+    const levelSelect = document.createElement("select");
+    levelSelect.className = "level-selector";
+    const maxUnlocked = game.getMaxUnlockedLevel();
+    for (let i = 0; i <= maxUnlocked; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = `${i + 1}. ${game.levels[i].name}`;
+      option.selected = i === game.idxCurrentLevel;
+      levelSelect.appendChild(option);
+    }
+    levelNav.appendChild(levelSelect);
+
+    // Add Start Over button
+    const startOverBtn = document.createElement("button");
+    startOverBtn.textContent = "Start Over";
+    startOverBtn.className = "start-over-btn";
+    levelNav.appendChild(startOverBtn);
 
     patternGrid = new DrumPatternGrid(currentLevel);
 
@@ -308,6 +326,24 @@ function App() {
   on(board, ".volume-slider", "input", function () {
     game.setVolume(this.value / 100);
   });
+
+  on(board, ".level-selector", "change", function () {
+    if (isPlaying) {
+      stopPlayback();
+    }
+    game.loadLevel(parseInt(this.value, 10));
+    updateUIForCurrentLevel(game.currentLevel);
+  });
+
+  on(board, ".start-over-btn", "click", function () {
+    if (confirm("Reset all progress and start from level 1?")) {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+  });
+
+  // Expose game globally for debugging
+  window.game = game;
 }
 
 App();

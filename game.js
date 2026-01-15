@@ -1,5 +1,7 @@
 // vim: set sw=4:ts=4:
 
+const STORAGE_KEY = 'drumGameProgress';
+
 class Game {
   constructor() {
     this.levels = [];
@@ -33,6 +35,7 @@ class Game {
   nextLevel() {
     if (this.hasNextLevel()) {
       this.loadLevel(++this.idxCurrentLevel);
+      this.saveProgress();
     } else {
       console.error("There is no next level, sorry!");
     }
@@ -66,13 +69,58 @@ class Game {
     console.log("Initialized level with amountOfSteps =", amountOfSteps);
   }
 
+  saveProgress() {
+    const data = {
+      currentLevel: this.idxCurrentLevel,
+      maxUnlockedLevel: Math.max(this.idxCurrentLevel, this.getMaxUnlockedLevel())
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  getMaxUnlockedLevel() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const data = JSON.parse(saved);
+        const max = data.maxUnlockedLevel || 0;
+        return Math.min(max, this.levels.length - 1);
+      }
+    } catch (e) {
+      console.warn('Failed to read progress from localStorage:', e);
+    }
+    return 0;
+  }
+
+  goToLevel(levelIndex) {
+    if (levelIndex >= 0 && levelIndex < this.levels.length) {
+      this.loadLevel(levelIndex);
+      this.saveProgress();
+      return true;
+    }
+    return false;
+  }
+
   async load() {
     const response = await fetch("./levels.json");
     if (!response.ok) {
       throw new Error(`Failed to load levels: ${response.status}`);
     }
     this.levels = await response.json();
-    this.loadLevel(0);
+
+    // Restore saved progress or start from 0
+    let startLevel = 0;
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const data = JSON.parse(saved);
+        startLevel = Math.min(data.currentLevel || 0, this.levels.length - 1);
+        startLevel = Math.max(0, startLevel);
+      }
+    } catch (e) {
+      console.warn('Failed to restore progress:', e);
+    }
+
+    this.loadLevel(startLevel);
   }
 
   playTrackSampleOnce(track) {

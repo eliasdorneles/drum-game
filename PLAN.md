@@ -14,7 +14,7 @@ Let's improve the gameplay!
 
 - [x] add a volume level control
 
-- [ ] save user progress in localStorage
+- [x] save user progress in localStorage
       (in such a way that i can easily hack locally to be able to test a specific level
        without having to play them all)
 

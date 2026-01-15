@@ -98,19 +98,70 @@ body::before {
   margin-bottom: var(--space-lg);
 }
 
+/* Level Header */
+.level-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
 /* Level Title */
 .level-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 var(--space-sm) 0;
+  margin: 0;
 }
 
-.level-title small {
+/* Level Navigation */
+.level-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* Level Selector */
+.level-selector {
+  font-family: inherit;
   font-size: 0.875rem;
-  font-weight: 400;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--box-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  max-width: 180px;
+}
+
+.level-selector:hover {
+  border-color: var(--accent-cyan);
+}
+
+.level-selector:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px rgba(0, 255, 245, 0.2);
+}
+
+/* Start Over Button */
+.start-over-btn {
+  font-family: inherit;
+  font-size: 0.75rem;
+  padding: var(--space-xs) var(--space-sm);
+  background: transparent;
   color: var(--text-secondary);
-  margin-left: var(--space-sm);
+  border: 1px solid var(--box-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.start-over-btn:hover {
+  color: var(--error);
+  border-color: var(--error);
 }
 
 /* Description */
@@ -453,10 +504,18 @@ body::before {
     font-size: 1.25rem;
   }
 
-  .level-title small {
-    display: block;
-    margin-left: 0;
-    margin-top: var(--space-xs);
+  .level-header {
+    flex-direction: column;
+  }
+
+  .level-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .level-selector {
+    flex: 1;
+    max-width: none;
   }
 
   .audio-controls {
@@ -494,7 +553,9 @@ body::before {
 .box:focus-visible,
 .play-btn:focus-visible,
 .next-level-btn:focus-visible,
-.track-name:focus-visible {
+.track-name:focus-visible,
+.level-selector:focus-visible,
+.start-over-btn:focus-visible {
   outline: 2px solid var(--accent-cyan);
   outline-offset: 2px;
 }
