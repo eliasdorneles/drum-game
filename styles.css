@@ -116,11 +116,57 @@ body::before {
   margin: 0;
 }
 
+/* Level Controls (score + nav) */
+.level-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
 /* Level Navigation */
 .level-nav {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+}
+
+/* Score Display */
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+.score-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.score-value {
+  color: var(--accent-cyan);
+  font-size: 1.25rem;
+  font-weight: 700;
+  min-width: 60px;
+}
+
+/* Animate score changes */
+.score-value.score-up {
+  animation: scoreUp 300ms ease-out;
+  color: var(--success);
+}
+
+.score-value.score-down {
+  animation: scoreDown 300ms ease-out;
+  color: var(--error);
+}
+
+@keyframes scoreUp {
+  50% { transform: scale(1.2); }
+}
+
+@keyframes scoreDown {
+  50% { transform: scale(0.9); }
 }
 
 /* Level Selector */
@@ -508,9 +554,17 @@ body::before {
     flex-direction: column;
   }
 
-  .level-nav {
+  .level-controls {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .level-nav {
+    width: auto;
+  }
+
+  .score-display {
+    order: -1;
   }
 
   .level-selector {

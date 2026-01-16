@@ -18,13 +18,10 @@ Let's improve the gameplay!
       (in such a way that i can easily hack locally to be able to test a specific level
        without having to play them all)
 
-- [ ] add a score system:
+- [x] add a score system:
       - add 15 points for every well-placed step
-      - remove 5 points for every misplaced step
+      - remove 5 points for every misplaced step, give back 3 if fixed
       - add 100 points for every completed level
-
-- [ ] considering adding an option for listening to entered rhythm, to compare
-      (not sure if it's a good idea, tbh... need to think more)
 
 - [ ] add "About / help?" button
 

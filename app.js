@@ -164,7 +164,16 @@ class DrumPatternGrid {
 
 function App() {
   const handleBoxClicked = () => {
-    if (game.isCorrectPattern(patternGrid.getUserInputPattern())) {
+    const pattern = patternGrid.getUserInputPattern();
+
+    if (game.canAdvance(pattern)) {
+      // Add completion bonus
+      game.updateScore(100);
+
+      // Save best score (before updating display so it shows correctly)
+      game.saveLevelScore(game.idxCurrentLevel, game.currentScore);
+      updateScoreDisplay();
+
       // Celebration! Play wave animation and victory sound
       addClass(board, "victory");
       patternGrid.playVictoryWave();
@@ -192,14 +201,38 @@ function App() {
     updateUIForCurrentLevel(game.currentLevel);
   };
 
+  const updateScoreDisplay = () => {
+    const scoreValue = board.querySelector(".score-value");
+    if (!scoreValue) return;
+
+    const oldScore = parseInt(scoreValue.textContent, 10) || 0;
+    const newScore = game.getTotalScore();
+    scoreValue.textContent = newScore;
+
+    // Animate score changes
+    scoreValue.classList.remove("score-up", "score-down");
+    if (newScore > oldScore) {
+      scoreValue.classList.add("score-up");
+    } else if (newScore < oldScore) {
+      scoreValue.classList.add("score-down");
+    }
+  };
+
   const updateUIForCurrentLevel = (currentLevel) => {
+    game.resetScore();
     removeClass(board, "victory");
     addClass(board, "playing");
 
     board.innerHTML = `
       <div class="level-header">
         <h2 class="level-title">${currentLevel.name} - BPM: ${currentLevel.bpm}</h2>
-        <div class="level-nav"></div>
+        <div class="level-controls">
+          <div class="score-display">
+            <span class="score-label">Score:</span>
+            <span class="score-value">${game.getTotalScore()}</span>
+          </div>
+          <div class="level-nav"></div>
+        </div>
       </div>
     `;
     if (currentLevel.description) {
@@ -296,6 +329,18 @@ function App() {
 
   // Register event listeners
   on(board, ".box", "click", function () {
+    // Don't allow clicks if level is completed
+    if (board.classList.contains("victory")) return;
+
+    const wasActive = this.classList.contains("tick");
+    const trackName = this.dataset.track;
+    const stepIndex = parseInt(this.dataset.index, 10);
+
+    // Calculate score change BEFORE toggling
+    const delta = game.calculateScoreChange(trackName, stepIndex, !wasActive);
+    game.updateScore(delta);
+    updateScoreDisplay();
+
     toggleClass(this, "tick");
     handleBoxClicked();
   });

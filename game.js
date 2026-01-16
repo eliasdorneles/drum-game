@@ -7,6 +7,8 @@ class Game {
     this.levels = [];
     this.idxCurrentLevel = 0;
     this.currentLevel = {};
+    this.currentScore = 0;
+    this.levelScores = {};  // { levelIndex: bestScore }
     // Each sample can have an optional "volume" property (0.0 to 1.0, default 1.0)
     this.audioLibrary = new AudioLibrary([
       { name: "Snare", file: "snare.wav", volume: 0.5 },
@@ -72,7 +74,8 @@ class Game {
   saveProgress() {
     const data = {
       currentLevel: this.idxCurrentLevel,
-      maxUnlockedLevel: Math.max(this.idxCurrentLevel, this.getMaxUnlockedLevel())
+      maxUnlockedLevel: Math.max(this.idxCurrentLevel, this.getMaxUnlockedLevel()),
+      levelScores: this.levelScores
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   }
@@ -115,6 +118,10 @@ class Game {
         const data = JSON.parse(saved);
         startLevel = Math.min(data.currentLevel || 0, this.levels.length - 1);
         startLevel = Math.max(0, startLevel);
+        // Restore level scores
+        if (data.levelScores) {
+          this.levelScores = data.levelScores;
+        }
       }
     } catch (e) {
       console.warn('Failed to restore progress:', e);
@@ -138,6 +145,51 @@ class Game {
       return JSON.stringify(enteredSteps) === JSON.stringify(patt.steps);
     });
     return matches.every(Boolean);
+  }
+
+  // Scoring methods
+  resetScore() {
+    this.currentScore = 0;
+  }
+
+  calculateScoreChange(trackName, stepIndex, isAdding) {
+    const track = this.currentLevel.pattern.find(t => t.name === trackName);
+    const isCorrectPosition = track.steps[stepIndex] === 1;
+
+    if (isAdding) {
+      return isCorrectPosition ? 15 : -5;
+    } else {
+      return isCorrectPosition ? -15 : 3;  // Removing wrong tick gives back 3
+    }
+  }
+
+  updateScore(delta) {
+    this.currentScore += delta;
+  }
+
+  canAdvance(enteredPattern) {
+    // For each track, check that every required tick (1 in pattern) is present
+    return this.currentLevel.pattern.every((track) => {
+      const entered = enteredPattern[track.name];
+      return track.steps.every((expected, i) => {
+        if (expected === 1) return entered[i] === 1;  // Required tick must be present
+        return true;  // Extra ticks are allowed (but penalized in score)
+      });
+    });
+  }
+
+  getTotalScore() {
+    // Sum of all completed level scores + current level progress
+    let total = 0;
+    for (let i = 0; i < this.idxCurrentLevel; i++) {
+      total += this.levelScores[i] || 0;
+    }
+    return total + this.currentScore;
+  }
+
+  saveLevelScore(levelIndex, score) {
+    this.levelScores[levelIndex] = score;
+    this.saveProgress();
   }
 
   stopPlayback() {
