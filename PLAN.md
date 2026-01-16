@@ -18,8 +18,6 @@ Let's improve the gameplay!
       (in such a way that i can easily hack locally to be able to test a specific level
        without having to play them all)
 
-- [ ] make the 2-measure loop playing more musical by playing the first step at the end
-
 - [ ] add a score system:
       - add 15 points for every well-placed step
       - remove 5 points for every misplaced step
@@ -29,8 +27,6 @@ Let's improve the gameplay!
       (not sure if it's a good idea, tbh... need to think more)
 
 - [ ] add "About / help?" button
-
-- [ ] improve the level representation: add time signature information, allow groups
 
 - [ ] design better levels for a smoother and engaging learning curve:
       make it be like a conversation/dialogue with the user
