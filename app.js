@@ -179,17 +179,41 @@ function App() {
       patternGrid.playVictoryWave();
       game.playVictorySound();
 
-      if (game.hasNextLevel()) {
-        show(board.querySelector(".next-level-btn"));
-        board.querySelector(".level-title").textContent =
-          `Bravo! You've completed the level: ${game.currentLevel.name} 🎉`;
-      } else {
-        show(document.querySelector(".finished"));
-      }
+      // Show victory overlay
+      showVictoryOverlay();
     } else {
       removeClass(board, "victory");
-      hide(board.querySelector(".next-level-btn"));
-      board.querySelector(".level-title").textContent = `${game.currentLevel.name} - BPM: ${game.currentLevel.bpm}`;
+      hideVictoryOverlay();
+    }
+  };
+
+  const showVictoryOverlay = () => {
+    // Remove existing overlay if any
+    hideVictoryOverlay();
+
+    const overlay = document.createElement("div");
+    overlay.className = "victory-overlay";
+
+    const hasNext = game.hasNextLevel();
+    overlay.innerHTML = `
+      <div class="victory-card">
+        <h3>Bravo! 🎉</h3>
+        <p>You've completed: ${game.currentLevel.name}</p>
+        ${hasNext ? '<button class="next-level-btn">Next Level</button>' : ''}
+      </div>
+    `;
+
+    board.querySelector(".pattern-canvas").appendChild(overlay);
+
+    if (!hasNext) {
+      show(document.querySelector(".finished"));
+    }
+  };
+
+  const hideVictoryOverlay = () => {
+    const overlay = board.querySelector(".victory-overlay");
+    if (overlay) {
+      overlay.remove();
     }
   };
 
@@ -246,7 +270,6 @@ function App() {
           <span class='volume-icon'>🔊</span>
           <input type='range' class='volume-slider' min='0' max='100' value='${game.getVolume() * 100}'>
         </div>
-        <button class='next-level-btn'>Next Level</button>
       </div>
     `;
 
@@ -276,8 +299,6 @@ function App() {
       board.querySelector(".pattern-canvas"),
       patternGrid.createDrumTracksGrid()
     );
-
-    hide(board.querySelector(".next-level-btn"));
   };
 
   let isPlaying = false;
