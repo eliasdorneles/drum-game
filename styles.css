@@ -101,9 +101,7 @@ body::before {
 /* Level Header */
 .level-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--space-sm);
   margin-bottom: var(--space-sm);
 }
@@ -120,7 +118,9 @@ body::before {
 .level-controls {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-md);
+  flex-wrap: wrap;
 }
 
 /* Level Navigation */
@@ -550,21 +550,8 @@ body::before {
     font-size: 1.25rem;
   }
 
-  .level-header {
-    flex-direction: column;
-  }
-
   .level-controls {
     width: 100%;
-    justify-content: space-between;
-  }
-
-  .level-nav {
-    width: auto;
-  }
-
-  .score-display {
-    order: -1;
   }
 
   .level-selector {
