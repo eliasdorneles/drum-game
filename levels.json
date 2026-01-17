@@ -1,9 +1,43 @@
 [
   {
-    "name": "Slow Beat",
-    "bpm": 160,
+    "name": "The Foundation",
+    "bpm": 180,
     "groupSize": 4,
-    "description": "Let's start with a slow beat",
+    "description": "Let's start with a classic steady 4/4 beat",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Up-tempo",
+    "bpm": 200,
+    "groupSize": 4,
+    "description": "Picking up the pace with a slight variation",
     "pattern": [
       {
         "name": "Snare",
@@ -34,10 +68,44 @@
     ]
   },
   {
-    "name": "Slow Beat 2",
+    "name": "Backbeat Basics",
     "bpm": 160,
     "groupSize": 4,
-    "description": "Variation of the slow beat",
+    "description": "Variation on the kick timing",
+    "pattern": [
+      {
+        "name": "Snare",
+        "steps": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Backbeat Basics bis",
+    "bpm": 160,
+    "groupSize": 4,
+    "description": "Yet another kick variation",
     "pattern": [
       {
         "name": "Snare",
@@ -68,76 +136,8 @@
     ]
   },
   {
-    "name": "Classic Beat",
-    "bpm": 180,
-    "groupSize": 4,
-    "description": "Here is a classic beat!",
-    "pattern": [
-      {
-        "name": "Snare",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
-      },
-      {
-        "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0
-        ]
-      }
-    ]
-  },
-  {
-    "name": "Classic Beat 2",
-    "bpm": 200,
-    "groupSize": 4,
-    "description": "A variation of the classic beat",
-    "pattern": [
-      {
-        "name": "Snare",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
-      },
-      {
-        "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0
-        ]
-      }
-    ]
-  },
-  {
     "name": "We Will, We Will",
-    "bpm": 300,
+    "bpm": 320,
     "groupSize": 4,
     "description": "Rock You!",
     "pattern": [
@@ -186,10 +186,10 @@
     ]
   },
   {
-    "name": "Slow Beat Again",
+    "name": "Up Close",
     "bpm": 320,
     "groupSize": 4,
-    "description": "High res variation of the slow beat",
+    "description": "Focus on the space between the notes",
     "pattern": [
       {
         "name": "Snare",
@@ -236,7 +236,7 @@
     ]
   },
   {
-    "name": "Slow Beat Again 2",
+    "name": "Up Closer",
     "bpm": 320,
     "groupSize": 4,
     "description": "Yet another high res variation of the slow beat",
@@ -286,10 +286,10 @@
     ]
   },
   {
-    "name": "Funky Beat",
+    "name": "The Syncopated Soul",
     "bpm": 320,
     "groupSize": 4,
-    "description": "Let's do a funky back beat",
+    "description": "A classic funk backbeat with a \"ghosted\" feel",
     "pattern": [
       {
         "name": "Snare",
@@ -336,10 +336,10 @@
     ]
   },
   {
-    "name": "Funky Beat 2",
+    "name": "The Tight Groove",
     "bpm": 320,
     "groupSize": 4,
-    "description": "Variation of that funky back beat",
+    "description": "Shifting some steps for extra funk",
     "pattern": [
       {
         "name": "Snare",
@@ -386,7 +386,7 @@
     ]
   },
   {
-    "name": "Heavy kick 1",
+    "name": "Thump & Drive",
     "bpm": 360,
     "groupSize": 4,
     "pattern": [
@@ -433,10 +433,10 @@
         ]
       }
     ],
-    "description": "Hitting hard the kick"
+    "description": "Maximum impact. Let the bass drum lead the way."
   },
   {
-    "name": "Heavy kick 2",
+    "name": "The Kick Barrage",
     "bpm": 360,
     "groupSize": 4,
     "pattern": [
@@ -483,10 +483,10 @@
         ]
       }
     ],
-    "description": "Hitting hard the kick more"
+    "description": "AKA the relentless high-energy kick"
   },
   {
-    "name": "Bossa",
+    "name": "Sunny Bossa Nova",
     "bpm": 280,
     "groupSize": 4,
     "description": "You know that girl from Ipanema?",
@@ -520,7 +520,7 @@
     ]
   },
   {
-    "name": "Cowbell Samba",
+    "name": "Carnival Pulse",
     "bpm": 340,
     "groupSize": 4,
     "pattern": [
@@ -564,10 +564,10 @@
         ]
       }
     ],
-    "description": "Move your feet"
+    "description": "Add the cowbell and find your Brazilian feet"
   },
   {
-    "name": "Rock Groove",
+    "name": "Constant Motion",
     "bpm": 600,
     "groupSize": 4,
     "description": "The high-hat keeps the pulse",
@@ -638,10 +638,10 @@
     ]
   },
   {
-    "name": "Classic Beat is back",
+    "name": "Hi-Hat Shimmer",
     "bpm": 400,
     "groupSize": 4,
-    "description": "Wearing a funky high hat",
+    "description": "The classic beat returns with a steady metal sizzle",
     "pattern": [
       {
         "name": "Hi-Hat",
@@ -712,7 +712,7 @@
     "name": "Chill Groove",
     "bpm": 300,
     "groupSize": 4,
-    "description": "A very chill groove",
+    "description": "Relaxed timing for a late-night atmosphere",
     "pattern": [
       {
         "name": "Hi-Hat",
@@ -780,10 +780,10 @@
     ]
   },
   {
-    "name": "Nervous Groove",
+    "name": "Skittering Hats",
     "bpm": 550,
     "groupSize": 4,
-    "description": "Playing with the hat",
+    "description": "Agitated, fast-paced Hi-Hat work. Stay sharp!",
     "pattern": [
       {
         "name": "Hi-Hat",
@@ -851,7 +851,7 @@
     ]
   },
   {
-    "name": "Laid Back Groove",
+    "name": "Behind the Beat",
     "bpm": 460,
     "groupSize": 4,
     "description": "Bob your head to this",
@@ -922,7 +922,7 @@
     ]
   },
   {
-    "name": "Fill in the fill 1",
+    "name": "How are you fill-in today?",
     "bpm": 400,
     "groupSize": 4,
     "pattern": [
@@ -990,10 +990,10 @@
         ]
       }
     ],
-    "description": "Now, let's do some snare fills!"
+    "description": "Now, let's do some fills!"
   },
   {
-    "name": "Fill in the fill 2",
+    "name": "Crash landing",
     "bpm": 400,
     "groupSize": 4,
     "pattern": [
@@ -1061,10 +1061,10 @@
         ]
       }
     ],
-    "description": "Let's do some snare fills!"
+    "description": "Start with a bang and fill-in the rest"
   },
   {
-    "name": "Fill in the fill 3",
+    "name": "The Rolling Kick",
     "bpm": 400,
     "groupSize": 4,
     "pattern": [
@@ -1123,7 +1123,7 @@
           0,
           1,
           0,
-          0,
+          1,
           0,
           0,
           1,
@@ -1132,10 +1132,10 @@
         ]
       }
     ],
-    "description": "Let's do some more snare fills!"
+    "description": "Integrating the bass drum into the transition"
   },
   {
-    "name": "Fill in the fill 4",
+    "name": "One last fill",
     "bpm": 400,
     "groupSize": 4,
     "pattern": [
@@ -1203,6 +1203,6 @@
         ]
       }
     ],
-    "description": "Let's do one last snare fill"
+    "description": "And then we can move on"
   }
 ]
