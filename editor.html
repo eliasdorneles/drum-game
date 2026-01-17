@@ -258,7 +258,6 @@
 
       .editor-boxes {
         display: flex;
-        flex-wrap: wrap;
         gap: 2px;
         align-items: flex-start;
       }
@@ -272,9 +271,9 @@
         margin-left: var(--space-sm);
       }
 
-      .editor-measure-break {
-        flex-basis: 100%;
-        height: var(--space-xs);
+      /* Allow horizontal scrolling for long patterns */
+      .pattern-editor {
+        overflow-x: auto;
       }
 
       .editor-box {

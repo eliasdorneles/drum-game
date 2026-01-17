@@ -265,7 +265,7 @@ class LevelEditor {
 
     return level.pattern
       .map((track, trackIndex) => {
-        // Group steps into beat groups
+        // Group steps into beat groups (no wrapping in editor)
         const beatGroups = [];
         for (let i = 0; i < track.steps.length; i += groupSize) {
           const groupSteps = track.steps.slice(i, i + groupSize);
@@ -284,12 +284,6 @@ class LevelEditor {
             </div>
           `;
           beatGroups.push(groupHtml);
-
-          // Add measure break after every 2 groups
-          const groupIndex = i / groupSize;
-          if ((groupIndex + 1) % 2 === 0 && i + groupSize < track.steps.length) {
-            beatGroups.push('<div class="editor-measure-break"></div>');
-          }
         }
 
         return `
