@@ -237,9 +237,18 @@ body::before {
   margin-bottom: var(--space-xl);
 }
 
+/* Staff System - groups tracks that break together like sheet music */
+.staff-system {
+  margin-bottom: var(--space-lg);
+}
+
 /* Track Row */
 .track {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-xs);
+}
+
+.staff-system .track:last-child {
+  margin-bottom: 0;
 }
 
 /* Track Name */
@@ -260,7 +269,6 @@ body::before {
 /* Track boxes container */
 .track-boxes {
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-start;
   gap: 2px;
 }
@@ -274,12 +282,6 @@ body::before {
 /* Add spacing between beat groups */
 .beat-group + .beat-group {
   margin-left: var(--space-sm);
-}
-
-/* Measure break - force new line after 2 groups */
-.measure-break {
-  flex-basis: 100%;
-  height: var(--space-xs);
 }
 
 /* Boxes */
@@ -592,7 +594,6 @@ body::before {
 
   .track-boxes {
     display: flex;
-    flex-wrap: wrap;
     gap: 2px;
   }
 

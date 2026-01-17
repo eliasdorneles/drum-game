@@ -72,62 +72,60 @@ class DrumPatternGrid {
     return box;
   }
 
-  #createTrackRow(trackSpec) {
-    // Create a row element representing a track in the pattern
-    const trackRow = document.createElement("div");
-    addClass(trackRow, "track");
-    trackRow.dataset.trackName = trackSpec.name;
-
-    const trackName = document.createElement("span");
-    addClass(trackName, "track-name");
-    trackName.textContent = trackSpec.name;
-    trackRow.appendChild(trackName);
-
-    // Container for all beat groups
-    const trackBoxes = document.createElement("div");
-    addClass(trackBoxes, "track-boxes");
-
+  createDrumTracksGrid() {
+    // Build grid pattern grouped into "staff systems" so all tracks break together
+    // like sheet music staves
     const groupSize = this.level.groupSize || 4;
-    const boxes = [];
+    const measuresPerSystem = 2;
+    const stepsPerSystem = groupSize * measuresPerSystem;
+    const totalSteps = this.level.pattern[0].steps.length;
 
-    // Group boxes into beat groups with measure breaks
-    for (let i = 0; i < trackSpec.steps.length; i += groupSize) {
-      const beatGroup = document.createElement("div");
-      addClass(beatGroup, "beat-group");
+    // Initialize patternBoxes array for each track
+    this.level.pattern.forEach(() => this.patternBoxes.push([]));
 
-      // Create boxes for this beat group
-      for (let j = i; j < Math.min(i + groupSize, trackSpec.steps.length); j++) {
-        const box = this.#createBox(trackSpec.steps[j], j, trackSpec.name);
-        beatGroup.appendChild(box);
-        boxes.push(box);
-      }
+    const systems = [];
 
-      trackBoxes.appendChild(beatGroup);
+    for (let systemStart = 0; systemStart < totalSteps; systemStart += stepsPerSystem) {
+      const system = document.createElement("div");
+      addClass(system, "staff-system");
 
-      // Add measure break after every 2 groups (one measure)
-      const groupIndex = i / groupSize;
-      if ((groupIndex + 1) % 2 === 0 && i + groupSize < trackSpec.steps.length) {
-        const measureBreak = document.createElement("div");
-        addClass(measureBreak, "measure-break");
-        trackBoxes.appendChild(measureBreak);
-      }
+      // Add each track's segment to this system
+      this.level.pattern.forEach((trackSpec, trackIndex) => {
+        const trackRow = document.createElement("div");
+        addClass(trackRow, "track");
+        trackRow.dataset.trackName = trackSpec.name;
+
+        const trackName = document.createElement("span");
+        addClass(trackName, "track-name");
+        trackName.textContent = trackSpec.name;
+        trackRow.appendChild(trackName);
+
+        const trackBoxes = document.createElement("div");
+        addClass(trackBoxes, "track-boxes");
+
+        // Create beat groups for this segment
+        for (let i = systemStart; i < Math.min(systemStart + stepsPerSystem, totalSteps); i += groupSize) {
+          const beatGroup = document.createElement("div");
+          addClass(beatGroup, "beat-group");
+
+          for (let j = i; j < Math.min(i + groupSize, totalSteps); j++) {
+            const box = this.#createBox(trackSpec.steps[j], j, trackSpec.name);
+            beatGroup.appendChild(box);
+            this.patternBoxes[trackIndex].push(box);
+          }
+
+          trackBoxes.appendChild(beatGroup);
+        }
+
+        trackRow.appendChild(trackBoxes);
+        system.appendChild(trackRow);
+        this.tracks.push(trackRow);
+      });
+
+      systems.push(system);
     }
 
-    trackRow.appendChild(trackBoxes);
-    return { trackRow, boxes };
-  }
-
-  createDrumTracksGrid() {
-    // Build grid pattern and return list of tracks to be appended to the DOM
-    // Note: see levels.json to understand the structure of the level object
-    return this.level.pattern.map((track) => {
-      const { trackRow, boxes } = this.#createTrackRow(track);
-
-      this.tracks.push(trackRow);
-      this.patternBoxes.push(boxes);
-
-      return trackRow;
-    });
+    return systems;
   }
 
   updatePlayingCursor(step) {
