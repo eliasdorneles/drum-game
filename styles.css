@@ -1,18 +1,6 @@
-/* Dark Synth Theme for Drum Game */
+/* Drum Game Styles */
 
 :root {
-  /* Colors */
-  --bg-primary: #1a1a2e;
-  --bg-surface: #16213e;
-  --accent-cyan: #00fff5;
-  --accent-orange: #ff9f1c;
-  --success: #08f26e;
-  --error: #ff4757;
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --box-inactive: #2d3748;
-  --box-border: rgba(0, 255, 245, 0.15);
-
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -25,12 +13,6 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
-
-  /* Shadows */
-  --shadow-glow-cyan: 0 0 20px rgba(0, 255, 245, 0.4);
-  --shadow-glow-green: 0 0 15px rgba(8, 242, 110, 0.5);
-  --shadow-glow-orange: 0 0 20px rgba(255, 159, 28, 0.6);
-  --shadow-glow-red: 0 0 15px rgba(255, 71, 87, 0.5);
 
   /* Transitions */
   --transition-fast: 100ms ease-out;
@@ -63,8 +45,8 @@ body::before {
   right: 0;
   bottom: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   background-size: 20px 20px;
   pointer-events: none;
   z-index: 0;
@@ -84,7 +66,7 @@ body::before {
   font-size: 1.75rem;
   font-weight: 700;
   margin: 0 0 var(--space-lg) 0;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -120,7 +102,7 @@ body::before {
 .bpm-tag {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   background: rgba(0, 255, 245, 0.1);
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-sm);
@@ -158,7 +140,7 @@ body::before {
 }
 
 .score-value {
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
   font-size: 1.25rem;
   font-weight: 700;
   min-width: 60px;
@@ -197,12 +179,12 @@ body::before {
 }
 
 .level-selector:hover {
-  border-color: var(--accent-cyan);
+  border-color: var(--accent-primary);
 }
 
 .level-selector:focus {
   outline: none;
-  border-color: var(--accent-cyan);
+  border-color: var(--accent-primary);
   box-shadow: 0 0 0 2px rgba(0, 255, 245, 0.2);
 }
 
@@ -263,7 +245,7 @@ body::before {
 }
 
 .track-name:hover {
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
 }
 
 /* Track boxes container */
@@ -301,8 +283,8 @@ body::before {
 }
 
 .box:hover {
-  border-color: var(--accent-cyan);
-  box-shadow: var(--shadow-glow-cyan);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-glow-primary);
 }
 
 .box:active {
@@ -313,20 +295,20 @@ body::before {
 .box.tick {
   background: var(--success);
   border-color: var(--success);
-  box-shadow: var(--shadow-glow-green);
+  box-shadow: var(--shadow-glow-success);
 }
 
 .box.isActive {
-  background: var(--accent-orange);
-  border-color: var(--accent-orange);
-  box-shadow: var(--shadow-glow-orange);
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+  box-shadow: var(--shadow-glow-accent);
   animation: pulse 300ms ease-in-out;
 }
 
 .box.mistake.tick {
   background: var(--error);
   border-color: var(--error);
-  box-shadow: var(--shadow-glow-red);
+  box-shadow: var(--shadow-glow-error);
 }
 
 @keyframes pulse {
@@ -343,7 +325,7 @@ body::before {
   40% {
     transform: scale(1.2);
     background: var(--success);
-    box-shadow: var(--shadow-glow-green);
+    box-shadow: var(--shadow-glow-success);
   }
   100% {
     transform: scale(1);
@@ -356,7 +338,7 @@ body::before {
 
 /* Victory state for the board */
 .board.victory .level-title {
-  background: linear-gradient(90deg, var(--success), var(--accent-cyan));
+  background: linear-gradient(90deg, var(--success), var(--accent-primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -373,7 +355,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(22, 33, 62, 0.55);
+  background: var(--bg-overlay);
   border-radius: var(--radius-lg);
   z-index: 10;
   animation: fadeIn 300ms ease-out;
@@ -392,7 +374,7 @@ body::before {
 .victory-card h3 {
   font-size: 1.5rem;
   margin: 0 0 var(--space-sm) 0;
-  background: linear-gradient(90deg, var(--success), var(--accent-cyan));
+  background: linear-gradient(90deg, var(--success), var(--accent-primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -442,20 +424,20 @@ body::before {
   appearance: none;
   width: 14px;
   height: 14px;
-  background: var(--accent-cyan);
+  background: var(--accent-primary);
   border-radius: 50%;
   cursor: pointer;
   transition: box-shadow var(--transition-normal);
 }
 
 .volume-slider::-webkit-slider-thumb:hover {
-  box-shadow: var(--shadow-glow-cyan);
+  box-shadow: var(--shadow-glow-primary);
 }
 
 .volume-slider::-moz-range-thumb {
   width: 14px;
   height: 14px;
-  background: var(--accent-cyan);
+  background: var(--accent-primary);
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -485,15 +467,15 @@ body::before {
 
 .play-btn {
   background: var(--bg-primary);
-  color: var(--accent-cyan);
-  border: 2px solid var(--accent-cyan);
+  color: var(--accent-primary);
+  border: 2px solid var(--accent-primary);
   min-width: 140px;
   text-align: center;
 }
 
 .play-btn:hover:not([disabled]) {
   background: rgba(0, 255, 245, 0.1);
-  box-shadow: var(--shadow-glow-cyan);
+  box-shadow: var(--shadow-glow-primary);
 }
 
 .play-btn:active:not([disabled]) {
@@ -511,7 +493,7 @@ body::before {
 }
 
 .next-level-btn:hover {
-  box-shadow: var(--shadow-glow-green);
+  box-shadow: var(--shadow-glow-success);
 }
 
 .next-level-btn:active {
@@ -526,7 +508,7 @@ body::before {
 
 .finished h2 {
   font-size: 1.5rem;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--success));
+  background: linear-gradient(90deg, var(--accent-primary), var(--success));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -535,7 +517,7 @@ body::before {
 
 .finished a {
   display: inline-block;
-  background: var(--accent-cyan);
+  background: var(--accent-primary);
   color: var(--bg-primary);
   text-decoration: none;
   padding: var(--space-md) var(--space-xl);
@@ -545,7 +527,7 @@ body::before {
 }
 
 .finished a:hover {
-  box-shadow: var(--shadow-glow-cyan);
+  box-shadow: var(--shadow-glow-primary);
 }
 
 /* Instructions */
@@ -560,7 +542,7 @@ body::before {
 }
 
 .game > p strong {
-  color: var(--accent-cyan);
+  color: var(--accent-primary);
 }
 
 /* Loading State */
@@ -655,13 +637,53 @@ body::before {
   }
 }
 
+/* Theme Switcher */
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.theme-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.theme-selector {
+  font-family: inherit;
+  font-size: 0.8rem;
+  padding: 2px var(--space-xs);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--box-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition-normal), color var(--transition-normal);
+}
+
+.theme-selector:hover {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.theme-selector:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.theme-selector option {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
 /* Focus Visible for Keyboard Navigation */
 .box:focus-visible,
 .play-btn:focus-visible,
 .next-level-btn:focus-visible,
 .track-name:focus-visible,
 .level-selector:focus-visible,
-.start-over-btn:focus-visible {
-  outline: 2px solid var(--accent-cyan);
+.start-over-btn:focus-visible,
+.theme-selector:focus-visible {
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }

@@ -1,0 +1,102 @@
+/* Theme Definitions for Drum Game */
+
+/* Dark Synth */
+[data-theme="dark-synth"] {
+  --bg-primary: #1a1a2e;
+  --bg-surface: #16213e;
+  --bg-overlay: rgba(22, 33, 62, 0.55);
+  --accent-primary: #00fff5;
+  --accent-secondary: #ff9f1c;
+  --success: #08f26e;
+  --error: #ff4757;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --box-inactive: #2d3748;
+  --box-border: rgba(0, 255, 245, 0.15);
+  --shadow-glow-primary: 0 0 20px rgba(0, 255, 245, 0.4);
+  --shadow-glow-success: 0 0 15px rgba(8, 242, 110, 0.5);
+  --shadow-glow-accent: 0 0 20px rgba(255, 159, 28, 0.6);
+  --shadow-glow-error: 0 0 15px rgba(255, 71, 87, 0.5);
+  --grid-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Retrowave - 80s sunset vibes */
+[data-theme="retrowave"] {
+  --bg-primary: #1a0a2e;
+  --bg-surface: #2d1b4e;
+  --bg-overlay: rgba(45, 27, 78, 0.55);
+  --accent-primary: #ff6ec7;
+  --accent-secondary: #ff9a56;
+  --success: #ff6ec7;
+  --error: #ff4757;
+  --text-primary: #ffffff;
+  --text-secondary: #b0a0c0;
+  --box-inactive: #3d2b5e;
+  --box-border: rgba(255, 110, 199, 0.2);
+  --shadow-glow-primary: 0 0 20px rgba(255, 110, 199, 0.4);
+  --shadow-glow-success: 0 0 15px rgba(255, 110, 199, 0.5);
+  --shadow-glow-accent: 0 0 20px rgba(255, 154, 86, 0.6);
+  --shadow-glow-error: 0 0 15px rgba(255, 71, 87, 0.5);
+  --grid-color: rgba(255, 110, 199, 0.06);
+}
+
+/* Analog Warmth - Default Theme */
+[data-theme="analog-warmth"],
+:root {
+  --bg-primary: #1c1410;
+  --bg-surface: #3a2a20;
+  --bg-overlay: rgba(58, 42, 32, 0.55);
+  --accent-primary: #e8a857;
+  --accent-secondary: #d4763a;
+  --success: #7cb342;
+  --error: #e53935;
+  --text-primary: #f5e6d3;
+  --text-secondary: #a89080;
+  --box-inactive: #4a3a30;
+  --box-border: rgba(232, 168, 87, 0.2);
+  --shadow-glow-primary: 0 0 20px rgba(232, 168, 87, 0.4);
+  --shadow-glow-success: 0 0 15px rgba(124, 179, 66, 0.5);
+  --shadow-glow-accent: 0 0 20px rgba(212, 118, 58, 0.6);
+  --shadow-glow-error: 0 0 15px rgba(229, 57, 53, 0.5);
+  --grid-color: rgba(232, 168, 87, 0.04);
+}
+
+/* Neon Club - High contrast club lighting */
+[data-theme="neon-club"] {
+  --bg-primary: #0a0a0f;
+  --bg-surface: #1a1a25;
+  --bg-overlay: rgba(26, 26, 37, 0.55);
+  --accent-primary: #ff0080;
+  --accent-secondary: #00d4ff;
+  --success: #39ff14;
+  --error: #ff0040;
+  --text-primary: #ffffff;
+  --text-secondary: #666680;
+  --box-inactive: #252530;
+  --box-border: rgba(0, 212, 255, 0.15);
+  --shadow-glow-primary: 0 0 20px rgba(255, 0, 128, 0.5);
+  --shadow-glow-success: 0 0 15px rgba(57, 255, 20, 0.6);
+  --shadow-glow-accent: 0 0 20px rgba(0, 212, 255, 0.5);
+  --shadow-glow-error: 0 0 15px rgba(255, 0, 64, 0.5);
+  --grid-color: rgba(255, 0, 128, 0.04);
+}
+
+/* Midnight Studio - Clean professional dark */
+[data-theme="midnight-studio"] {
+  --bg-primary: #0d1117;
+  --bg-surface: #21262d;
+  --bg-overlay: rgba(33, 38, 45, 0.55);
+  --accent-primary: #58a6ff;
+  --accent-secondary: #a371f7;
+  --success: #3fb950;
+  --error: #f85149;
+  --text-primary: #f0f6fc;
+  --text-secondary: #8b949e;
+  --box-inactive: #30363d;
+  --box-border: rgba(88, 166, 255, 0.2);
+  --shadow-glow-primary: 0 0 20px rgba(88, 166, 255, 0.4);
+  --shadow-glow-success: 0 0 15px rgba(63, 185, 80, 0.5);
+  --shadow-glow-accent: 0 0 20px rgba(163, 113, 247, 0.5);
+  --shadow-glow-error: 0 0 15px rgba(248, 81, 73, 0.5);
+  --grid-color: rgba(88, 166, 255, 0.04);
+}
