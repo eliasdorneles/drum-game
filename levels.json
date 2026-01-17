@@ -386,7 +386,7 @@
     ]
   },
   {
-    "name": "Heavy kick",
+    "name": "Heavy kick 1",
     "bpm": 360,
     "groupSize": 4,
     "pattern": [
@@ -486,52 +486,6 @@
     "description": "Hitting hard the kick more"
   },
   {
-    "name": "Use that crash!",
-    "bpm": 300,
-    "groupSize": 4,
-    "pattern": [
-      {
-        "name": "Crash",
-        "steps": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
-      },
-      {
-        "name": "Snare",
-        "steps": [
-          0,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          1
-        ]
-      },
-      {
-        "name": "Kick",
-        "steps": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
-      }
-    ]
-  },
-  {
     "name": "Simple Samba",
     "bpm": 360,
     "groupSize": 4,
@@ -613,21 +567,50 @@
     "description": "Same Samba plus a cowbell"
   },
   {
-    "name": "Whiplash",
-    "bpm": 400,
+    "name": "Rock Groove",
+    "bpm": 600,
     "groupSize": 4,
-    "description": "Not quite my tempo...",
+    "description": "Time to add a high-hat pulse",
     "pattern": [
+      {
+        "name": "Hi-Hat",
+        "steps": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      },
       {
         "name": "Snare",
         "steps": [
           0,
           0,
-          1,
-          1,
           0,
           0,
           1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
           0
         ]
       },
@@ -635,15 +618,307 @@
         "name": "Kick",
         "steps": [
           1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           1,
           0,
           0,
-          1,
-          1,
           0,
-          1
+          0,
+          0
         ]
       }
     ]
+  },
+  {
+    "name": "Classic Groove is back",
+    "bpm": 600,
+    "groupSize": 4,
+    "description": "With a funky high hat",
+    "pattern": [
+      {
+        "name": "Hi-Hat",
+        "steps": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Snare",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Fill in the fill 1",
+    "bpm": 400,
+    "groupSize": 4,
+    "pattern": [
+      {
+        "name": "Crash",
+        "steps": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Snare",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "description": "Let's do some fills!"
+  },
+  {
+    "name": "Fill in the fill 2",
+    "bpm": 400,
+    "groupSize": 4,
+    "pattern": [
+      {
+        "name": "Crash",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Snare",
+        "steps": [
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ]
+      }
+    ],
+    "description": "Let's do some fills!"
+  },
+  {
+    "name": "Fill in the fill 2",
+    "bpm": 400,
+    "groupSize": 4,
+    "pattern": [
+      {
+        "name": "Crash",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Snare",
+        "steps": [
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "description": "Let's do some fills!"
   }
 ]
