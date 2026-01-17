@@ -209,7 +209,7 @@
           1,
           0,
           0,
-          0
+          1
         ]
       },
       {
@@ -486,10 +486,10 @@
     "description": "Hitting hard the kick more"
   },
   {
-    "name": "Simple Samba",
-    "bpm": 360,
+    "name": "Bossa",
+    "bpm": 280,
     "groupSize": 4,
-    "description": "Short and sweet",
+    "description": "You know that girl from Ipanema?",
     "pattern": [
       {
         "name": "Stick",
@@ -521,7 +521,7 @@
   },
   {
     "name": "Cowbell Samba",
-    "bpm": 360,
+    "bpm": 340,
     "groupSize": 4,
     "pattern": [
       {
@@ -564,13 +564,13 @@
         ]
       }
     ],
-    "description": "Same Samba plus a cowbell"
+    "description": "Move your feet"
   },
   {
     "name": "Rock Groove",
     "bpm": 600,
     "groupSize": 4,
-    "description": "Time to add a high-hat pulse",
+    "description": "The high-hat keeps the pulse",
     "pattern": [
       {
         "name": "Hi-Hat",
@@ -638,10 +638,152 @@
     ]
   },
   {
-    "name": "New Groove",
+    "name": "Classic Beat is back",
+    "bpm": 400,
+    "groupSize": 4,
+    "description": "Wearing a funky high hat",
+    "pattern": [
+      {
+        "name": "Hi-Hat",
+        "steps": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Snare",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Chill Groove",
+    "bpm": 300,
+    "groupSize": 4,
+    "description": "A very chill groove",
+    "pattern": [
+      {
+        "name": "Hi-Hat",
+        "steps": [
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Snare",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Nervous Groove",
     "bpm": 550,
     "groupSize": 4,
-    "description": "With a funky hat",
+    "description": "Playing with the hat",
     "pattern": [
       {
         "name": "Hi-Hat",
@@ -710,9 +852,9 @@
   },
   {
     "name": "Laid Back Groove",
-    "bpm": 480,
+    "bpm": 460,
     "groupSize": 4,
-    "description": "A very chill groove",
+    "description": "Bob your head to this",
     "pattern": [
       {
         "name": "Hi-Hat",
@@ -787,19 +929,19 @@
       {
         "name": "Crash",
         "steps": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           1,
           0,
           0,
           0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
+          1,
           0,
           0,
           0
@@ -808,20 +950,20 @@
       {
         "name": "Snare",
         "steps": [
-          0,
-          0,
-          0,
-          0,
           1,
-          0,
-          0,
           1,
           0,
           0,
           1,
           0,
           1,
-          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0
         ]
@@ -829,7 +971,6 @@
       {
         "name": "Kick",
         "steps": [
-          1,
           0,
           0,
           1,
@@ -842,8 +983,9 @@
           0,
           0,
           0,
-          0,
           1,
+          0,
+          0,
           0
         ]
       }
@@ -858,15 +1000,15 @@
       {
         "name": "Crash",
         "steps": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
           1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           0,
           0,
@@ -879,20 +1021,20 @@
       {
         "name": "Snare",
         "steps": [
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          1,
           0,
           0,
           0,
           0,
           1,
           0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
           0,
           0
         ]
@@ -900,26 +1042,26 @@
       {
         "name": "Kick",
         "steps": [
-          0,
-          0,
           1,
-          1,
-          0,
-          0,
           0,
           0,
           1,
           0,
           0,
+          1,
           0,
           0,
           1,
+          0,
+          0,
+          0,
+          0,
           1,
           0
         ]
       }
     ],
-    "description": "Now, let's do some snare fills!"
+    "description": "Let's do some snare fills!"
   },
   {
     "name": "Fill in the fill 3",
@@ -941,7 +1083,7 @@
           0,
           0,
           0,
-          1,
+          0,
           0,
           0,
           0
@@ -957,12 +1099,12 @@
           1,
           0,
           1,
+          1,
           0,
           0,
           0,
           0,
-          0,
-          0,
+          1,
           0,
           0,
           0
@@ -976,21 +1118,21 @@
           1,
           1,
           0,
-          1,
-          0,
-          0,
-          1,
           0,
           0,
           0,
           1,
           0,
           0,
+          0,
+          0,
+          1,
+          1,
           0
         ]
       }
     ],
-    "description": "Now, let's do some snare fills!"
+    "description": "Let's do some more snare fills!"
   },
   {
     "name": "Fill in the fill 4",
@@ -1061,6 +1203,6 @@
         ]
       }
     ],
-    "description": "Now, let's do some snare fills!"
+    "description": "Let's do one last snare fill"
   }
 ]
