@@ -393,6 +393,73 @@ body::before {
   animation: victoryWave 400ms ease-out forwards;
 }
 
+/* Final level rainbow wave animation */
+@keyframes rainbowWave {
+  0% {
+    transform: scale(1);
+    background: #ff6b6b;
+    border-color: #ff6b6b;
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
+  }
+  14% {
+    background: #ffa94d;
+    border-color: #ffa94d;
+    box-shadow: 0 0 20px rgba(255, 169, 77, 0.6);
+  }
+  28% {
+    transform: scale(1.3);
+    background: #ffd43b;
+    border-color: #ffd43b;
+    box-shadow: 0 0 25px rgba(255, 212, 59, 0.7);
+  }
+  42% {
+    background: #69db7c;
+    border-color: #69db7c;
+    box-shadow: 0 0 20px rgba(105, 219, 124, 0.6);
+  }
+  57% {
+    background: #4ecdc4;
+    border-color: #4ecdc4;
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.6);
+  }
+  71% {
+    transform: scale(1.2);
+    background: #74c0fc;
+    border-color: #74c0fc;
+    box-shadow: 0 0 20px rgba(116, 192, 252, 0.6);
+  }
+  85% {
+    background: #b197fc;
+    border-color: #b197fc;
+    box-shadow: 0 0 20px rgba(177, 151, 252, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--success);
+    border-color: var(--success);
+    box-shadow: var(--shadow-glow-success);
+  }
+}
+
+.box.rainbow-wave {
+  animation: rainbowWave 1.2s ease-in-out forwards;
+}
+
+/* Final victory board state */
+.board.final-victory .level-title {
+  background: linear-gradient(90deg, #ff6b6b, #ffa94d, #ffd43b, #69db7c, #4ecdc4, #74c0fc, #b197fc);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbowTitle 2s linear infinite;
+}
+
+@keyframes rainbowTitle {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
 /* Victory state for the board */
 .board.victory .level-title {
   background: linear-gradient(90deg, var(--success), var(--accent-primary));

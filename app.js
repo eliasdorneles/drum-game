@@ -158,6 +158,16 @@ class DrumPatternGrid {
       }, index * 50); // 50ms delay between each box
     });
   }
+
+  playFinalVictoryWave() {
+    // Rainbow wave animation for completing the final level
+    const allBoxes = this.patternBoxes.flat();
+    allBoxes.forEach((box, index) => {
+      setTimeout(() => {
+        addClass(box, "rainbow-wave");
+      }, index * 80); // Slower cascade for more dramatic effect
+    });
+  }
 }
 
 function App() {
@@ -172,15 +182,24 @@ function App() {
       game.saveLevelScore(game.idxCurrentLevel, game.currentScore);
       updateScoreDisplay();
 
-      // Celebration! Play wave animation and victory sound
+      const isFinalLevel = !game.hasNextLevel();
+
+      // Celebration! Play appropriate animation and sound
       addClass(board, "victory");
-      patternGrid.playVictoryWave();
-      game.playVictorySound();
+      if (isFinalLevel) {
+        addClass(board, "final-victory");
+        patternGrid.playFinalVictoryWave();
+        game.playFinalVictorySound();
+      } else {
+        patternGrid.playVictoryWave();
+        game.playVictorySound();
+      }
 
       // Show victory overlay
       showVictoryOverlay();
     } else {
       removeClass(board, "victory");
+      removeClass(board, "final-victory");
       hideVictoryOverlay();
     }
   };
@@ -243,6 +262,7 @@ function App() {
   const updateUIForCurrentLevel = (currentLevel) => {
     game.resetScore();
     removeClass(board, "victory");
+    removeClass(board, "final-victory");
     addClass(board, "playing");
 
     const maxUnlocked = game.getMaxUnlockedLevel();

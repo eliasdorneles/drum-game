@@ -19,6 +19,7 @@ class Game {
       { name: "Cowbell", file: "cowbell.wav", volume: 0.5 },
       { name: "Stick", file: "stick.wav", volume: 0.5 },
       { name: "Win", file: "win.wav", volume: 0.5 },
+      { name: "FinalWin", file: "final_win.wav", volume: 0.6 },
     ]);
   }
 
@@ -137,6 +138,11 @@ class Game {
   playVictorySound() {
     const startTime = this.audioLibrary.getCurrentTime();
     this.audioLibrary.playSampleAfter("Win", startTime, 0.2);
+  }
+
+  playFinalVictorySound() {
+    const startTime = this.audioLibrary.getCurrentTime();
+    this.audioLibrary.playSampleAfter("FinalWin", startTime, 0.2);
   }
 
   isCorrectPattern(enteredPattern) {
