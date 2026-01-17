@@ -277,7 +277,7 @@ function App() {
     board.innerHTML += `
       <div class='pattern-canvas'></div>
       <div class='audio-controls'>
-        <button class='play-btn'>Listen now</button>
+        <button class='play-btn'>Play Loop</button>
         <div class='volume-control'>
           <span class='volume-icon'>🔊</span>
           <input type='range' class='volume-slider' min='0' max='100' value='${game.getVolume() * 100}'>
@@ -327,7 +327,7 @@ function App() {
     // Reset UI
     patternGrid.updatePlayingCursor(-1);
     const playButton = board.querySelector(".play-btn");
-    playButton.textContent = "Listen now";
+    playButton.textContent = "Play Loop";
     playButton.blur();
   };
 
