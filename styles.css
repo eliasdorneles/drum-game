@@ -373,7 +373,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(22, 33, 62, 0.85);
+  background: rgba(22, 33, 62, 0.55);
   border-radius: var(--radius-lg);
   z-index: 10;
   animation: fadeIn 300ms ease-out;
@@ -399,7 +399,7 @@ body::before {
 }
 
 .victory-card p {
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin: 0 0 var(--space-lg) 0;
 }
 
