@@ -103,7 +103,6 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  flex-wrap: wrap;
   gap: var(--space-sm);
   margin-bottom: var(--space-sm);
 }
@@ -114,6 +113,20 @@ body::before {
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
+  min-width: 0;
+}
+
+/* BPM Tag */
+.bpm-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  background: rgba(0, 255, 245, 0.1);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 /* Level Controls (score + nav) */
@@ -121,6 +134,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  flex-shrink: 0;
 }
 
 /* Level Navigation */

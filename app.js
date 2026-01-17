@@ -249,7 +249,7 @@ function App() {
 
     board.innerHTML = `
       <div class="level-header">
-        <h2 class="level-title">${currentLevel.name} - BPM: ${currentLevel.bpm}</h2>
+        <h2 class="level-title">${currentLevel.name} <span class="bpm-tag">${currentLevel.bpm} BPM</span></h2>
         <div class="level-controls">
           <div class="score-display">
             <span class="score-label">Score:</span>
