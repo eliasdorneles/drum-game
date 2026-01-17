@@ -638,10 +638,10 @@
     ]
   },
   {
-    "name": "Classic Groove is back",
-    "bpm": 600,
+    "name": "New Groove",
+    "bpm": 550,
     "groupSize": 4,
-    "description": "With a funky high hat",
+    "description": "With a funky hat",
     "pattern": [
       {
         "name": "Hi-Hat",
@@ -699,6 +699,77 @@
           0,
           0,
           1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Laid Back Groove",
+    "bpm": 480,
+    "groupSize": 4,
+    "description": "A very chill groove",
+    "pattern": [
+      {
+        "name": "Hi-Hat",
+        "steps": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Snare",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
           0,
           0,
           0,
@@ -777,7 +848,7 @@
         ]
       }
     ],
-    "description": "Let's do some fills!"
+    "description": "Now, let's do some snare fills!"
   },
   {
     "name": "Fill in the fill 2",
@@ -848,10 +919,10 @@
         ]
       }
     ],
-    "description": "Let's do some fills!"
+    "description": "Now, let's do some snare fills!"
   },
   {
-    "name": "Fill in the fill 2",
+    "name": "Fill in the fill 3",
     "bpm": 400,
     "groupSize": 4,
     "pattern": [
@@ -919,6 +990,77 @@
         ]
       }
     ],
-    "description": "Let's do some fills!"
+    "description": "Now, let's do some snare fills!"
+  },
+  {
+    "name": "Fill in the fill 4",
+    "bpm": 400,
+    "groupSize": 4,
+    "pattern": [
+      {
+        "name": "Crash",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Snare",
+        "steps": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "description": "Now, let's do some snare fills!"
   }
 ]
