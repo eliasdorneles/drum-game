@@ -238,6 +238,7 @@ function App() {
     if (isPlaying) {
       stopPlayback();
     }
+    game.resetTempo();
     game.nextLevel();
     updateUIForCurrentLevel(game.currentLevel);
   };
@@ -259,8 +260,33 @@ function App() {
     }
   };
 
+  // Stuck detection helpers
+  let stuckCheckInterval = null;
+  let stuckHintTimeout = null;
+  let stuckHintShown = false;
+
+  const checkAndShowStuckHint = () => {
+    const hint = board.querySelector('.stuck-hint');
+    if (hint && game.isStuck() && game.getTempo() === 1.0 && !stuckHintShown) {
+      stuckHintShown = true;
+      hint.classList.add('visible');
+      // Auto-hide after 10 seconds
+      if (stuckHintTimeout) clearTimeout(stuckHintTimeout);
+      stuckHintTimeout = setTimeout(() => {
+        hint.classList.remove('visible');
+      }, 10000);
+    }
+  };
+
+  const startStuckTimer = () => {
+    if (stuckCheckInterval) clearInterval(stuckCheckInterval);
+    stuckHintShown = false;
+    stuckCheckInterval = setInterval(checkAndShowStuckHint, 2000);
+  };
+
   const updateUIForCurrentLevel = (currentLevel) => {
     game.resetScore();
+    game.resetMistakeCount();
     removeClass(board, "victory");
     removeClass(board, "final-victory");
     addClass(board, "playing");
@@ -278,13 +304,23 @@ function App() {
     const lockedCount = totalLevels - maxUnlocked - 1;
     const remainingHtml = lockedCount > 0 ? `<span class="levels-remaining">+${lockedCount} more</span>` : '';
 
+    // Build BPM dropdown options
+    const bpmOptions = [
+      { value: 1.0, label: `${currentLevel.bpm} BPM` },
+      { value: 0.8, label: `${Math.round(currentLevel.bpm * 0.8)} BPM (80%)` },
+      { value: 0.6, label: `${Math.round(currentLevel.bpm * 0.6)} BPM (60%)` }
+    ];
+    const bpmOptionsHtml = bpmOptions.map(opt =>
+      `<option value="${opt.value}" ${opt.value === game.getTempo() ? 'selected' : ''}>${opt.label}</option>`
+    ).join('');
+
     board.innerHTML = `
       <div class="level-progress-bar">
         <div class="level-progress">${dotsHtml}${remainingHtml}</div>
         <button class="start-over-btn">Start Over</button>
       </div>
       <div class="level-header">
-        <h2 class="level-title">${currentLevel.name} <span class="bpm-tag">${currentLevel.bpm} BPM</span></h2>
+        <h2 class="level-title">${currentLevel.name} <span class="bpm-container"><select class="bpm-dropdown">${bpmOptionsHtml}</select><span class="stuck-hint">Stuck? Try a slower tempo!</span></span></h2>
         <div class="score-display">
           <span class="score-label">Score:</span>
           <span class="score-value">${game.getTotalScore()}</span>
@@ -311,6 +347,8 @@ function App() {
       board.querySelector(".pattern-canvas"),
       patternGrid.createDrumTracksGrid()
     );
+
+    startStuckTimer();
   };
 
   let isPlaying = false;
@@ -374,6 +412,12 @@ function App() {
     game.updateScore(delta);
     updateScoreDisplay();
 
+    // Track mistakes for stuck detection
+    if (delta < 0) {
+      game.recordMistake();
+      checkAndShowStuckHint();
+    }
+
     toggleClass(this, "tick");
     handleBoxClicked();
   });
@@ -405,6 +449,21 @@ function App() {
     game.setVolume(this.value / 100);
   });
 
+  on(board, ".bpm-dropdown", "change", function () {
+    const newTempo = parseFloat(this.value);
+    game.setTempo(newTempo);
+
+    // Hide stuck hint when user changes tempo
+    const hint = board.querySelector('.stuck-hint');
+    if (hint) hint.classList.remove('visible');
+
+    // Restart playback if currently playing
+    if (isPlaying) {
+      stopPlayback();
+      playPattern();
+    }
+  });
+
   on(board, ".level-dot", "click", function () {
     const levelIndex = parseInt(this.dataset.level, 10);
     if (levelIndex === game.idxCurrentLevel) return;
@@ -412,6 +471,7 @@ function App() {
     if (isPlaying) {
       stopPlayback();
     }
+    game.resetTempo();
     game.loadLevel(levelIndex);
     updateUIForCurrentLevel(game.currentLevel);
   });

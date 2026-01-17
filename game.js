@@ -9,6 +9,9 @@ class Game {
     this.currentLevel = {};
     this.currentScore = 0;
     this.levelScores = {};  // { levelIndex: bestScore }
+    this.tempoMultiplier = 1.0;
+    this.mistakeCount = 0;
+    this.levelStartTime = null;
     // Each sample can have an optional "volume" property (0.0 to 1.0, default 1.0)
     this.audioLibrary = new AudioLibrary([
       { name: "Snare", file: "snare.wav", volume: 0.5 },
@@ -33,6 +36,41 @@ class Game {
 
   setVolume(volume) {
     this.audioLibrary.setMasterVolume(volume);
+  }
+
+  getTempo() {
+    return this.tempoMultiplier;
+  }
+
+  setTempo(multiplier) {
+    this.tempoMultiplier = Math.max(0.6, Math.min(1.0, multiplier));
+  }
+
+  resetTempo() {
+    this.tempoMultiplier = 1.0;
+  }
+
+  getEffectiveBpm() {
+    return Math.round(this.currentLevel.bpm * this.tempoMultiplier);
+  }
+
+  recordMistake() {
+    this.mistakeCount++;
+  }
+
+  resetMistakeCount() {
+    this.mistakeCount = 0;
+    this.levelStartTime = Date.now();
+  }
+
+  isStuck() {
+    const timeElapsed = (Date.now() - this.levelStartTime) / 1000;
+    return this.mistakeCount >= 3 || timeElapsed >= 45;
+  }
+
+  getScoreMultiplier() {
+    // 100% tempo = 1.0x, 80% tempo = 0.8x, 60% tempo = 0.6x
+    return this.tempoMultiplier;
   }
 
   nextLevel() {
@@ -161,11 +199,12 @@ class Game {
   calculateScoreChange(trackName, stepIndex, isAdding) {
     const track = this.currentLevel.pattern.find(t => t.name === trackName);
     const isCorrectPosition = track.steps[stepIndex] === 1;
+    const multiplier = this.getScoreMultiplier();
 
     if (isAdding) {
-      return isCorrectPosition ? 15 : -5;
+      return isCorrectPosition ? Math.round(15 * multiplier) : -5;
     } else {
-      return isCorrectPosition ? -15 : 3;  // Removing wrong tick gives back 3
+      return isCorrectPosition ? Math.round(-15 * multiplier) : 3;  // Removing wrong tick gives back 3
     }
   }
 
@@ -218,7 +257,8 @@ class Game {
     const startTime = this.audioLibrary.getCurrentTime();
     const repeat = 3;
     const resolution = level.resolution || 1;
-    const internalBpm = level.bpm * resolution;
+    const effectiveBpm = level.bpm * this.tempoMultiplier;
+    const internalBpm = effectiveBpm * resolution;
     const beatDuration = 60 / internalBpm;
     const barDuration = beatDuration * level.amountOfSteps;
     for (let currentBar = 0; currentBar < repeat; currentBar++) {

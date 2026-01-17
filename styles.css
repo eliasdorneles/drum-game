@@ -111,6 +111,83 @@ body::before {
   white-space: nowrap;
 }
 
+/* BPM Container */
+.bpm-container {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* BPM Dropdown */
+.bpm-dropdown {
+  font-family: inherit;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--box-inactive);
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+}
+
+.bpm-dropdown:hover {
+  border-color: var(--accent-primary);
+}
+
+.bpm-dropdown:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.bpm-dropdown option {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Stuck Hint Popover */
+.stuck-hint {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  background: var(--accent-secondary);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+  z-index: 10;
+}
+
+/* Popover arrow */
+.stuck-hint::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: var(--accent-secondary);
+}
+
+.stuck-hint.visible {
+  opacity: 1;
+  visibility: visible;
+  animation: pulse-hint 2s ease-in-out infinite;
+}
+
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
 /* Level Progress Bar (top of board) */
 .level-progress-bar {
   display: flex;
@@ -810,7 +887,8 @@ body::before {
 .track-name:focus-visible,
 .level-dot:focus-visible,
 .start-over-btn:focus-visible,
-.theme-selector:focus-visible {
+.theme-selector:focus-visible,
+.bpm-dropdown:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
