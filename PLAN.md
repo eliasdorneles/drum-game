@@ -23,7 +23,15 @@ Let's improve the gameplay!
       - remove 5 points for every misplaced step, give back 3 if fixed
       - add 100 points for every completed level
 
+- [x] design better levels for a smoother and engaging learning curve:
+      make it be like a conversation/dialogue with the user
+
+- [x] add color theming support
+
+- [x] show level progression
+
+- [ ] add a way for users to slow down the tempo if they get stuck on a level
+
 - [ ] add "About / help?" button
 
-- [ ] design better levels for a smoother and engaging learning curve:
-      make it be like a conversation/dialogue with the user
+- [ ] plan what next!
