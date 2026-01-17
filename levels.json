@@ -1,1208 +1,416 @@
 [
   {
     "name": "The Foundation",
-    "bpm": 180,
+    "bpm": 90,
+    "resolution": 2,
     "groupSize": 4,
     "description": "Let's start with a classic steady 4/4 beat",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
+        "steps": [0, 0, 1, 0, 0, 0, 1, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 1, 1, 0, 0, 0]
       }
     ]
   },
   {
     "name": "Up-tempo",
-    "bpm": 200,
+    "bpm": 100,
+    "resolution": 2,
     "groupSize": 4,
     "description": "Picking up the pace with a slight variation",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
+        "steps": [0, 0, 1, 0, 0, 0, 1, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 1, 0, 1, 0, 0]
       }
     ]
   },
   {
     "name": "Backbeat Basics",
-    "bpm": 160,
+    "bpm": 80,
+    "resolution": 2,
     "groupSize": 4,
     "description": "Variation on the kick timing",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
+        "steps": [0, 0, 1, 0, 0, 0, 1, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 1, 0, 1, 0, 0]
       }
     ]
   },
   {
     "name": "Backbeat Basics bis",
-    "bpm": 160,
+    "bpm": 80,
+    "resolution": 2,
     "groupSize": 4,
     "description": "Yet another kick variation",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
+        "steps": [0, 0, 1, 0, 0, 0, 1, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1
-        ]
+        "steps": [1, 0, 0, 1, 0, 1, 0, 1]
       }
     ]
   },
   {
     "name": "We Will, We Will",
-    "bpm": 320,
+    "bpm": 80,
+    "resolution": 4,
     "groupSize": 4,
     "description": "Rock You!",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "Up Close",
-    "bpm": 320,
+    "bpm": 80,
+    "resolution": 4,
     "groupSize": 4,
     "description": "Focus on the space between the notes",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "Up Closer",
-    "bpm": 320,
+    "bpm": 80,
+    "resolution": 4,
     "groupSize": 4,
     "description": "Yet another high res variation of the slow beat",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0]
       }
     ]
   },
   {
     "name": "The Syncopated Soul",
-    "bpm": 320,
+    "bpm": 80,
+    "resolution": 4,
     "groupSize": 4,
     "description": "A classic funk backbeat with a \"ghosted\" feel",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "The Tight Groove",
-    "bpm": 320,
+    "bpm": 80,
+    "resolution": 4,
     "groupSize": 4,
     "description": "Shifting some steps for extra funk",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "Thump & Drive",
-    "bpm": 360,
+    "bpm": 90,
+    "resolution": 4,
     "groupSize": 4,
+    "description": "Maximum impact. Let the bass drum lead the way.",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0
-        ]
+        "steps": [1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0]
       }
-    ],
-    "description": "Maximum impact. Let the bass drum lead the way."
+    ]
   },
   {
     "name": "The Kick Barrage",
-    "bpm": 360,
+    "bpm": 90,
+    "resolution": 4,
     "groupSize": 4,
+    "description": "AKA the relentless high-energy kick",
     "pattern": [
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
+        "steps": [1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0]
       }
-    ],
-    "description": "AKA the relentless high-energy kick"
+    ]
   },
   {
     "name": "Sunny Bossa Nova",
-    "bpm": 280,
+    "bpm": 70,
+    "resolution": 4,
     "groupSize": 4,
     "description": "You know that girl from Ipanema?",
     "pattern": [
       {
         "name": "Stick",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1
-        ]
+        "steps": [0, 0, 1, 0, 0, 1, 0, 1]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1
-        ]
+        "steps": [1, 0, 0, 1, 1, 0, 0, 1]
       }
     ]
   },
   {
     "name": "Carnival Pulse",
-    "bpm": 340,
+    "bpm": 85,
+    "resolution": 4,
     "groupSize": 4,
+    "description": "Add the cowbell and find your Brazilian feet",
     "pattern": [
       {
         "name": "Cowbell",
-        "steps": [
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Stick",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1
-        ]
+        "steps": [0, 0, 1, 0, 0, 1, 0, 1]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1
-        ]
+        "steps": [1, 0, 0, 1, 1, 0, 0, 1]
       }
-    ],
-    "description": "Add the cowbell and find your Brazilian feet"
+    ]
   },
   {
     "name": "Constant Motion",
-    "bpm": 600,
+    "bpm": 150,
+    "resolution": 4,
     "groupSize": 4,
     "description": "The high-hat keeps the pulse",
     "pattern": [
       {
         "name": "Hi-Hat",
-        "steps": [
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0
-        ]
+        "steps": [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "Hi-Hat Shimmer",
-    "bpm": 400,
+    "bpm": 100,
+    "resolution": 4,
     "groupSize": 4,
     "description": "The classic beat returns with a steady metal sizzle",
     "pattern": [
       {
         "name": "Hi-Hat",
-        "steps": [
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0
-        ]
+        "steps": [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "Chill Groove",
-    "bpm": 300,
+    "bpm": 75,
+    "resolution": 4,
     "groupSize": 4,
     "description": "Relaxed timing for a late-night atmosphere",
     "pattern": [
       {
         "name": "Hi-Hat",
-        "steps": [
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0
-        ]
+        "steps": [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "Skittering Hats",
-    "bpm": 550,
+    "bpm": 138,
+    "resolution": 4,
     "groupSize": 4,
     "description": "Agitated, fast-paced Hi-Hat work. Stay sharp!",
     "pattern": [
       {
         "name": "Hi-Hat",
-        "steps": [
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0
-        ]
+        "steps": [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "Behind the Beat",
-    "bpm": 460,
+    "bpm": 115,
+    "resolution": 4,
     "groupSize": 4,
     "description": "Bob your head to this",
     "pattern": [
       {
         "name": "Hi-Hat",
-        "steps": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-          1,
-          1,
-          0,
-          1,
-          0
-        ]
+        "steps": [1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0]
       }
     ]
   },
   {
     "name": "How are you fill-in today?",
-    "bpm": 400,
+    "bpm": 100,
+    "resolution": 4,
     "groupSize": 4,
+    "description": "Now, let's do some fills!",
     "pattern": [
       {
         "name": "Crash",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0]
       }
-    ],
-    "description": "Now, let's do some fills!"
+    ]
   },
   {
     "name": "Crash landing",
-    "bpm": 400,
+    "bpm": 100,
+    "resolution": 4,
     "groupSize": 4,
+    "description": "Start with a bang and fill-in the rest",
     "pattern": [
       {
         "name": "Crash",
-        "steps": [
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
+        "steps": [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0]
       }
-    ],
-    "description": "Start with a bang and fill-in the rest"
+    ]
   },
   {
     "name": "The Rolling Kick",
-    "bpm": 400,
+    "bpm": 100,
+    "resolution": 4,
     "groupSize": 4,
+    "description": "Integrating the bass drum into the transition",
     "pattern": [
       {
         "name": "Crash",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          0,
-          0,
-          1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          1,
-          1,
-          0
-        ]
+        "steps": [0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0]
       }
-    ],
-    "description": "Integrating the bass drum into the transition"
+    ]
   },
   {
     "name": "One last fill",
-    "bpm": 400,
+    "bpm": 100,
+    "resolution": 4,
     "groupSize": 4,
+    "description": "And then we can move on",
     "pattern": [
       {
         "name": "Crash",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0]
       },
       {
         "name": "Snare",
-        "steps": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0
-        ]
+        "steps": [1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0]
       },
       {
         "name": "Kick",
-        "steps": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
+        "steps": [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0]
       }
-    ],
-    "description": "And then we can move on"
+    ]
   }
 ]

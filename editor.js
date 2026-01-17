@@ -119,12 +119,13 @@ class LevelEditor {
   addLevel() {
     const newLevel = {
       name: "New Level",
-      bpm: 180,
+      bpm: 90,
+      resolution: 4,
       groupSize: 4,
       description: "",
       pattern: [
-        { name: "Snare", steps: [0, 0, 0, 0, 0, 0, 0, 0] },
-        { name: "Kick", steps: [0, 0, 0, 0, 0, 0, 0, 0] },
+        { name: "Snare", steps: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
+        { name: "Kick", steps: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] },
       ],
     };
 
@@ -218,6 +219,14 @@ class LevelEditor {
           <div class="form-group">
             <label for="levelGroupSize">Group Size</label>
             <input type="number" id="levelGroupSize" min="1" max="16" value="${level.groupSize}">
+          </div>
+          <div class="form-group">
+            <label for="levelResolution">Resolution</label>
+            <select id="levelResolution">
+              <option value="1" ${level.resolution === 1 ? "selected" : ""}>1 (Quarter notes)</option>
+              <option value="2" ${level.resolution === 2 ? "selected" : ""}>2 (Eighth notes)</option>
+              <option value="4" ${(level.resolution === 4 || !level.resolution) ? "selected" : ""}>4 (16th notes)</option>
+            </select>
           </div>
         </div>
         <div class="form-row">
@@ -329,6 +338,10 @@ class LevelEditor {
       this.updateMetadata("groupSize", value);
       // Re-render to update group separators
       this.renderEditor();
+    });
+
+    document.getElementById("levelResolution").addEventListener("change", (e) => {
+      this.updateMetadata("resolution", parseInt(e.target.value, 10) || 4);
     });
 
     document.getElementById("levelDescription").addEventListener("input", (e) => {
@@ -480,7 +493,9 @@ class LevelEditor {
 
     const level = this.levels[this.currentLevelIndex];
     const startTime = this.audioLibrary.getCurrentTime();
-    const beatDuration = 60 / level.bpm;
+    const resolution = level.resolution || 4;
+    const internalBpm = level.bpm * resolution;
+    const beatDuration = 60 / internalBpm;
     const numSteps = level.pattern[0]?.steps.length || 8;
     const barDuration = beatDuration * numSteps;
     const repeat = 2;

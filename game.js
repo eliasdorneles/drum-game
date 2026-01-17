@@ -211,7 +211,9 @@ class Game {
     const level = this.currentLevel;
     const startTime = this.audioLibrary.getCurrentTime();
     const repeat = 3;
-    const beatDuration = 60 / level.bpm;
+    const resolution = level.resolution || 1;
+    const internalBpm = level.bpm * resolution;
+    const beatDuration = 60 / internalBpm;
     const barDuration = beatDuration * level.amountOfSteps;
     for (let currentBar = 0; currentBar < repeat; currentBar++) {
       for (let step = 0; step < level.amountOfSteps; step++) {
