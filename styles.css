@@ -111,19 +111,76 @@ body::before {
   white-space: nowrap;
 }
 
-/* Level Controls (score + nav) */
-.level-controls {
+/* Level Progress Bar (top of board) */
+.level-progress-bar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-md);
-  flex-shrink: 0;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--box-border);
 }
 
-/* Level Navigation */
-.level-nav {
+/* Level Progress Dots */
+.level-progress {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.level-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--box-border);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background var(--transition-normal),
+    border-color var(--transition-normal),
+    transform var(--transition-fast),
+    box-shadow var(--transition-normal);
+  padding: 0;
+}
+
+.level-dot:hover {
+  border-color: var(--accent-primary);
+  transform: scale(1.2);
+}
+
+.level-dot.completed {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.level-dot.completed:hover {
+  box-shadow: var(--shadow-glow-success);
+}
+
+.level-dot.current {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-glow-primary);
+  transform: scale(1.15);
+}
+
+.level-dot.locked {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.level-dot.locked:hover {
+  transform: none;
+  border-color: var(--box-border);
+}
+
+.levels-remaining {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  margin-left: var(--space-xs);
+  white-space: nowrap;
 }
 
 /* Score Display */
@@ -596,14 +653,17 @@ body::before {
     flex-direction: column;
   }
 
-  .level-controls {
-    width: 100%;
-    justify-content: space-between;
+  .level-progress-bar {
+    flex-wrap: wrap;
   }
 
-  .level-selector {
-    flex: 1;
-    max-width: none;
+  .level-progress {
+    flex-wrap: wrap;
+  }
+
+  .level-dot {
+    width: 10px;
+    height: 10px;
   }
 
   .audio-controls {
@@ -681,7 +741,7 @@ body::before {
 .play-btn:focus-visible,
 .next-level-btn:focus-visible,
 .track-name:focus-visible,
-.level-selector:focus-visible,
+.level-dot:focus-visible,
 .start-over-btn:focus-visible,
 .theme-selector:focus-visible {
   outline: 2px solid var(--accent-primary);

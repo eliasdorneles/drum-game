@@ -245,15 +245,29 @@ function App() {
     removeClass(board, "victory");
     addClass(board, "playing");
 
+    const maxUnlocked = game.getMaxUnlockedLevel();
+    const totalLevels = game.levels.length;
+
+    // Build level progress dots HTML
+    let dotsHtml = '';
+    for (let i = 0; i <= maxUnlocked; i++) {
+      const state = i < game.idxCurrentLevel ? 'completed' : (i === game.idxCurrentLevel ? 'current' : '');
+      dotsHtml += `<button class="level-dot ${state}" data-level="${i}" title="${i + 1}. ${game.levels[i].name}"></button>`;
+    }
+
+    const lockedCount = totalLevels - maxUnlocked - 1;
+    const remainingHtml = lockedCount > 0 ? `<span class="levels-remaining">+${lockedCount} more</span>` : '';
+
     board.innerHTML = `
+      <div class="level-progress-bar">
+        <div class="level-progress">${dotsHtml}${remainingHtml}</div>
+        <button class="start-over-btn">Start Over</button>
+      </div>
       <div class="level-header">
         <h2 class="level-title">${currentLevel.name} <span class="bpm-tag">${currentLevel.bpm} BPM</span></h2>
-        <div class="level-controls">
-          <div class="score-display">
-            <span class="score-label">Score:</span>
-            <span class="score-value">${game.getTotalScore()}</span>
-          </div>
-          <div class="level-nav"></div>
+        <div class="score-display">
+          <span class="score-label">Score:</span>
+          <span class="score-value">${game.getTotalScore()}</span>
         </div>
       </div>
     `;
@@ -270,26 +284,6 @@ function App() {
         </div>
       </div>
     `;
-
-    // Add level selector dropdown
-    const levelNav = board.querySelector(".level-nav");
-    const levelSelect = document.createElement("select");
-    levelSelect.className = "level-selector";
-    const maxUnlocked = game.getMaxUnlockedLevel();
-    for (let i = 0; i <= maxUnlocked; i++) {
-      const option = document.createElement("option");
-      option.value = i;
-      option.textContent = `${i + 1}. ${game.levels[i].name}`;
-      option.selected = i === game.idxCurrentLevel;
-      levelSelect.appendChild(option);
-    }
-    levelNav.appendChild(levelSelect);
-
-    // Add Start Over button
-    const startOverBtn = document.createElement("button");
-    startOverBtn.textContent = "Start Over";
-    startOverBtn.className = "start-over-btn";
-    levelNav.appendChild(startOverBtn);
 
     patternGrid = new DrumPatternGrid(currentLevel);
 
@@ -391,11 +385,14 @@ function App() {
     game.setVolume(this.value / 100);
   });
 
-  on(board, ".level-selector", "change", function () {
+  on(board, ".level-dot", "click", function () {
+    const levelIndex = parseInt(this.dataset.level, 10);
+    if (levelIndex === game.idxCurrentLevel) return;
+
     if (isPlaying) {
       stopPlayback();
     }
-    game.loadLevel(parseInt(this.value, 10));
+    game.loadLevel(levelIndex);
     updateUIForCurrentLevel(game.currentLevel);
   });
 
