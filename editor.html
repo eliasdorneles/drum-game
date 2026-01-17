@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <title>Drum Game - Level Editor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#1a1a2e" />
+    <meta name="theme-color" content="#1c1410" />
+    <link rel="stylesheet" href="themes.css" />
     <link rel="stylesheet" href="styles.css" />
     <style>
       /* Editor-specific styles */
@@ -56,7 +57,7 @@
 
       .level-list li.selected {
         background: rgba(0, 255, 245, 0.2);
-        border: 1px solid var(--accent-cyan);
+        border: 1px solid var(--accent-primary);
       }
 
       .level-list li .level-name {
@@ -117,18 +118,18 @@
       }
 
       .sidebar-btn:hover {
-        border-color: var(--accent-cyan);
+        border-color: var(--accent-primary);
         background: rgba(0, 255, 245, 0.1);
       }
 
       .sidebar-btn.primary {
-        background: var(--accent-cyan);
+        background: var(--accent-primary);
         color: var(--bg-primary);
-        border-color: var(--accent-cyan);
+        border-color: var(--accent-primary);
       }
 
       .sidebar-btn.primary:hover {
-        box-shadow: var(--shadow-glow-cyan);
+        box-shadow: var(--shadow-glow-primary);
       }
 
       /* Main Editor Area */
@@ -148,7 +149,7 @@
       .editor-header h1 {
         font-size: 1.5rem;
         margin: 0;
-        background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -162,7 +163,7 @@
       }
 
       .back-link:hover {
-        color: var(--accent-cyan);
+        color: var(--accent-primary);
       }
 
       /* Metadata Form */
@@ -210,7 +211,7 @@
 
       .form-group input:focus {
         outline: none;
-        border-color: var(--accent-cyan);
+        border-color: var(--accent-primary);
       }
 
       .form-group input[type="number"] {
@@ -253,7 +254,7 @@
 
       .editor-track select:focus {
         outline: none;
-        border-color: var(--accent-cyan);
+        border-color: var(--accent-primary);
       }
 
       .editor-boxes {
@@ -287,19 +288,19 @@
       }
 
       .editor-box:hover {
-        border-color: var(--accent-cyan);
+        border-color: var(--accent-primary);
       }
 
       .editor-box.active {
         background: var(--success);
         border-color: var(--success);
-        box-shadow: var(--shadow-glow-green);
+        box-shadow: var(--shadow-glow-success);
       }
 
       .editor-box.playing {
-        background: var(--accent-orange);
-        border-color: var(--accent-orange);
-        box-shadow: var(--shadow-glow-orange);
+        background: var(--accent-secondary);
+        border-color: var(--accent-secondary);
+        box-shadow: var(--shadow-glow-accent);
       }
 
       .remove-track-btn {
@@ -339,7 +340,7 @@
       }
 
       .pattern-btn:hover {
-        border-color: var(--accent-cyan);
+        border-color: var(--accent-primary);
         background: rgba(0, 255, 245, 0.1);
       }
 
@@ -383,13 +384,13 @@
 
       .action-btn.preview {
         background: var(--bg-primary);
-        color: var(--accent-cyan);
-        border: 2px solid var(--accent-cyan);
+        color: var(--accent-primary);
+        border: 2px solid var(--accent-primary);
       }
 
       .action-btn.preview:hover:not(:disabled) {
         background: rgba(0, 255, 245, 0.1);
-        box-shadow: var(--shadow-glow-cyan);
+        box-shadow: var(--shadow-glow-primary);
       }
 
       .action-btn.preview:disabled {
@@ -403,7 +404,7 @@
       }
 
       .action-btn.download:hover {
-        box-shadow: var(--shadow-glow-green);
+        box-shadow: var(--shadow-glow-success);
       }
 
       /* Empty state */
@@ -480,6 +481,7 @@
       </main>
     </div>
 
+    <script src="theme.js"></script>
     <script src="audio.js"></script>
     <script src="editor.js"></script>
   </body>
