@@ -97,7 +97,7 @@ class DrumPatternGrid {
         const trackRow = document.createElement("div");
         addClass(trackRow, "track");
         trackRow.dataset.trackName = trackSpec.name;
-        trackRow.dataset.trackColor = (trackIndex % 4) + 1;
+        trackRow.dataset.trackColor = ((this.level.pattern.length - 1 - trackIndex) % 4) + 1;
 
         const trackName = document.createElement("span");
         addClass(trackName, "track-name");
@@ -112,7 +112,7 @@ class DrumPatternGrid {
           const beatGroup = document.createElement("div");
           addClass(beatGroup, "beat-group");
 
-          const trackColorIndex = (trackIndex % 4) + 1;
+          const trackColorIndex = ((this.level.pattern.length - 1 - trackIndex) % 4) + 1;
           for (let j = i; j < Math.min(i + groupSize, totalSteps); j++) {
             const box = this.#createBox(trackSpec.steps[j], j, trackSpec.name, trackColorIndex);
             beatGroup.appendChild(box);
