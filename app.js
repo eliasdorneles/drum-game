@@ -176,6 +176,172 @@ class DrumPatternGrid {
 }
 
 function App() {
+  // Onboarding System
+  const ONBOARDING_KEY = 'drumGameOnboarding';
+
+  const onboarding = {
+    active: false,
+    step: 0,
+    loopPlayCount: 0,
+    hasCompletedOnce: JSON.parse(localStorage.getItem(ONBOARDING_KEY))?.completed || false,
+    autoDismissTimeout: null,
+
+    start() {
+      this.active = true;
+      this.step = 0;
+      this.loopPlayCount = 0;
+      // Jump to level 1 if not already there
+      if (game.idxCurrentLevel !== 0) {
+        game.loadLevel(0);
+        updateUIForCurrentLevel(game.currentLevel);
+      }
+      this.showWelcomeModal();
+    },
+
+    nextStep() {
+      this.step++;
+      this.runStep();
+    },
+
+    runStep() {
+      this.hidePopover();
+
+      switch (this.step) {
+        case 1:
+          // Step 2: Play Loop popover
+          this.showPopover('.play-btn', 'Click here to play the loop', 'above');
+          break;
+        case 2:
+          // Step 3: Listen popover (shown when loop starts playing)
+          this.showPopover('.pattern-canvas', 'Listen carefully! There are 3 kick hits and 2 snare hits. Your job is to find them!', 'below');
+          break;
+        case 3:
+          // Step 4: Click boxes popover
+          this.showPopover('.pattern-canvas', 'Now recreate what you heard! Click the boxes where you heard the drums hit.', 'below');
+          break;
+        case 4:
+          // Step 5: Keep going popover
+          this.showPopover('.pattern-canvas', 'Keep going! Match all the beats to complete the level.', 'below');
+          // Auto-dismiss after 5 seconds
+          this.autoDismissTimeout = setTimeout(() => {
+            this.complete();
+          }, 5000);
+          break;
+        default:
+          this.complete();
+      }
+    },
+
+    complete() {
+      this.active = false;
+      this.step = 0;
+      this.loopPlayCount = 0;
+      this.hasCompletedOnce = true;
+      if (this.autoDismissTimeout) {
+        clearTimeout(this.autoDismissTimeout);
+        this.autoDismissTimeout = null;
+      }
+      localStorage.setItem(ONBOARDING_KEY, JSON.stringify({ completed: true }));
+      this.hidePopover();
+      this.hideModal();
+    },
+
+    showWelcomeModal() {
+      this.hideModal();
+      const modal = document.createElement('div');
+      modal.className = 'onboarding-modal';
+      modal.innerHTML = `
+        <div class="onboarding-modal-content">
+          <h2>Welcome to Drum Game!</h2>
+          <p>Your goal: Recreate drum patterns by ear.<br>
+          Listen to the loop, then click the boxes to match the rhythm.</p>
+          <button class="onboarding-start-btn">Start Tutorial</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      modal.querySelector('.onboarding-start-btn').addEventListener('click', () => {
+        this.hideModal();
+        this.nextStep();
+      });
+    },
+
+    hideModal() {
+      const modal = document.querySelector('.onboarding-modal');
+      if (modal) modal.remove();
+    },
+
+    showPopover(targetSelector, message, position = 'above') {
+      this.hidePopover();
+      const target = document.querySelector(targetSelector);
+      if (!target) return;
+
+      const popover = document.createElement('div');
+      popover.className = 'onboarding-popover';
+      popover.textContent = message;
+
+      // Add to DOM first so we can measure it
+      document.body.appendChild(popover);
+
+      const targetRect = target.getBoundingClientRect();
+      const popoverRect = popover.getBoundingClientRect();
+
+      // Use fixed positioning
+      popover.style.position = 'fixed';
+
+      if (position === 'above') {
+        popover.classList.add('arrow-down');
+        // Center horizontally over target, but clamp to viewport
+        let left = targetRect.left + targetRect.width / 2 - popoverRect.width / 2;
+        left = Math.max(10, Math.min(left, window.innerWidth - popoverRect.width - 10));
+        popover.style.left = `${left}px`;
+        popover.style.top = `${targetRect.top - popoverRect.height - 12}px`;
+      } else if (position === 'below') {
+        popover.classList.add('arrow-up');
+        let left = targetRect.left + targetRect.width / 2 - popoverRect.width / 2;
+        left = Math.max(10, Math.min(left, window.innerWidth - popoverRect.width - 10));
+        popover.style.left = `${left}px`;
+        popover.style.top = `${targetRect.bottom + 12}px`;
+      }
+    },
+
+    hidePopover() {
+      const popover = document.querySelector('.onboarding-popover');
+      if (popover) popover.remove();
+    },
+
+    // Called when loop finishes one complete cycle
+    onLoopCycleComplete() {
+      if (this.active && this.step === 2) {
+        this.loopPlayCount++;
+        if (this.loopPlayCount >= 1) {
+          this.nextStep();
+        }
+      }
+    },
+
+    // Called when user clicks a box
+    onBoxClick() {
+      if (this.active && this.step === 3) {
+        this.nextStep();
+      }
+    },
+
+    // Called when user clicks play button
+    onPlayClick() {
+      if (this.active && this.step === 1) {
+        this.nextStep();
+      }
+    },
+
+    // Called when level is completed
+    onLevelComplete() {
+      if (this.active) {
+        this.complete();
+      }
+    }
+  };
+
   const handleBoxClicked = () => {
     const pattern = patternGrid.getUserInputPattern();
 
@@ -199,6 +365,9 @@ function App() {
         patternGrid.playVictoryWave();
         game.playVictorySound();
       }
+
+      // Complete onboarding if active
+      onboarding.onLevelComplete();
 
       // Show victory overlay
       showVictoryOverlay();
@@ -359,14 +528,22 @@ function App() {
   let isPlaying = false;
   let playTimeouts = [];
 
+  let previousStep = -1;
+
   const playPattern = () => {
     isPlaying = true;
+    previousStep = -1;
     const playButton = board.querySelector(".play-btn");
     playButton.textContent = "Stop";
 
     game.playCurrentLevelLoop({
       tickCallback: (step) => {
         patternGrid.updatePlayingCursor(step);
+        // Detect when loop restarts (step goes from high number back to 0)
+        if (step === 0 && previousStep > 0) {
+          onboarding.onLoopCycleComplete();
+        }
+        previousStep = step;
       },
       finishCallback: () => {
         stopPlayback();
@@ -399,8 +576,6 @@ function App() {
 
   let game = new Game();
 
-  game.load().then(() => updateUIForCurrentLevel(game.currentLevel));
-
   const board = document.querySelector(".board");
 
   // Register event listeners
@@ -423,6 +598,9 @@ function App() {
       checkAndShowStuckHint();
     }
 
+    // Notify onboarding of box click
+    onboarding.onBoxClick();
+
     toggleClass(this, "tick");
     handleBoxClicked();
   });
@@ -435,6 +613,8 @@ function App() {
     if (isPlaying) {
       stopPlayback();
     } else {
+      // Notify onboarding that play was clicked
+      onboarding.onPlayClick();
       playPattern();
     }
   });
@@ -485,6 +665,29 @@ function App() {
     if (confirm("Reset all progress and start from level 1?")) {
       localStorage.removeItem(STORAGE_KEY);
       location.reload();
+    }
+  });
+
+  // "How to Play" button in header
+  const howToPlayBtn = document.querySelector('.how-to-play-btn');
+  if (howToPlayBtn) {
+    howToPlayBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        stopPlayback();
+      }
+      onboarding.start();
+    });
+  }
+
+  // Load game and start onboarding for first-time visitors
+  game.load().then(() => {
+    updateUIForCurrentLevel(game.currentLevel);
+
+    if (!onboarding.hasCompletedOnce) {
+      // Small delay to ensure UI is ready
+      setTimeout(() => {
+        onboarding.start();
+      }, 500);
     }
   });
 

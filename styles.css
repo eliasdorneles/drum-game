@@ -912,6 +912,138 @@ body::before {
   color: var(--text-primary);
 }
 
+/* How to Play Button */
+.how-to-play-btn {
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--box-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-left: var(--space-sm);
+  vertical-align: middle;
+  transition: color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.how-to-play-btn:hover {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+/* Onboarding Modal */
+.onboarding-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  animation: fadeIn 300ms ease-out;
+}
+
+.onboarding-modal-content {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  max-width: 400px;
+  text-align: center;
+  margin: var(--space-md);
+}
+
+.onboarding-modal-content h2 {
+  font-size: 1.5rem;
+  margin: 0 0 var(--space-md) 0;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.onboarding-modal-content p {
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-lg) 0;
+  line-height: 1.6;
+}
+
+.onboarding-start-btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: var(--space-md) var(--space-xl);
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast);
+}
+
+.onboarding-start-btn:hover {
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.onboarding-start-btn:active {
+  transform: scale(0.98);
+}
+
+/* Onboarding Popover */
+.onboarding-popover {
+  position: absolute;
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 50;
+  max-width: 280px;
+  line-height: 1.5;
+  animation: popoverPulse 2s ease-in-out infinite;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Arrow pointing down (popover above target) */
+.onboarding-popover.arrow-down::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: var(--accent-primary);
+}
+
+/* Arrow pointing up (popover below target) */
+.onboarding-popover.arrow-up::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-bottom-color: var(--accent-primary);
+}
+
+/* Arrow pointing left (popover to the right of target) */
+.onboarding-popover.arrow-left::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  border: 8px solid transparent;
+  border-right-color: var(--accent-primary);
+}
+
+@keyframes popoverPulse {
+  0%, 100% { opacity: 0.95; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
 /* Focus Visible for Keyboard Navigation */
 .box:focus-visible,
 .play-btn:focus-visible,
@@ -920,7 +1052,9 @@ body::before {
 .level-dot:focus-visible,
 .start-over-btn:focus-visible,
 .theme-selector:focus-visible,
-.bpm-dropdown:focus-visible {
+.bpm-dropdown:focus-visible,
+.how-to-play-btn:focus-visible,
+.onboarding-start-btn:focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
