@@ -78,6 +78,8 @@ body::before {
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
   margin-bottom: var(--space-lg);
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Level Header */
@@ -96,6 +98,8 @@ body::before {
   color: var(--text-primary);
   margin: 0;
   min-width: 0;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* BPM Tag */
@@ -380,6 +384,34 @@ body::before {
 
 .track-name:hover {
   color: var(--accent-primary);
+}
+
+/* Track Preview Icon (Speaker) */
+.track-preview-icon {
+  opacity: 0.6;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.track-name:hover .track-preview-icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Track Colors - Subtle background tints for box differentiation */
+.box.track-color-1 {
+  background: var(--track-color-1, var(--box-inactive));
+}
+
+.box.track-color-2 {
+  background: var(--track-color-2, var(--box-inactive));
+}
+
+.box.track-color-3 {
+  background: var(--track-color-3, var(--box-inactive));
+}
+
+.box.track-color-4 {
+  background: var(--track-color-4, var(--box-inactive));
 }
 
 /* Track boxes container */
@@ -731,8 +763,8 @@ body::before {
   box-shadow: var(--shadow-glow-primary);
 }
 
-/* Instructions */
-.game > p {
+/* Tip Panel */
+.tip-panel {
   background: rgba(45, 55, 72, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
@@ -742,7 +774,7 @@ body::before {
   max-width: 600px;
 }
 
-.game > p strong {
+.tip-panel strong {
   color: var(--accent-primary);
 }
 

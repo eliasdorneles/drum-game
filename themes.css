@@ -18,6 +18,10 @@
   --shadow-glow-accent: 0 0 20px rgba(212, 118, 58, 0.6);
   --shadow-glow-error: 0 0 15px rgba(229, 57, 53, 0.5);
   --grid-color: rgba(232, 168, 87, 0.04);
+  --track-color-1: #4a3a30;
+  --track-color-2: #4d3528;
+  --track-color-3: #3d3a2a;
+  --track-color-4: #453530;
 }
 
 /* Dark Synth */
@@ -38,6 +42,10 @@ html[data-theme="dark-synth"] {
   --shadow-glow-accent: 0 0 20px rgba(255, 159, 28, 0.6);
   --shadow-glow-error: 0 0 15px rgba(255, 71, 87, 0.5);
   --grid-color: rgba(255, 255, 255, 0.03);
+  --track-color-1: #2d3748;
+  --track-color-2: #2d3040;
+  --track-color-3: #253545;
+  --track-color-4: #323848;
 }
 
 /* Retrowave - 80s sunset vibes */
@@ -58,6 +66,10 @@ html[data-theme="retrowave"] {
   --shadow-glow-accent: 0 0 20px rgba(255, 154, 86, 0.6);
   --shadow-glow-error: 0 0 15px rgba(255, 71, 87, 0.5);
   --grid-color: rgba(255, 110, 199, 0.06);
+  --track-color-1: #3d2b5e;
+  --track-color-2: #402b50;
+  --track-color-3: #352b55;
+  --track-color-4: #3a2860;
 }
 
 /* Analog Warmth */
@@ -78,6 +90,10 @@ html[data-theme="analog-warmth"] {
   --shadow-glow-accent: 0 0 20px rgba(212, 118, 58, 0.6);
   --shadow-glow-error: 0 0 15px rgba(229, 57, 53, 0.5);
   --grid-color: rgba(232, 168, 87, 0.04);
+  --track-color-1: #4a3a30;
+  --track-color-2: #4d3528;
+  --track-color-3: #3d3a2a;
+  --track-color-4: #453530;
 }
 
 /* Neon Club - High contrast club lighting */
@@ -98,6 +114,10 @@ html[data-theme="neon-club"] {
   --shadow-glow-accent: 0 0 20px rgba(0, 212, 255, 0.5);
   --shadow-glow-error: 0 0 15px rgba(255, 0, 64, 0.5);
   --grid-color: rgba(255, 0, 128, 0.04);
+  --track-color-1: #252530;
+  --track-color-2: #252535;
+  --track-color-3: #202530;
+  --track-color-4: #282530;
 }
 
 /* Midnight Studio - Clean professional dark */
@@ -118,4 +138,8 @@ html[data-theme="midnight-studio"] {
   --shadow-glow-accent: 0 0 20px rgba(163, 113, 247, 0.5);
   --shadow-glow-error: 0 0 15px rgba(248, 81, 73, 0.5);
   --grid-color: rgba(88, 166, 255, 0.04);
+  --track-color-1: #30363d;
+  --track-color-2: #303040;
+  --track-color-3: #283638;
+  --track-color-4: #353640;
 }

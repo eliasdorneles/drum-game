@@ -55,7 +55,7 @@ class DrumPatternGrid {
     this.patternBoxes = [];
   }
 
-  #createBox(isActive, index, trackName) {
+  #createBox(isActive, index, trackName, trackColorIndex) {
     // Create a box element representing a step in the pattern
     const box = document.createElement("span");
     addClass(box, "box");
@@ -65,6 +65,9 @@ class DrumPatternGrid {
     // when the box is clicked
     box.dataset.index = index;
     box.dataset.track = trackName;
+
+    // Add track color class for visual differentiation
+    box.classList.add(`track-color-${trackColorIndex}`);
 
     if (!isActive) {
       addClass(box, "mistake");
@@ -94,10 +97,11 @@ class DrumPatternGrid {
         const trackRow = document.createElement("div");
         addClass(trackRow, "track");
         trackRow.dataset.trackName = trackSpec.name;
+        trackRow.dataset.trackColor = (trackIndex % 4) + 1;
 
         const trackName = document.createElement("span");
         addClass(trackName, "track-name");
-        trackName.textContent = trackSpec.name;
+        trackName.innerHTML = `<span class="track-preview-icon">&#128266;</span> ${trackSpec.name}`;
         trackRow.appendChild(trackName);
 
         const trackBoxes = document.createElement("div");
@@ -108,8 +112,9 @@ class DrumPatternGrid {
           const beatGroup = document.createElement("div");
           addClass(beatGroup, "beat-group");
 
+          const trackColorIndex = (trackIndex % 4) + 1;
           for (let j = i; j < Math.min(i + groupSize, totalSteps); j++) {
-            const box = this.#createBox(trackSpec.steps[j], j, trackSpec.name);
+            const box = this.#createBox(trackSpec.steps[j], j, trackSpec.name, trackColorIndex);
             beatGroup.appendChild(box);
             this.patternBoxes[trackIndex].push(box);
           }
