@@ -30,8 +30,11 @@ Let's improve the gameplay!
 
 - [x] show level progression
 
-- [ ] add a way for users to slow down the tempo if they get stuck on a level
+- [x] add a way for users to slow down the tempo if they get stuck on a level
 
-- [ ] add "About / help?" button
+- [x] add onboarding tutorial
+
+- [x] punish users who start clicking on many boxes: we should make the player
+      to lose the level if they have too much mistakes.
 
 - [ ] plan what next!

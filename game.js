@@ -11,6 +11,7 @@ class Game {
     this.levelScores = {};  // { levelIndex: bestScore }
     this.tempoMultiplier = 1.0;
     this.mistakeCount = 0;
+    this.mistakeForgiveness = 0;
     this.levelStartTime = null;
     // Each sample can have an optional "volume" property (0.0 to 1.0, default 1.0)
     this.audioLibrary = new AudioLibrary([
@@ -23,6 +24,7 @@ class Game {
       { name: "Stick", file: "stick.wav", volume: 0.5 },
       { name: "Win", file: "win.wav", volume: 0.5 },
       { name: "FinalWin", file: "final_win.wav", volume: 0.6 },
+      { name: "Fail", file: "fail.wav", volume: 0.5 },
     ]);
   }
 
@@ -60,12 +62,42 @@ class Game {
 
   resetMistakeCount() {
     this.mistakeCount = 0;
+    this.mistakeForgiveness = 0;
     this.levelStartTime = Date.now();
   }
 
   isStuck() {
     const timeElapsed = (Date.now() - this.levelStartTime) / 1000;
     return this.mistakeCount >= 3 || timeElapsed >= 45;
+  }
+
+  calculateMaxMistakes() {
+    const requiredTicks = this.currentLevel.pattern.reduce((sum, track) =>
+      sum + track.steps.filter(s => s === 1).length, 0);
+    let max = Math.max(3, Math.floor(3 + requiredTicks / 5));
+    if (this.tempoMultiplier < 1.0) max += 1;
+    return max;
+  }
+
+  getEffectiveMistakes() {
+    return Math.max(0, this.mistakeCount - Math.floor(this.mistakeForgiveness));
+  }
+
+  getMistakesRemaining() {
+    return this.calculateMaxMistakes() - this.getEffectiveMistakes();
+  }
+
+  recordMistakeCorrection() {
+    this.mistakeForgiveness += 0.5;
+  }
+
+  hasLostLevel() {
+    return this.getEffectiveMistakes() >= this.calculateMaxMistakes();
+  }
+
+  playFailureSound() {
+    const startTime = this.audioLibrary.getCurrentTime();
+    this.audioLibrary.playSampleAfter("Fail", startTime, 0.3);
   }
 
   getScoreMultiplier() {

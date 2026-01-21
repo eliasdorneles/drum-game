@@ -173,6 +173,14 @@ class DrumPatternGrid {
       }, index * 80); // Slower cascade for more dramatic effect
     });
   }
+
+  playFailureWave() {
+    // Fast red shake animation for level failure
+    const allBoxes = this.patternBoxes.flat();
+    allBoxes.forEach((box, index) => {
+      setTimeout(() => addClass(box, "failure-wave"), index * 30);
+    });
+  }
 }
 
 function App() {
@@ -408,6 +416,70 @@ function App() {
     }
   };
 
+  const showLevelFailedOverlay = () => {
+    hideLevelFailedOverlay();
+
+    const overlay = document.createElement("div");
+    overlay.className = "level-failed-overlay";
+    overlay.innerHTML = `
+      <div class="level-failed-card">
+        <h3>Level Failed</h3>
+        <p>Too many mistakes! Give it another try.</p>
+        <button class="retry-level-btn">Retry Level</button>
+      </div>
+    `;
+
+    board.querySelector(".pattern-canvas").appendChild(overlay);
+  };
+
+  const hideLevelFailedOverlay = () => {
+    const overlay = board.querySelector(".level-failed-overlay");
+    if (overlay) {
+      overlay.remove();
+    }
+  };
+
+  const updateMistakeWarning = () => {
+    const warning = board.querySelector(".mistake-warning");
+    if (!warning) return;
+
+    const remaining = game.getMistakesRemaining();
+
+    if (remaining <= 2 && remaining > 0) {
+      warning.style.display = "";
+      const text = warning.querySelector(".warning-text");
+      text.textContent = `${remaining} mistake${remaining === 1 ? '' : 's'} left!`;
+
+      if (remaining === 1) {
+        warning.classList.add("critical");
+      } else {
+        warning.classList.remove("critical");
+      }
+    } else {
+      warning.style.display = "none";
+      warning.classList.remove("critical");
+    }
+  };
+
+  const handleLevelFailed = () => {
+    if (isPlaying) {
+      stopPlayback();
+    }
+
+    addClass(board, "level-failed");
+    patternGrid.playFailureWave();
+    game.playFailureSound();
+    showLevelFailedOverlay();
+  };
+
+  const retryLevel = () => {
+    hideLevelFailedOverlay();
+    removeClass(board, "level-failed");
+    game.resetTempo();
+    game.loadLevel(game.idxCurrentLevel);
+    updateUIForCurrentLevel(game.currentLevel);
+  };
+
   const startNextLevel = () => {
     if (isPlaying) {
       stopPlayback();
@@ -500,6 +572,10 @@ function App() {
           <span class="score-value">${game.getTotalScore()}</span>
         </div>
       </div>
+      <div class="mistake-warning" style="display: none;">
+        <span class="warning-icon">⚠</span>
+        <span class="warning-text">2 mistakes left!</span>
+      </div>
     `;
     if (currentLevel.description) {
       board.innerHTML += `<p class="i">${currentLevel.description}</p>`;
@@ -580,8 +656,9 @@ function App() {
 
   // Register event listeners
   on(board, ".box", "click", function () {
-    // Don't allow clicks if level is completed
+    // Don't allow clicks if level is completed or failed
     if (board.classList.contains("victory")) return;
+    if (board.classList.contains("level-failed")) return;
 
     const wasActive = this.classList.contains("tick");
     const trackName = this.dataset.track;
@@ -592,10 +669,24 @@ function App() {
     game.updateScore(delta);
     updateScoreDisplay();
 
-    // Track mistakes for stuck detection
+    // Track mistakes for stuck detection and level failure
     if (delta < 0) {
       game.recordMistake();
       checkAndShowStuckHint();
+      updateMistakeWarning();
+
+      // Check if player has lost the level
+      if (game.hasLostLevel()) {
+        toggleClass(this, "tick");
+        handleLevelFailed();
+        return;
+      }
+    }
+
+    // Track corrections (removing a wrong tick gives +3 score)
+    if (delta === 3) {
+      game.recordMistakeCorrection();
+      updateMistakeWarning();
     }
 
     // Notify onboarding of box click
@@ -623,6 +714,10 @@ function App() {
     if (game.hasNextLevel()) {
       startNextLevel();
     }
+  });
+
+  on(board, ".retry-level-btn", "click", function () {
+    retryLevel();
   });
 
   on(board, ".track-name", "click", function () {
