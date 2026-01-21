@@ -344,6 +344,89 @@
     ]
   },
   {
+    "name": "Sunny Bossa Nova",
+    "bpm": 120,
+    "resolution": 2,
+    "groupSize": 4,
+    "description": "You know that girl from Ipanema?",
+    "pattern": [
+      {
+        "name": "Stick",
+        "steps": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Carnival Pulse",
+    "bpm": 160,
+    "resolution": 2,
+    "groupSize": 4,
+    "description": "Add the cowbell and find your Brazilian feet",
+    "pattern": [
+      {
+        "name": "Cowbell",
+        "steps": [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Stick",
+        "steps": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
     "name": "The Tight Groove",
     "bpm": 80,
     "resolution": 4,
@@ -462,7 +545,7 @@
           1,
           0,
           0,
-          1,
+          0,
           0,
           0,
           0,
@@ -483,98 +566,15 @@
           0,
           1,
           1,
-          0,
           1,
-          1,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
-      }
-    ]
-  },
-  {
-    "name": "Sunny Bossa Nova",
-    "bpm": 70,
-    "resolution": 4,
-    "groupSize": 4,
-    "description": "You know that girl from Ipanema?",
-    "pattern": [
-      {
-        "name": "Stick",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1
-        ]
-      },
-      {
-        "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
           1,
           1,
           0,
           0,
-          1
-        ]
-      }
-    ]
-  },
-  {
-    "name": "Carnival Pulse",
-    "bpm": 85,
-    "resolution": 4,
-    "groupSize": 4,
-    "description": "Add the cowbell and find your Brazilian feet",
-    "pattern": [
-      {
-        "name": "Cowbell",
-        "steps": [
-          1,
           0,
-          0,
-          0,
-          1,
           0,
           0,
           0
-        ]
-      },
-      {
-        "name": "Stick",
-        "steps": [
-          0,
-          0,
-          1,
-          0,
-          0,
-          1,
-          0,
-          1
-        ]
-      },
-      {
-        "name": "Kick",
-        "steps": [
-          1,
-          0,
-          0,
-          1,
-          1,
-          0,
-          0,
-          1
         ]
       }
     ]
@@ -860,6 +860,57 @@
           1,
           0,
           0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Nova Bossa",
+    "bpm": 80,
+    "resolution": 4,
+    "groupSize": 4,
+    "description": "Get right those off-beats",
+    "pattern": [
+      {
+        "name": "Stick",
+        "steps": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Kick",
+        "steps": [
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
           0,
           0,
           0
